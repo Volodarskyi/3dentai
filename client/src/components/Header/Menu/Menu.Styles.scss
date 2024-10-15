@@ -1,0 +1,37 @@
+.menu{
+  &__link-wrapper{
+    width: 100%;
+    height: 3rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+    border-bottom: #878787 solid 1px;
+  }
+
+  &__account{
+
+    &-name{
+      cursor: pointer;
+      color: #8ED755;
+      font-size: 19px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+      letter-spacing: 0.08px;
+    }
+
+    &-icon{
+      color: #8ED755;
+    }
+  }
+
+  &__user{
+    &-data{
+      margin-top: 3rem;
+      color: var(--main-text-color-yellow);
+    }
+  }
+
+}
+

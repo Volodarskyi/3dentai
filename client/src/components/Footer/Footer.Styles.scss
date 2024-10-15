@@ -1,0 +1,10 @@
+.footer {
+  height: 50px;
+  min-height: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  border-top: 1px solid #2D2D2D;
+  background: rgba(0, 0, 0, 0.9);
+  box-shadow: 0px -5px 4px 0px rgba(0, 0, 0, 0.30);
+}
