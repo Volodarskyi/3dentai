@@ -1,3 +1,7 @@
 test.js
 .idea
 /node_modules/
+
+/client_new/.firebase
+/client_new/.next
+/client_new/.firebase/
