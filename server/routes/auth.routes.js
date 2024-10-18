@@ -2,15 +2,15 @@ const {Router} = require('express')
 const User = require('../models/User')
 const Learn = require('../models/Learn')
 const router = Router();
-const config = require("../../config/config");
+const config = require("../config/config");
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const validator = require('express-validator');
 const authMiddleware = require("../middleware/auth.middleware");
-const roleList = require("../../config/roleList");
+const roleList = require("../constants/roleList");
 const {check, validationResult} = validator
 const checker = require('../utils/checker');
-const userRole = require('../../config/roleList');
+const userRole = require('../constants/roleList');
 
 // 'api/auth/register'
 router.post('/register',
