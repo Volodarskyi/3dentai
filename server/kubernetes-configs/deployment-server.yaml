@@ -40,7 +40,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: hackaton-server
-  namespace: hackaton-server
+  namespace: hackaton-argo
   labels:
     name: hackaton-server
 spec:
