@@ -11,6 +11,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: hackaton-server
+  namespace: hackaton-argo
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
     nginx.ingress.kubernetes.io/proxy-connect-timeout: "600"
