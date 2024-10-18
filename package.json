@@ -4,8 +4,8 @@
   "description": "flash cards for learn",
   "main": "dist/index.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=production node ./src/index.js",
-    "server": "nodemon src/index.js",
+    "start": "cross-env NODE_ENV=production node server/index.js",
+    "server": "nodemon server/index.js",
     "client": "npm run start --prefix client",
     "client:install": "npm install --prefix client",
     "client:build": "npm run build --prefix client",
