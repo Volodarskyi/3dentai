@@ -1,6 +1,6 @@
 node_modules
 
-client/node_modules
+client_legacy/node_modules
 
 .idea
 .vscode
