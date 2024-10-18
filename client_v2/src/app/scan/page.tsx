@@ -25,7 +25,7 @@ const Scan = () => {
   }, [activeStep]);
 
   return (
-    <div className="bg-white min-h-svh flex items-center flex-col pt-12">
+    <div className="bg-white min-h-svh flex items-center flex-col">
       <Processor activeStep={activeStep} handlerStep={handlerStep} />
       <Steps step={activeStep} />
       <Navigation
