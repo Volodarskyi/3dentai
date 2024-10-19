@@ -13,14 +13,14 @@ const Scan = () => {
   });
 
   const handlerStep = useMemo(
-    () => (newStep: number) => () => setActiveStep(newStep),
+    () => (newStep: number) => () => setActiveStep(() => newStep),
     [],
   );
 
   useEffect(() => {
     setNavigationSetting({
       disabledPrevious: activeStep <= 0,
-      disabledNext: activeStep >= 4,
+      disabledNext: activeStep >= 2,
     });
   }, [activeStep]);
 

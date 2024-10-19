@@ -8,13 +8,8 @@ type steps = {
 
 const steps: steps[] = [
   { name: "Step 1", description: "Upload video (photo)." },
-  {
-    name: "Step 2",
-    description: "Parse to data (video to photo, photo to data).",
-  },
-  { name: "Step 3", description: "Send to Chat GPT API and receive response." },
-  { name: "Step 4", description: "Convert photo to 3D." },
-  { name: "Step 5", description: "Analyze." },
+  { name: "Step 2", description: "Send to Chat GPT API and receive response." },
+  { name: "Step 3", description: "Convert photo to 3D." },
 ];
 
 interface ProgressProps {
@@ -116,7 +111,7 @@ const Progress = ({ activeStep }: ProgressProps) => {
   return (
     <nav
       aria-label="Progress"
-      className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
+      className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full"
     >
       <ol
         role="list"

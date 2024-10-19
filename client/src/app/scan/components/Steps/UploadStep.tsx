@@ -51,7 +51,7 @@ const UploadStep = () => {
       />
       <div
         className={
-          "flex justify-center items-center w-full min-h-96 border border-gray-200 rounded-b-lg rounded-l-lg"
+          "flex justify-center items-center w-full min-h-96 border border-gray-200 rounded-b-lg"
         }
       >
         <button
