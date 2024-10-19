@@ -1,24 +1,14 @@
 import { CheckIcon } from "@heroicons/react/24/solid";
 import { classNames } from "@/helper/classnames";
+import { useStores } from "@/hooks/useStores";
+import { observer } from "mobx-react-lite";
+import { ISteps } from "@/types/steps";
 
-type steps = {
-  name: string;
-  description: string;
-};
+const Progress = observer(() => {
+  const { scanStore } = useStores();
+  const { step: activeStep, steps } = scanStore;
 
-const steps: steps[] = [
-  { name: "Step 1", description: "Upload video (photo)." },
-  { name: "Step 2", description: "Send to Chat GPT API and receive response." },
-  { name: "Step 3", description: "Convert photo to 3D." },
-];
-
-interface ProgressProps {
-  activeStep: number;
-  handlerStep: (step: number) => () => void;
-}
-
-const Progress = ({ activeStep }: ProgressProps) => {
-  const renderStep = (step: steps, stepIdx: number) => {
+  const renderStep = (step: ISteps, stepIdx: number) => {
     const isCompleted = stepIdx < activeStep;
     const isActive = stepIdx === activeStep;
 
@@ -30,7 +20,7 @@ const Progress = ({ activeStep }: ProgressProps) => {
         <div
           className={classNames(
             stepIdx === 0 ? "rounded-t-md" : "",
-            stepIdx === steps.length - 1 ? "rounded-b-md" : "",
+            stepIdx === steps.length ? "rounded-b-md" : "",
             "overflow-hidden border border-gray-200 lg:border-0",
           )}
         >
@@ -117,10 +107,10 @@ const Progress = ({ activeStep }: ProgressProps) => {
         role="list"
         className="overflow-y-scroll rounded-md lg:flex lg:rounded-none lg:border-l lg:border-r lg:border-gray-200"
       >
-        {steps.map((step, stepIdx) => renderStep(step, stepIdx))}
+        {steps.map((step, stepIdx) => renderStep(step, stepIdx + 1))}
       </ol>
     </nav>
   );
-};
+});
 
 export default Progress;

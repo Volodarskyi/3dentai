@@ -3,36 +3,29 @@
 import Processor from "./components/Progress";
 import Navigation from "./components/Navigation";
 import Steps from "@/app/scan/components/Steps";
-import { useEffect, useMemo, useState } from "react";
+import { ISteps } from "@/types/steps";
+import { useEffect } from "react";
+import { useStores } from "@/hooks/useStores";
+
+const steps: ISteps[] = [
+  { name: "Step 1", description: "Upload video (photo)." },
+  { name: "Step 2", description: "Send to Chat GPT API and receive response." },
+  { name: "Step 3", description: "Convert photo to 3D." },
+];
 
 const Scan = () => {
-  const [activeStep, setActiveStep] = useState(0);
-  const [navigationSetting, setNavigationSetting] = useState({
-    disabledPrevious: true,
-    disabledNext: false,
-  });
-
-  const handlerStep = useMemo(
-    () => (newStep: number) => () => setActiveStep(() => newStep),
-    [],
-  );
+  const { scanStore } = useStores();
+  const { setSteps } = scanStore;
 
   useEffect(() => {
-    setNavigationSetting({
-      disabledPrevious: activeStep <= 0,
-      disabledNext: activeStep >= 2,
-    });
-  }, [activeStep]);
+    setSteps(steps);
+  }, [setSteps]);
 
   return (
     <div className="bg-white min-h-svh flex items-center flex-col">
-      <Processor activeStep={activeStep} handlerStep={handlerStep} />
-      <Steps step={activeStep} />
-      <Navigation
-        activeStep={activeStep}
-        handlerStep={handlerStep}
-        navigationSetting={navigationSetting}
-      />
+      <Processor />
+      <Steps />
+      <Navigation />
     </div>
   );
 };
