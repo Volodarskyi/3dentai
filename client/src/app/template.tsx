@@ -1,10 +1,12 @@
 "use client";
 
 import { ReactNode } from "react";
-import Header from "@/components/Header";
+
 import Footer from "@/components/Footer";
-import "@/services/index";
+import Header from "@/components/Header";
 import { StoreWrapper } from "@/store/provider";
+
+import "@/services/index";
 
 interface TemplateProps {
   readonly children: ReactNode;

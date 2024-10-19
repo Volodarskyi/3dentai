@@ -6,11 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
     "deploy": "next build && firebase deploy"
   },
   "dependencies": {
     "@heroicons/react": "^2.1.5",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
     "firebase": "^10.14.1",
     "mobx": "^6.13.5",
     "mobx-react-lite": "^4.0.7",

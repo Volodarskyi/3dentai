@@ -1,8 +1,9 @@
 "use client";
 
-import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { storage } from "@/services";
 import { ChangeEvent, useRef, useState } from "react";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+
+import { storage } from "@/services";
 
 const UploadStep = () => {
   const fileRef = useRef<HTMLInputElement>(null);

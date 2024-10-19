@@ -1,5 +1,6 @@
-import { useStores } from "@/hooks/useStores";
 import { observer } from "mobx-react-lite";
+
+import { useStores } from "@/hooks/useStores";
 
 const Navigation = observer(() => {
   const { scanStore } = useStores();

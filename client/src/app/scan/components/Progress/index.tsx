@@ -1,7 +1,8 @@
 import { CheckIcon } from "@heroicons/react/24/solid";
+import { observer } from "mobx-react-lite";
+
 import { classNames } from "@/helper/classnames";
 import { useStores } from "@/hooks/useStores";
-import { observer } from "mobx-react-lite";
 import { ISteps } from "@/types/steps";
 
 const Progress = observer(() => {

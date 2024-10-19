@@ -1,4 +1,5 @@
 import { makeAutoObservable } from "mobx";
+
 import { ISteps } from "@/types/steps";
 
 class ScanStore {

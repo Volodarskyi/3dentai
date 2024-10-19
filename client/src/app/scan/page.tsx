@@ -1,11 +1,13 @@
 "use client";
 
-import Processor from "./components/Progress";
-import Navigation from "./components/Navigation";
-import Steps from "@/app/scan/components/Steps";
-import { ISteps } from "@/types/steps";
 import { useEffect } from "react";
+
+import Steps from "@/app/scan/components/Steps";
 import { useStores } from "@/hooks/useStores";
+import { ISteps } from "@/types/steps";
+
+import Navigation from "./components/Navigation";
+import Processor from "./components/Progress";
 
 const steps: ISteps[] = [
   { name: "Step 1", description: "Upload video (photo)." },

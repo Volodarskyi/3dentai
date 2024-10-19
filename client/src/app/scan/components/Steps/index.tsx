@@ -1,6 +1,7 @@
+import { observer } from "mobx-react-lite";
+
 import UploadStep from "@/app/scan/components/Steps/UploadStep";
 import { useStores } from "@/hooks/useStores";
-import { observer } from "mobx-react-lite";
 
 const Steps = observer(() => {
   const { scanStore } = useStores();
