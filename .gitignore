@@ -5,6 +5,8 @@ test.js
 /server/node_modules
 /server/package-lock.json
 
+/client/node_modules
 /client/.firebase
 /client/.next
 /client/.firebase/
+
