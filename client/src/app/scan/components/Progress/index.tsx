@@ -11,7 +11,7 @@ const Progress = observer(() => {
 
   const renderStep = (step: ISteps, stepIdx: number) => {
     const isCompleted = stepIdx < activeStep;
-    const isActive = stepIdx === activeStep;
+    const isActive = stepIdx + 1 === activeStep;
 
     return (
       <li
@@ -108,7 +108,7 @@ const Progress = observer(() => {
         role="list"
         className="overflow-y-scroll rounded-md lg:flex lg:rounded-none lg:border-l lg:border-r lg:border-gray-200"
       >
-        {steps.map((step, stepIdx) => renderStep(step, stepIdx + 1))}
+        {steps.map((step, stepIdx) => renderStep(step, stepIdx))}
       </ol>
     </nav>
   );

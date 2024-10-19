@@ -1,5 +1,7 @@
 import { observer } from "mobx-react-lite";
 
+import ModelStep from "@/app/scan/components/Steps/ModelStep";
+import ResponseStep from "@/app/scan/components/Steps/ResponseStep";
 import UploadStep from "@/app/scan/components/Steps/UploadStep";
 import { useStores } from "@/hooks/useStores";
 
@@ -14,6 +16,8 @@ const Steps = observer(() => {
       }
     >
       {step === 1 && <UploadStep />}
+      {step === 2 && <ResponseStep />}
+      {step === 3 && <ModelStep />}
     </div>
   );
 });
