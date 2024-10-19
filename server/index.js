@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import helmet from 'helmet';
 import cors from 'cors';
 import { connect } from 'mongoose';
+import morgan from 'morgan';
 import { generateRes } from './utils/api.js';
 import CONFIG from './config/config.js';
 import routes from './routes/index.js';
@@ -14,7 +15,9 @@ app.use(cors({ origin: true }));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(helmet());
+app.set('trust proxy', 1);
 app.use(limiter);
+app.use(morgan('tiny'));
 
 app.use('/api', routes);
 
