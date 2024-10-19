@@ -4,6 +4,8 @@ test.js
 
 /server_new/node_modules
 /server/node_modules
+/server_new/package-lock.json
+/server/package-lock.json
 
 /client/.firebase
 /client/.next
