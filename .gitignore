@@ -2,10 +2,10 @@ test.js
 .idea
 /node_modules/
 
-/server_new/node_modules
 /server/node_modules
-/server_new/package-lock.json
+/server_legacy/node_modules
 /server/package-lock.json
+/server_legacy/package-lock.json
 
 /client/.firebase
 /client/.next

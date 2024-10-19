@@ -1,44 +1,43 @@
-const express = require('express');
+import express from 'express';
+import bodyParser from 'body-parser';
+import helmet from 'helmet';
+import cors from 'cors';
+import { connect } from 'mongoose';
+import { generateRes } from './utils/api.js';
+import CONFIG from './config/config.js';
+import routes from './routes/index.js';
+import limiter from './middlewares/requestLimiter.js';
+
 const app = express();
-const mongoose = require('mongoose');
-const path = require('path');
-const config = require("./config/config");
 
+app.use(cors({ origin: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(helmet());
+app.use(limiter);
 
-const PORT_SEVER = config.SERVER_PORT || 80
+app.use('/api', routes);
 
-app.use(express.json({extended: true}))
-
-app.use('/api/auth', require('./routes/auth.routes'))
-
-// Construct an absolute path to the 'client/build' directory
-const clientBuildPath = path.join(__dirname,'..', 'client', 'build');
-
-if (process.env.NODE_ENV === 'production') {
-    app.use('/', express.static(path.join(clientBuildPath)))
-
-    app.get('*', (req,res)=>{
-        res.sendFile(path.resolve(clientBuildPath, 'index.html'))
-    })
-}
+app.use((req, res) => {
+  res.status(404);
+  res.json(
+    generateRes({ data: {}, message: 'Use not registered API', status: 404 }),
+  );
+});
 
 async function start() {
-    try {
-        console.log('[CONFIG_MONGO]:', config.MONGO_URI)
-        await mongoose.connect(config.MONGO_URI, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true
-        })
+  console.log('[CONFIG_MONGO]:', CONFIG.MONGO_URI);
+  await connect(CONFIG.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
 
-        app.listen(PORT_SEVER, () => {
-            console.log(`Server is running on port: ${PORT_SEVER}`);
-        });
-
-    } catch (e) {
-        console.log('Server Error:', e.message)
-        process.exit(1)
-    }
+  app.listen(CONFIG.SERVER_PORT, () => {
+    console.log(`Server is running on port: ${CONFIG.SERVER_PORT}`);
+  });
 }
 
-start()
-
+start().catch(err => {
+  console.log('Server Error:', err.message);
+  process.exit(1);
+});
