@@ -1,0 +1,85 @@
+# Namespace Definition
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: hackaton-argo
+
+---
+
+# Ingress Definition
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hackaton-server
+  namespace: hackaton-argo
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: hackaton-server.paxel.ca
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: hackaton-server
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - hackaton-server.paxel.ca
+      secretName: hackaton-server.paxel.ca-tls
+---
+# Service Definition for Pac-Man Application
+apiVersion: v1
+kind: Service
+metadata:
+  name: hackaton-server
+  namespace: hackaton-argo
+  labels:
+    name: hackaton-server
+spec:
+  selector:
+    name: hackaton-server
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+
+---
+
+# Deployment Definition for Pac-Man Application
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hackaton-server
+  namespace: hackaton-argo
+  labels:
+    name: hackaton-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: hackaton-server
+  template:
+    metadata:
+      labels:
+        name: hackaton-server
+    spec:
+      imagePullSecrets:
+        - name: dockerhubaccess
+      containers:
+        - name: hackaton-server
+          image: oleksiipasichnyk/confl:hackaton-server-v1
+          ports:
+            - name: http-server
+              containerPort: 80
+          env:
+            - name: NODE_ENV
+              value: "production"
