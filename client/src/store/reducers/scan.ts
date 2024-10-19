@@ -1,4 +1,4 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, reaction } from "mobx";
 
 import { ISteps } from "@/types/steps";
 
@@ -10,15 +10,24 @@ class ScanStore {
 
   constructor() {
     makeAutoObservable(this);
+
+    reaction(
+      () => this.step,
+      () => this.validationButton(),
+    );
   }
+
+  setSteps = (newSteps: ISteps[]) => {
+    this.steps = newSteps;
+    this.validationButton();
+  };
 
   nextStep = () => {
     this.step = this.step + 1;
-    this.validationButton();
   };
+
   previousStep = () => {
     this.step = this.step - 1;
-    this.validationButton();
   };
 
   validationButton = () => {
@@ -26,11 +35,6 @@ class ScanStore {
     this.disabledNext = this.steps.length
       ? this.step >= this.steps.length
       : true;
-  };
-
-  setSteps = (newSteps: ISteps[]) => {
-    this.steps = newSteps;
-    this.validationButton();
   };
 }
 
