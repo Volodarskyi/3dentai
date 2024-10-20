@@ -29,7 +29,22 @@ async function analyzeImages(req, res) {
   }
 }
 
+async function testApiAi(req,res){
+  try {
+    console.log('Server API: GET api/AI/analyze',req.body)
+
+    res.json(generateRes({ data: "pong-ai" }));
+  } catch (err) {
+    sendErrorLog({
+      res,
+      url: 'GET api/AI/test',
+      err,
+    });
+  }
+}
+
 export default {
   getImages,
   analyzeImages,
+  testApiAi
 };

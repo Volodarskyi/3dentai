@@ -29,11 +29,11 @@ app.use((req, res) => {
 });
 
 async function start() {
-  console.log('[CONFIG_MONGO]:', CONFIG.MONGO_URI);
-  await connect(CONFIG.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+  // console.log('[CONFIG_MONGO]:', CONFIG.MONGO_URI);
+  // await connect(CONFIG.MONGO_URI, {
+  //   useNewUrlParser: true,
+  //   useUnifiedTopology: true,
+  // });
 
   app.listen(CONFIG.SERVER_PORT, () => {
     console.log(`Server is running on port: ${CONFIG.SERVER_PORT}`);
