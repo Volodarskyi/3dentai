@@ -28,6 +28,13 @@
     "url": "https://github.com/baruch-f/flashcards/issues"
   },
   "homepage": "https://github.com/baruch-f/flashcards#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express": "^4.18.2",
+    "express-validator": "^7.0.1",
+    "jsonwebtoken": "^9.0.1",
+    "mongoose": "^7.4.0"
+  },
   "devDependencies": {
     "@types/express": "^4.17.17",
     "@types/mongoose": "^5.11.97",
@@ -36,16 +43,5 @@
     "cross-env": "^7.0.3",
     "nodemon": "^3.0.1",
     "ts-node": "^10.9.1"
-  },
-  "dependencies": {
-    "@react-three/drei": "^9.114.6",
-    "@react-three/fiber": "^8.17.10",
-    "@types/three": "^0.169.0",
-    "bcryptjs": "^2.4.3",
-    "express": "^4.18.2",
-    "express-validator": "^7.0.1",
-    "jsonwebtoken": "^9.0.1",
-    "mongoose": "^7.4.0",
-    "three": "^0.169.0"
   }
 }
