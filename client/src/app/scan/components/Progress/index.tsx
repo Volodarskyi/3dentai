@@ -1,31 +1,17 @@
 import { CheckIcon } from "@heroicons/react/24/solid";
+import { observer } from "mobx-react-lite";
+
 import { classNames } from "@/helper/classnames";
+import { useStores } from "@/hooks/useStores";
+import { ISteps } from "@/types/steps";
 
-type steps = {
-  name: string;
-  description: string;
-};
+const Progress = observer(() => {
+  const { scanStore } = useStores();
+  const { step: activeStep, steps } = scanStore;
 
-const steps: steps[] = [
-  { name: "Step 1", description: "Upload video (photo)." },
-  {
-    name: "Step 2",
-    description: "Parse to data (video to photo, photo to data).",
-  },
-  { name: "Step 3", description: "Send to Chat GPT API and receive response." },
-  { name: "Step 4", description: "Convert photo to 3D." },
-  { name: "Step 5", description: "Analyze." },
-];
-
-interface ProgressProps {
-  activeStep: number;
-  handlerStep: (step: number) => () => void;
-}
-
-const Progress = ({ activeStep }: ProgressProps) => {
-  const renderStep = (step: steps, stepIdx: number) => {
+  const renderStep = (step: ISteps, stepIdx: number) => {
     const isCompleted = stepIdx < activeStep;
-    const isActive = stepIdx === activeStep;
+    const isActive = stepIdx + 1 === activeStep;
 
     return (
       <li
@@ -35,7 +21,7 @@ const Progress = ({ activeStep }: ProgressProps) => {
         <div
           className={classNames(
             stepIdx === 0 ? "rounded-t-md" : "",
-            stepIdx === steps.length - 1 ? "rounded-b-md" : "",
+            stepIdx === steps.length ? "rounded-b-md" : "",
             "overflow-hidden border border-gray-200 lg:border-0",
           )}
         >
@@ -116,7 +102,7 @@ const Progress = ({ activeStep }: ProgressProps) => {
   return (
     <nav
       aria-label="Progress"
-      className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
+      className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full"
     >
       <ol
         role="list"
@@ -126,6 +112,6 @@ const Progress = ({ activeStep }: ProgressProps) => {
       </ol>
     </nav>
   );
-};
+});
 
 export default Progress;

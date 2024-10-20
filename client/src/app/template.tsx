@@ -1,6 +1,11 @@
+"use client";
+
 import { ReactNode } from "react";
-import Header from "@/components/Header";
+
 import Footer from "@/components/Footer";
+import Header from "@/components/Header";
+import { StoreWrapper } from "@/store/provider";
+
 import "@/services/index";
 
 interface TemplateProps {
@@ -11,11 +16,11 @@ function Template(props: TemplateProps) {
   const { children } = props;
 
   return (
-    <>
+    <StoreWrapper>
       <Header />
       {children}
       <Footer />
-    </>
+    </StoreWrapper>
   );
 }
 

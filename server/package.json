@@ -1,15 +1,10 @@
 {
   "name": "3DentAI",
-  "version": "1.0.0",
-  "description": "flash cards for learn",
-  "main": "dist/index.js",
+  "private": true,
+  "type": "module",
   "scripts": {
-    "start": "cross-env NODE_ENV=production node server_legacy/index.js",
-    "server": "nodemon server_legacy/index.js",
-    "client": "npm run start --prefix client_legacy",
-    "client:install": "npm install --prefix client_legacy",
-    "client:build": "npm run build --prefix client_legacy",
-    "dev": "cross-env NODE_ENV=development concurrently \"npm run server\" \"npm run client\" ",
+    "start": "cross-env NODE_ENV=production node ./index.js",
+    "server": "nodemon ./index.js",
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -22,16 +17,15 @@
     "learn",
     "application"
   ],
-  "author": "N&D",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/baruch-f/flashcards/issues"
-  },
-  "homepage": "https://github.com/baruch-f/flashcards#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
     "express": "^4.18.2",
+    "express-rate-limit": "^7.4.1",
     "express-validator": "^7.0.1",
+    "helmet": "^8.0.0",
     "jsonwebtoken": "^9.0.1",
     "mongoose": "^7.4.0"
   },
@@ -41,7 +35,13 @@
     "@types/node": "^20.4.4",
     "concurrently": "^8.2.0",
     "cross-env": "^7.0.3",
-    "nodemon": "^3.0.1",
+    "eslint": "^8.52.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "8.9.0",
+    "eslint-plugin-import": "^2.29.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "nodemon": "^3.1.0",
+    "prettier": "^3.2.5",
     "ts-node": "^10.9.1"
   }
 }

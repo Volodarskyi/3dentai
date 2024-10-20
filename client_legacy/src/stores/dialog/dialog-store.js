@@ -5,19 +5,21 @@ export class DialogStore {
     isLoading = false;
     methodResult = undefined;
     error = undefined;
-    closeCb = ()=>{
-        console.log('close cb')};
+    closeCb = () => {
+        console.log('close cb')
+    };
 
     constructor() {
         makeAutoObservable(this)
     }
 
-    clearAll = ()=>{
+    clearAll = () => {
         this.isLoading = false;
         this.methodResult = undefined;
         this.error = undefined;
-        this.closeCb = ()=>{
-            console.log('close cb')};
+        this.closeCb = () => {
+            console.log('close cb')
+        };
     }
 
     showWindow = () => {
@@ -36,13 +38,13 @@ export class DialogStore {
         this.isLoading = false
     }
 
-    showLoader = ()=>{
+    showLoader = () => {
         this.clearAll()
         this.showWindow()
         this.loadingStart()
     }
 
-    closeLoader = ()=>{
+    closeLoader = () => {
         this.loadingFinish()
         this.closeWindow()
         this.clearAll()
@@ -51,14 +53,14 @@ export class DialogStore {
     setResult = (result, closeCb = null) => {
         this.clearAll()
         this.methodResult = result
-        console.log('setResult-store,',result)
-        if(closeCb){
+        console.log('setResult-store,', result)
+        if (closeCb) {
             this.closeCb = closeCb
         }
     }
 
-    closeResult = ()=>{
-       this.closeCb()
+    closeResult = () => {
+        this.closeCb()
         this.isShow = false;
 
         this.clearAll()
@@ -69,7 +71,7 @@ export class DialogStore {
         this.error = error
     }
 
-    closeError = ()=>{
+    closeError = () => {
         this.closeWindow()
         this.clearAll()
     }
