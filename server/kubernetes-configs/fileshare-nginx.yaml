@@ -5,8 +5,7 @@ metadata:
   name: hackaton-argo
 
 ---
-
-# ConfigMap for Nginx Custom Configuration with Rate Limiting
+# ConfigMap for Nginx Custom Configuration with Rate Limiting and Correct Root Directive
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -24,13 +23,19 @@ data:
         server {
             listen 80;
             
+            # Location block to serve files from /files
             location /files {
-                root /usr/share/nginx/html;
+                root /usr/share/nginx/html;  # Correct root directive without the 'files' part
                 autoindex on;
                 limit_req zone=one burst=10 nodelay;
                 limit_except GET HEAD {
                     deny all;
                 }
+            }
+
+            # Catch-all block for any paths outside /files
+            location / {
+                return 404;  # Return 404 for any other paths
             }
         }
     }
