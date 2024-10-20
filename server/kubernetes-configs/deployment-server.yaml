@@ -35,8 +35,10 @@ spec:
     - hosts:
         - hackaton-server.paxel.ca
       secretName: hackaton-server.paxel.ca-tls
+
 ---
-# Service Definition for Pac-Man Application
+
+# Service Definition for Hackaton Server
 apiVersion: v1
 kind: Service
 metadata:
@@ -54,7 +56,7 @@ spec:
 
 ---
 
-# Deployment Definition for Pac-Man Application
+# Deployment Definition for Hackaton Server with Longhorn PVC
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -80,6 +82,14 @@ spec:
           ports:
             - name: http-server
               containerPort: 80
+          volumeMounts:
+            - name: file-storage
+              mountPath: /app/files  # Mount the 25GB PVC to a directory for file storage
           env:
             - name: NODE_ENV
               value: "production"
+      volumes:
+        - name: file-storage
+          persistentVolumeClaim:
+            claimName: longhorn-file-storage-pvc  # Use the same PVC as Nginx (25GB)
+

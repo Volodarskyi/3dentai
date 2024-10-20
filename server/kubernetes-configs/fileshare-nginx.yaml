@@ -1,0 +1,139 @@
+# Namespace Definition
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: hackaton-argo
+
+---
+
+# ConfigMap for Nginx Custom Configuration with Rate Limiting
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+  namespace: hackaton-argo
+data:
+  nginx.conf: |
+    worker_processes auto;
+    events {
+        worker_connections 1024;
+    }
+    http {
+        limit_req_zone $binary_remote_addr zone=one:10m rate=30r/s;
+
+        server {
+            listen 80;
+            
+            location /files {
+                root /usr/share/nginx/html;
+                autoindex on;
+                limit_req zone=one burst=10 nodelay;
+                limit_except GET HEAD {
+                    deny all;
+                }
+            }
+        }
+    }
+
+---
+
+# Ingress Definition for Nginx
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-file-server
+  namespace: hackaton-argo
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: nginx-files.paxel.ca
+      http:
+        paths:
+          - path: /files
+            pathType: Prefix
+            backend:
+              service:
+                name: nginx-file-server
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - nginx-files.paxel.ca
+      secretName: nginx-files.paxel.ca-tls
+
+---
+
+# Service Definition for Nginx File Server
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-file-server
+  namespace: hackaton-argo
+  labels:
+    name: nginx-file-server
+spec:
+  selector:
+    name: nginx-file-server
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+
+---
+
+# Deployment Definition for Nginx File Server with ConfigMap
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-file-server
+  namespace: hackaton-argo
+  labels:
+    name: nginx-file-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: nginx-file-server
+  template:
+    metadata:
+      labels:
+        name: nginx-file-server
+    spec:
+      containers:
+        - name: nginx-file-server
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: file-storage
+              mountPath: /usr/share/nginx/html/files  # Mount the PVC for serving files
+            - name: nginx-config-volume
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+      volumes:
+        - name: file-storage
+          persistentVolumeClaim:
+            claimName: longhorn-file-storage-pvc
+        - name: nginx-config-volume
+          configMap:
+            name: nginx-config
+---
+# Persistent Volume Claim (PVC) for 25GB of storage
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: longhorn-file-storage-pvc
+  namespace: hackaton-argo
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 25Gi  # 25GB storage request
+  storageClassName: longhorn  # Ensure this matches your Longhorn storage class
