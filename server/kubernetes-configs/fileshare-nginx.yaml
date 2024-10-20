@@ -49,7 +49,6 @@ metadata:
   name: nginx-file-server
   namespace: hackaton-argo
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
     nginx.ingress.kubernetes.io/proxy-connect-timeout: "600"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
     nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
@@ -61,7 +60,7 @@ spec:
       http:
         paths:
           - path: /files
-            pathType: Prefix
+            pathType: ImplementationSpecific
             backend:
               service:
                 name: nginx-file-server
