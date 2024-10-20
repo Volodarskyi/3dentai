@@ -28,6 +28,9 @@ const Scan = () => {
       <Processor />
       <Steps />
       <Navigation />
+        <div>
+            <button onClick={scanStore.testApi}>TEST API</button>
+        </div>
     </div>
   );
 };

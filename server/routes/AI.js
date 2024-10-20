@@ -5,5 +5,6 @@ const router = Router();
 
 router.get('/', AIController.getImages);
 router.get('/analyze', AIController.analyzeImages);
+router.get('/test', AIController.testApiAi);
 
 export default router;
