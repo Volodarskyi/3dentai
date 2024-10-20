@@ -135,5 +135,4 @@ spec:
     - ReadWriteMany
   resources:
     requests:
-      storage: 25Gi  # 25GB storage request
-  storageClassName: longhorn  # Ensure this matches your Longhorn storage class
+      storage: 10Gi  # 10GB storage request
