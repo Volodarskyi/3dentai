@@ -13,9 +13,7 @@
     "url": "git+https://github.com/baruch-f/flashcards.git"
   },
   "keywords": [
-    "cards",
-    "learn",
-    "application"
+    "3D", "AI","Dental"
   ],
   "license": "ISC",
   "dependencies": {

@@ -1,11 +1,14 @@
 "use client";
 
+import { observer } from 'mobx-react-lite';
 import { ChangeEvent, useRef, useState } from "react";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import {useStores} from "@/hooks/useStores";
 
 import { storage } from "@/services";
 
-const UploadStep = () => {
+const UploadStepComponent = () => {
+  const { uploadImgStore} = useStores();
   const fileRef = useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState(false);
 
@@ -44,9 +47,8 @@ const UploadStep = () => {
   return (
     <>
       <input
-        ref={fileRef}
         type="file"
-        onChange={handlerLoading}
+        onChange={uploadImgStore.setImgFile}
         hidden
         accept=".jpg, .jpeg, .png"
       />
@@ -83,4 +85,4 @@ const UploadStep = () => {
   );
 };
 
-export default UploadStep;
+export const UploadStep = observer(UploadStepComponent);
