@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "cross-env NEXT_PUBLIC_APP_ENV=production next dev",
+    "dev:local": "cross-env NEXT_PUBLIC_APP_ENV=development next dev",
+    "build": "cross-env APP_ENV=production next build",
     "start": "next start",
     "deploy": "next build && firebase deploy"
   },
@@ -15,7 +16,6 @@
     "firebase": "^10.14.1",
     "mobx": "^6.13.5",
     "mobx-react-lite": "^4.0.7",
-    "morgan": "^1.10.0",
     "next": "14.2.15",
     "react": "^18",
     "react-dom": "^18"
