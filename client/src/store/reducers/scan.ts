@@ -1,7 +1,7 @@
 import { makeAutoObservable, reaction } from "mobx";
 
+import { apiClient } from "@/api/apiClient";
 import { ISteps } from "@/types/steps";
-import {apiClient} from "@/api/apiClient";
 
 class ScanStore {
   steps: ISteps[] = [];
@@ -38,16 +38,14 @@ class ScanStore {
       : true;
   };
 
-  testApi =async ()=>{
+  testApi = async () => {
     try {
-      const res = await apiClient.get('/api/ai/test')
-      console.log('api client-test:',res.data)
-
-    }catch (e) {
-      console.error('TEST API ERROR',e)
+      const res = await apiClient.get("/api/ai/test");
+      console.log("api client-test:", res.data);
+    } catch (e) {
+      console.error("TEST API ERROR", e);
     }
-
-  }
+  };
 }
 
 export default ScanStore;
