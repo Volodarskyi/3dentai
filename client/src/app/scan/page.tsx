@@ -1,6 +1,6 @@
 "use client";
 import { observer } from "mobx-react-lite";
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 
 import Steps from "@/app/scan/components/Steps";
 import {useStores} from "@/hooks/useStores";
