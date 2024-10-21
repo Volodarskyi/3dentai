@@ -41,6 +41,7 @@ const UploadStepComponent = () => {
   };
 
   const clickBtn = () => {
+    console.log('click file handler')
     fileRef.current?.click();
   };
 

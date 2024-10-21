@@ -1,5 +1,5 @@
 "use client";
-
+import { observer } from "mobx-react-lite";
 import {useEffect, useState} from "react";
 
 import Steps from "@/app/scan/components/Steps";
@@ -15,7 +15,7 @@ const steps: ISteps[] = [
     {name: "Step 3", description: "Convert photo to 3D."},
 ];
 
-const Scan = () => {
+const ScanComponent = () => {
     const {scanStore, uploadImgStore} = useStores();
     const {setSteps} = scanStore;
 
@@ -30,6 +30,7 @@ const Scan = () => {
             <Navigation/>
 
             <div>
+                <input type="file" onChange={uploadImgStore.setImgFile} />
                 <button onClick={uploadImgStore.handleUpload}>Upload Photo</button>
             </div>
 
@@ -44,4 +45,4 @@ const Scan = () => {
         </div>);
 };
 
-export default Scan;
+export default observer(ScanComponent);

@@ -31,11 +31,17 @@ export class UploadImgStore {
         formData.append('photo', this.imgFile);
 
         try {
-            const response = await axios.post<{ url: string }>('/upload/photo', formData, {
+            console.log('MY ENV:',process.env.NEXT_PUBLIC_APP_ENV)
+            const response = await axios.post<{ url: string }>('api/photo/upload', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
+                baseURL:
+                    process.env.NEXT_PUBLIC_APP_ENV === "development"
+                        ? process.env.NEXT_PUBLIC_APP_BASE_URL_DEVELOPMENT
+                        : process.env.NEXT_PUBLIC_APP_BASE_URL_PRODUCTION,
             });
+            console.log('Res handleUpload:',response)
             this.setImgUrl(response.data.url);
         } catch (error) {
             console.error('Error uploading file:', error);
