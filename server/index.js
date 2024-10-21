@@ -8,8 +8,14 @@ import { generateRes } from './utils/api.js';
 import CONFIG from './config/config.js';
 import routes from './routes/index.js';
 import limiter from './middlewares/requestLimiter.js';
+import path from "path";
+import {fileURLToPath} from "url";
 
 const app = express();
+
+// Manually define __dirname for ES Modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 app.use(cors({ origin: true }));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -21,6 +27,9 @@ app.use(morgan('tiny'));
 
 app.use('/api', routes);
 
+// Set static folder for public access
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
+
 app.use((req, res) => {
   res.status(404);
   res.json(
@@ -29,11 +38,11 @@ app.use((req, res) => {
 });
 
 async function start() {
-  // console.log('[CONFIG_MONGO]:', CONFIG.MONGO_URI);
-  // await connect(CONFIG.MONGO_URI, {
-  //   useNewUrlParser: true,
-  //   useUnifiedTopology: true,
-  // });
+  console.log('[CONFIG_MONGO]:', CONFIG.MONGO_URI);
+  await connect(CONFIG.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
 
   app.listen(CONFIG.SERVER_PORT, () => {
     console.log(`Server is running on port: ${CONFIG.SERVER_PORT}`);
