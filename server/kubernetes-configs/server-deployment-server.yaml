@@ -18,6 +18,9 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
     nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    external-dns.alpha.kubernetes.io/hostname: "hackaton-server.paxel.ca."
+    external-dns.alpha.kubernetes.io/target: "router.paxel.ca."
+    
 spec:
   ingressClassName: nginx
   rules:
@@ -35,8 +38,10 @@ spec:
     - hosts:
         - hackaton-server.paxel.ca
       secretName: hackaton-server.paxel.ca-tls
+
 ---
-# Service Definition for Pac-Man Application
+
+# Service Definition for Hackaton Server
 apiVersion: v1
 kind: Service
 metadata:
@@ -50,11 +55,11 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 80
+      targetPort: 5001
 
 ---
 
-# Deployment Definition for Pac-Man Application
+# Deployment Definition for Hackaton Server with Longhorn PVC
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -79,7 +84,15 @@ spec:
           image: oleksiipasichnyk/confl:hackaton-server-v1
           ports:
             - name: http-server
-              containerPort: 80
+              containerPort: 5001
+          volumeMounts:
+            - name: file-storage
+              mountPath: /app/files  # Mount the 25GB PVC to a directory for file storage
           env:
             - name: NODE_ENV
               value: "production"
+      volumes:
+        - name: file-storage
+          persistentVolumeClaim:
+            claimName: longhorn-file-storage-pvc  # Use the same PVC as Nginx (25GB)
+
