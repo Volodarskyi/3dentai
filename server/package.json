@@ -13,9 +13,9 @@
     "url": "git+https://github.com/baruch-f/flashcards.git"
   },
   "keywords": [
-    "cards",
-    "learn",
-    "application"
+    "3D",
+    "AI",
+    "Dental"
   ],
   "license": "ISC",
   "dependencies": {
@@ -28,7 +28,8 @@
     "helmet": "^8.0.0",
     "jsonwebtoken": "^9.0.1",
     "mongoose": "^7.4.0",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1"
   },
   "devDependencies": {
     "@types/express": "^4.17.17",

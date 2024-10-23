@@ -38,7 +38,7 @@ class ScanStore {
       : true;
   };
 
-  testApi = async () => {
+  testApiGet = async () => {
     try {
       const res = await apiClient.get("/api/ai/test");
       console.log("api client-test:", res.data);
@@ -46,6 +46,16 @@ class ScanStore {
       console.error("TEST API ERROR", e);
     }
   };
+
+  testApiPost = async () => {
+    try {
+      const res = await apiClient.post("/api/ai/test",{someObj:'ping-ai'});
+      console.log("api client-test-post:", res.data);
+    } catch (e) {
+      console.error("TEST API ERROR", e);
+    }
+  };
+
 }
 
 export default ScanStore;
