@@ -81,13 +81,14 @@ spec:
         - name: dockerhubaccess
       containers:
         - name: hackaton-server
-          image: oleksiipasichnyk/confl:hackaton-server-v1
+          image: oleksiipasichnyk/confl:hackaton-server-v2
+          imagePullPolicy: Always
           ports:
             - name: http-server
               containerPort: 5001
           volumeMounts:
             - name: file-storage
-              mountPath: /app/files  # Mount the 25GB PVC to a directory for file storage
+              mountPath: /app/uploads  # Mount the 25GB PVC to a directory for file storage
           env:
             - name: NODE_ENV
               value: "production"
