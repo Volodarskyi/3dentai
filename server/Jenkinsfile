@@ -15,15 +15,22 @@ pipeline {
             steps {
                 sshagent(credentials: ['github-ssh-key']) {
                     script {
-                        // Initialize Git repo and configure sparse checkout
-                        sh """
-                        git init
-                        git remote add origin ${REPO_URL}
-                        git config core.sparseCheckout true
-                        echo '${SERVER_DIR}/*' > .git/info/sparse-checkout
-                        git fetch --depth=1 origin main
-                        git checkout main
-                        """
+                        try {
+                            // Check if the 'origin' remote already exists and add it only if it doesn't
+                            sh """
+                            git init
+                            if ! git remote | grep -q origin; then
+                                git remote add origin ${REPO_URL}
+                            fi
+                            git config core.sparseCheckout true
+                            echo '${SERVER_DIR}/*' > .git/info/sparse-checkout
+                            git fetch --depth=1 origin main
+                            git checkout main
+                            """
+                        } catch (Exception e) {
+                            echo "Error during sparse checkout: ${e.message}"
+                            error("Checkout failed.")
+                        }
                     }
                 }
             }
