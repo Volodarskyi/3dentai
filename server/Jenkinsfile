@@ -1,52 +1,53 @@
 pipeline {
     agent {
-        label 'master' // Runs on the Jenkins master
-    }  // Runs on any available Jenkins node (master or dedicated agent)
+        kubernetes {
+            yaml """
+            apiVersion: v1
+            kind: Pod
+            spec:
+              containers:
+              - name: jnlp
+                image: jenkins/inbound-agent:latest
+                resources:
+                  requests:
+                    memory: "4Gi"
+                    cpu: "2"
+                  limits:
+                    memory: "8Gi"
+                    cpu: "4"
+              - name: docker
+                image: docker:20.10.8-dind
+                securityContext:
+                  privileged: true  # Required for Docker-in-Docker
+                volumeMounts:
+                - name: docker-graph-storage
+                  mountPath: /var/lib/docker
+              volumes:
+              - name: docker-graph-storage
+                emptyDir: {}
+            """
+        }
+    }
 
     environment {
-        DOCKER_HUB_TOKEN = credentials('dockerhub-token') // DockerHub token stored in Jenkins
+        DOCKER_HUB_TOKEN = credentials('dockerhub-token')
         DOCKER_IMAGE = 'oleksiipasichnyk/confl:hackaton-server'
-        K8S_MANIFEST_PATH = 'server/kubernetes-configs/server-deployment-server.yaml' // Kubernetes manifest location
-        REPO_URL = 'git@github.com:Volodarskyi/3dentai.git' // Repository URL
-        GIT_SSH_KEY = credentials('github-ssh-key') // GitHub SSH key for authentication
-        SERVER_DIR = 'server' // Directory where the Jenkinsfile is located and the Docker build happens
+        K8S_MANIFEST_PATH = 'server/kubernetes-configs/server-deployment-server.yaml'
+        REPO_URL = 'git@github.com:Volodarskyi/3dentai.git'
+        GIT_SSH_KEY = credentials('github-ssh-key')
+        SERVER_DIR = 'server'
     }
 
     stages {
-        stage('Sparse Checkout Setup') {
-            steps {
-                sshagent(credentials: ['github-ssh-key']) {
-                    script {
-                        try {
-                            // Check if the 'origin' remote already exists and add it only if it doesn't
-                            sh """
-                            git init
-                            if ! git remote | grep -q origin; then
-                                git remote add origin ${REPO_URL}
-                            fi
-                            git config core.sparseCheckout true
-                            echo '${SERVER_DIR}/*' > .git/info/sparse-checkout
-                            git fetch --depth=1 origin main
-                            git checkout main
-                            """
-                        } catch (Exception e) {
-                            echo "Error during sparse checkout: ${e.message}"
-                            error("Checkout failed.")
-                        }
-                    }
-                }
-            }
-        }
-
         stage('Build Docker Image') {
             steps {
-                dir("${SERVER_DIR}") { // Move into the 'server' directory for Docker build
+                container('docker') {  // Use the docker container in the Kubernetes pod
                     script {
                         def commitHash = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
                         def date = sh(script: "date +%Y%m%d", returnStdout: true).trim()
                         def imageTag = "${DOCKER_IMAGE}-${commitHash}-${date}"
 
-                        // Build Docker image within the 'server' directory
+                        // Docker build within the 'server' directory
                         sh """
                         docker build -t ${imageTag} .
                         """
@@ -57,54 +58,22 @@ pipeline {
 
         stage('Push Docker Image to DockerHub') {
             steps {
-                script {
-                    def commitHash = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
-                    def date = sh(script: "date +%Y%m%d", returnStdout: true).trim()
-                    def imageTag = "${DOCKER_IMAGE}-${commitHash}-${date}"
-
-                    // Authenticate with DockerHub using the token and push the image
-                    sh """
-                    echo ${DOCKER_HUB_TOKEN} | docker login -u your-dockerhub-username --password-stdin
-                    docker push ${imageTag}
-                    """
-                }
-            }
-        }
-
-        stage('Update Kubernetes Manifest') {
-            steps {
-                dir("${SERVER_DIR}") { // Ensure we're in the correct directory
+                container('docker') {  // Use the docker container for pushing the image
                     script {
                         def commitHash = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
                         def date = sh(script: "date +%Y%m%d", returnStdout: true).trim()
                         def imageTag = "${DOCKER_IMAGE}-${commitHash}-${date}"
 
-                        // Use sed to replace only the image tag part of the manifest
+                        // DockerHub login and push
                         sh """
-                        sed -i 's|image: oleksiipasichnyk/confl:hackaton-server-.*|image: ${imageTag}|' ${K8S_MANIFEST_PATH}
+                        echo ${DOCKER_HUB_TOKEN} | docker login -u your-dockerhub-username --password-stdin
+                        docker push ${imageTag}
                         """
                     }
                 }
             }
         }
 
-        stage('Rebase and Push to Deploy Branch') {
-            steps {
-                dir("${SERVER_DIR}") { // Ensure we're in the correct directory
-                    script {
-                        sshagent(credentials: ['github-ssh-key']) {
-                            // Rebase deploy branch on top of the main branch
-                            sh """
-                            git checkout deploy || git checkout -b deploy
-                            git rebase origin/main
-                            git add ${K8S_MANIFEST_PATH}
-                            git commit -m "Update image tag to ${DOCKER_IMAGE}-${commitHash}-${date}"
-                            git push --force origin deploy
-                            """
-                        }
-                    }
-                }
-            }
-        }
+        // Other stages...
     }
 }
