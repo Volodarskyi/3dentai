@@ -7,11 +7,24 @@ pipeline {
             spec:
               containers:
               - name: jnlp
-                image: docker:20.10.8
+                image: jenkins/inbound-agent:latest
+                resources:
+                  requests:
+                    memory: "4Gi"
+                    cpu: "2"
+                  limits:
+                    memory: "8Gi"
+                    cpu: "4"
+              - name: docker
+                image: docker:20.10.8-dind
                 securityContext:
-                  privileged: true  # Allow Docker-in-Docker if necessary
-                command:
-                - cat  # Override default command to keep the container running
+                  privileged: true  # Needed for Docker-in-Docker (DinD)
+                volumeMounts:
+                - name: docker-graph-storage
+                  mountPath: /var/lib/docker
+              volumes:
+              - name: docker-graph-storage
+                emptyDir: {}
             """
         }
     }
@@ -28,25 +41,29 @@ pipeline {
     stages {
         stage('Install Git') {
             steps {
-                // Install Git if it's not present
-                sh 'apk add --no-cache git || apt-get update && apt-get install -y git'  // Adjust for Alpine or Debian base
+                container('docker') {
+                    // Install Git in the Docker container if it's not present
+                    sh 'apk add --no-cache git || apt-get update && apt-get install -y git'
+                }
             }
         }
 
         stage('Sparse Checkout Setup') {
             steps {
-                sshagent(credentials: ['github-ssh-key']) {
-                    script {
-                        // Initialize Git repo and configure sparse checkout
-                        sh """
-                        git init
-                        git remote remove origin || true
-                        git remote add origin ${REPO_URL}
-                        git config core.sparseCheckout true
-                        echo '${SERVER_DIR}/*' > .git/info/sparse-checkout
-                        git fetch --depth=1 origin main
-                        git checkout main
-                        """
+                container('docker') {
+                    sshagent(credentials: ['github-ssh-key']) {
+                        script {
+                            // Initialize Git repo and configure sparse checkout
+                            sh """
+                            git init
+                            git remote remove origin || true
+                            git remote add origin ${REPO_URL}
+                            git config core.sparseCheckout true
+                            echo '${SERVER_DIR}/*' > .git/info/sparse-checkout
+                            git fetch --depth=1 origin main
+                            git checkout main
+                            """
+                        }
                     }
                 }
             }
@@ -54,31 +71,35 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                script {
-                    def commitHash = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
-                    def date = sh(script: "date +%Y%m%d", returnStdout: true).trim()
-                    def imageTag = "${DOCKER_IMAGE}-${commitHash}-${date}"
+                container('docker') {  // Use the docker container in the Kubernetes pod
+                    script {
+                        def commitHash = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
+                        def date = sh(script: "date +%Y%m%d", returnStdout: true).trim()
+                        def imageTag = "${DOCKER_IMAGE}-${commitHash}-${date}"
 
-                    // Build Docker image within the 'server' directory
-                    sh """
-                    docker build -t ${imageTag} .
-                    """
+                        // Docker build within the 'server' directory
+                        sh """
+                        docker build -t ${imageTag} .
+                        """
+                    }
                 }
             }
         }
 
         stage('Push Docker Image to DockerHub') {
             steps {
-                script {
-                    def commitHash = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
-                    def date = sh(script: "date +%Y%m%d", returnStdout: true).trim()
-                    def imageTag = "${DOCKER_IMAGE}-${commitHash}-${date}"
+                container('docker') {  // Use the docker container for pushing the image
+                    script {
+                        def commitHash = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
+                        def date = sh(script: "date +%Y%m%d", returnStdout: true).trim()
+                        def imageTag = "${DOCKER_IMAGE}-${commitHash}-${date}"
 
-                    // Authenticate with DockerHub and push the image
-                    sh """
-                    echo ${DOCKER_HUB_TOKEN} | docker login -u your-dockerhub-username --password-stdin
-                    docker push ${imageTag}
-                    """
+                        // DockerHub login and push
+                        sh """
+                        echo ${DOCKER_HUB_TOKEN} | docker login -u your-dockerhub-username --password-stdin
+                        docker push ${imageTag}
+                        """
+                    }
                 }
             }
         }
