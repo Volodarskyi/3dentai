@@ -1,5 +1,7 @@
 pipeline {
-    agent any  // Runs on any available Jenkins node (master or dedicated agent)
+    agent {
+        kabek 'master' // Runs on the Jenkins master
+    }  // Runs on any available Jenkins node (master or dedicated agent)
 
     environment {
         DOCKER_HUB_TOKEN = credentials('dockerhub-token') // DockerHub token stored in Jenkins
