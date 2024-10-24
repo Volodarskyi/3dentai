@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        kabek 'master' // Runs on the Jenkins master
+        label 'master' // Runs on the Jenkins master
     }  // Runs on any available Jenkins node (master or dedicated agent)
 
     environment {
