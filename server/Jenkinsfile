@@ -6,42 +6,29 @@ pipeline {
             kind: Pod
             spec:
               containers:
-              - name: jnlp
-                image: jenkins/inbound-agent
-                resources:
-                  requests:
-                    memory: "4Gi"
-                    cpu: "4"
-                  limits:
-                    memory: "8Gi"
-                    cpu: "8"
-              - name: docker
-                image: docker:20.10.8-dind
-                securityContext:
-                  privileged: true
+              - name: kaniko
+                image: gcr.io/kaniko-project/executor:latest
+                args:
+                - --dockerfile=/workspace/server/Dockerfile
+                - --context=/workspace
+                - --destination=oleksiipasichnyk/confl:hackaton-server-latest
                 volumeMounts:
-                - name: docker-sock
-                  mountPath: /var/run/docker.sock
+                - name: kaniko-secret
+                  mountPath: /kaniko/.docker
               volumes:
-              - name: docker-sock
-                emptyDir: {}
+              - name: kaniko-secret
+                secret:
+                  secretName: dockerhub-secret
             """
         }
     }
 
     environment {
-        // DockerHub token stored as a Jenkins secret
-        DOCKER_HUB_TOKEN = credentials('dockerhub-token') // DockerHub token stored in Jenkins
         DOCKER_IMAGE = 'oleksiipasichnyk/confl:hackaton-server'
-        K8S_MANIFEST_PATH = 'server/kubernetes-configs/server-deployment-server.yaml' // Kubernetes manifest location
-        REPO_URL = 'git@github.com:Volodarskyi/3dentai.git' // Repository URL
-        GIT_SSH_KEY = credentials('github-ssh-key') // GitHub SSH key for authentication
-        SERVER_DIR = 'server' // Directory where the Jenkinsfile is located and the Docker build happens
-    }
-
-    triggers {
-        // Poll SCM every 5 minutes
-        pollSCM('H/5 * * * *')
+        K8S_MANIFEST_PATH = 'server/kubernetes-configs/server-deployment-server.yaml'
+        REPO_URL = 'git@github.com:Volodarskyi/3dentai.git'
+        GIT_SSH_KEY = credentials('github-ssh-key')
+        SERVER_DIR = 'server'
     }
 
     stages {
@@ -49,7 +36,7 @@ pipeline {
             steps {
                 sshagent(credentials: ['github-ssh-key']) {
                     script {
-                        // Initialize a new Git repository and configure sparse checkout
+                        // Initialize Git repo and configure sparse checkout
                         sh """
                         git init
                         git remote add origin ${REPO_URL}
@@ -63,40 +50,21 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Build and Push Docker Image using Kaniko') {
             steps {
-                container('docker') {
-                    dir("${SERVER_DIR}") { // Move into the 'server' directory for Docker build
-                        script {
-                            def commitHash = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
-                            def date = sh(script: "date +%Y%m%d", returnStdout: true).trim()
-                            def imageTag = "${DOCKER_IMAGE}-${commitHash}-${date}"
+                container('kaniko') {
+                    script {
+                        def commitHash = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
+                        def date = sh(script: "date +%Y%m%d", returnStdout: true).trim()
+                        def imageTag = "${DOCKER_IMAGE}-${commitHash}-${date}"
 
-                            // Build Docker image within the 'server' directory
-                            sh """
-                            docker build -t ${imageTag} .
-                            """
-                        }
-                    }
-                }
-            }
-        }
-
-        stage('Push Docker Image to DockerHub') {
-            steps {
-                container('docker') {
-                    dir("${SERVER_DIR}") { // Ensure we're in the correct directory
-                        script {
-                            def commitHash = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
-                            def date = sh(script: "date +%Y%m%d", returnStdout: true).trim()
-                            def imageTag = "${DOCKER_IMAGE}-${commitHash}-${date}"
-
-                            // Authenticate with DockerHub using the token and push the image
-                            sh """
-                            echo ${DOCKER_HUB_TOKEN} | docker login -u your-dockerhub-username --password-stdin
-                            docker push ${imageTag}
-                            """
-                        }
+                        // Kaniko will use the context and Dockerfile to build the image and push it
+                        sh """
+                        /kaniko/executor --dockerfile=/workspace/server/Dockerfile \
+                            --context=/workspace \
+                            --destination=${imageTag} \
+                            --cache=true
+                        """
                     }
                 }
             }
@@ -104,7 +72,7 @@ pipeline {
 
         stage('Update Kubernetes Manifest') {
             steps {
-                dir("${SERVER_DIR}") { // Ensure we're in the correct directory
+                dir("${SERVER_DIR}") {
                     script {
                         def commitHash = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
                         def date = sh(script: "date +%Y%m%d", returnStdout: true).trim()
@@ -121,7 +89,7 @@ pipeline {
 
         stage('Rebase and Push to Deploy Branch') {
             steps {
-                dir("${SERVER_DIR}") { // Ensure we're in the correct directory
+                dir("${SERVER_DIR}") {
                     script {
                         sshagent(credentials: ['github-ssh-key']) {
                             // Rebase deploy branch on top of the main branch
