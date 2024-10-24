@@ -15,6 +15,16 @@ pipeline {
                   limits:
                     memory: "8Gi"
                     cpu: "8"
+              - name: docker
+                image: docker:20.10.8-dind
+                securityContext:
+                  privileged: true
+                volumeMounts:
+                - name: docker-sock
+                  mountPath: /var/run/docker.sock
+              volumes:
+              - name: docker-sock
+                emptyDir: {}
             """
         }
     }
@@ -55,16 +65,18 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                dir("${SERVER_DIR}") { // Move into the 'server' directory for Docker build
-                    script {
-                        def commitHash = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
-                        def date = sh(script: "date +%Y%m%d", returnStdout: true).trim()
-                        def imageTag = "${DOCKER_IMAGE}-${commitHash}-${date}"
+                container('docker') {
+                    dir("${SERVER_DIR}") { // Move into the 'server' directory for Docker build
+                        script {
+                            def commitHash = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
+                            def date = sh(script: "date +%Y%m%d", returnStdout: true).trim()
+                            def imageTag = "${DOCKER_IMAGE}-${commitHash}-${date}"
 
-                        // Build Docker image within the 'server' directory
-                        sh """
-                        docker build -t ${imageTag} .
-                        """
+                            // Build Docker image within the 'server' directory
+                            sh """
+                            docker build -t ${imageTag} .
+                            """
+                        }
                     }
                 }
             }
@@ -72,17 +84,19 @@ pipeline {
 
         stage('Push Docker Image to DockerHub') {
             steps {
-                dir("${SERVER_DIR}") { // Ensure we're in the correct directory
-                    script {
-                        def commitHash = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
-                        def date = sh(script: "date +%Y%m%d", returnStdout: true).trim()
-                        def imageTag = "${DOCKER_IMAGE}-${commitHash}-${date}"
+                container('docker') {
+                    dir("${SERVER_DIR}") { // Ensure we're in the correct directory
+                        script {
+                            def commitHash = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
+                            def date = sh(script: "date +%Y%m%d", returnStdout: true).trim()
+                            def imageTag = "${DOCKER_IMAGE}-${commitHash}-${date}"
 
-                        // Authenticate with DockerHub using the token and push the image
-                        sh """
-                        echo ${DOCKER_HUB_TOKEN} | docker login -u your-dockerhub-username --password-stdin
-                        docker push ${imageTag}
-                        """
+                            // Authenticate with DockerHub using the token and push the image
+                            sh """
+                            echo ${DOCKER_HUB_TOKEN} | docker login -u your-dockerhub-username --password-stdin
+                            docker push ${imageTag}
+                            """
+                        }
                     }
                 }
             }
