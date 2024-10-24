@@ -15,14 +15,21 @@ pipeline {
                   limits:
                     memory: "8Gi"
                     cpu: "4"
+                volumeMounts:
+                - name: workspace-volume
+                  mountPath: /workspace  # Mount the shared volume to /workspace for the jnlp container
               - name: docker
                 image: docker:20.10.8-dind
                 securityContext:
-                  privileged: true  # Needed for Docker-in-Docker (DinD)
+                  privileged: true  # Required for Docker-in-Docker
                 volumeMounts:
                 - name: docker-graph-storage
                   mountPath: /var/lib/docker
+                - name: workspace-volume
+                  mountPath: /workspace  # Mount the shared volume to /workspace for the docker container
               volumes:
+              - name: workspace-volume
+                emptyDir: {}
               - name: docker-graph-storage
                 emptyDir: {}
             """
@@ -36,6 +43,7 @@ pipeline {
         REPO_URL = 'git@github.com:Volodarskyi/3dentai.git'
         GIT_SSH_KEY = credentials('github-ssh-key')
         SERVER_DIR = 'server'
+        WORKSPACE_DIR = '/workspace'  # Shared workspace directory between containers
     }
 
     stages {
@@ -43,18 +51,19 @@ pipeline {
             steps {
                 container('docker') {
                     // Install Git in the Docker container if it's not present
-                    sh 'apk add --no-cache git || apt-get update && apt-get install -y git'
+                    sh 'apk add --no-cache git'
                 }
             }
         }
 
         stage('Sparse Checkout Setup') {
             steps {
-                container('docker') {
+                container('jnlp') {
                     sshagent(credentials: ['github-ssh-key']) {
                         script {
                             // Initialize Git repo and configure sparse checkout
                             sh """
+                            cd ${WORKSPACE_DIR}
                             git init
                             git remote remove origin || true
                             git remote add origin ${REPO_URL}
@@ -71,14 +80,15 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                container('docker') {  // Use the docker container in the Kubernetes pod
+                container('docker') {  // Use the docker container to build the Docker image
                     script {
                         def commitHash = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
                         def date = sh(script: "date +%Y%m%d", returnStdout: true).trim()
                         def imageTag = "${DOCKER_IMAGE}-${commitHash}-${date}"
 
-                        // Docker build within the 'server' directory
+                        // Docker build within the 'server' directory inside the shared workspace
                         sh """
+                        cd ${WORKSPACE_DIR}/${SERVER_DIR}
                         docker build -t ${imageTag} .
                         """
                     }
@@ -106,7 +116,7 @@ pipeline {
 
         stage('Update Kubernetes Manifest') {
             steps {
-                dir("${SERVER_DIR}") {
+                dir("${WORKSPACE_DIR}/${SERVER_DIR}") {
                     script {
                         def commitHash = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
                         def date = sh(script: "date +%Y%m%d", returnStdout: true).trim()
@@ -123,17 +133,19 @@ pipeline {
 
         stage('Rebase and Push to Deploy Branch') {
             steps {
-                dir("${SERVER_DIR}") {
-                    script {
-                        sshagent(credentials: ['github-ssh-key']) {
-                            // Rebase and push changes to the deploy branch
-                            sh """
-                            git checkout deploy || git checkout -b deploy
-                            git rebase origin/main
-                            git add ${K8S_MANIFEST_PATH}
-                            git commit -m "Update image tag to ${DOCKER_IMAGE}-${commitHash}-${date}"
-                            git push --force origin deploy
-                            """
+                container('jnlp') {  // Use the jnlp container to handle git commands
+                    dir("${WORKSPACE_DIR}/${SERVER_DIR}") {
+                        script {
+                            sshagent(credentials: ['github-ssh-key']) {
+                                // Rebase and push changes to the deploy branch
+                                sh """
+                                git checkout deploy || git checkout -b deploy
+                                git rebase origin/main
+                                git add ${K8S_MANIFEST_PATH}
+                                git commit -m "Update image tag to ${DOCKER_IMAGE}-${commitHash}-${date}"
+                                git push --force origin deploy
+                                """
+                            }
                         }
                     }
                 }
