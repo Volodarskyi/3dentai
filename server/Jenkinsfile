@@ -85,3 +85,17 @@ pipeline {
                     script {
                         sshagent(credentials: ['github-ssh-key']) {
                             // Rebase deploy branch on top of the main branch
+                            sh """
+                            git checkout deploy || git checkout -b deploy
+                            git rebase origin/main
+                            git add ${K8S_MANIFEST_PATH}
+                            git commit -m "Update image tag to ${DOCKER_IMAGE}-${commitHash}-${date}"
+                            git push --force origin deploy
+                            """
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
