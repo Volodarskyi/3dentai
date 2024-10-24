@@ -43,7 +43,7 @@ pipeline {
         REPO_URL = 'git@github.com:Volodarskyi/3dentai.git'
         GIT_SSH_KEY = credentials('github-ssh-key')
         SERVER_DIR = 'server'
-        WORKSPACE_DIR = '/workspace'  # Shared workspace directory between containers
+        WORKSPACE_DIR = '/workspace' 
     }
 
     stages {
