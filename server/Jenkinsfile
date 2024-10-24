@@ -17,16 +17,16 @@ pipeline {
                     cpu: "4"
                 volumeMounts:
                 - name: workspace-volume
-                  mountPath: /workspace  # Mount the shared volume to /workspace for the jnlp container
+                  mountPath: /workspace
               - name: docker
                 image: docker:20.10.8-dind
                 securityContext:
-                  privileged: true  # Required for Docker-in-Docker
+                  privileged: true
                 volumeMounts:
                 - name: docker-graph-storage
                   mountPath: /var/lib/docker
                 - name: workspace-volume
-                  mountPath: /workspace  # Mount the shared volume to /workspace for the docker container
+                  mountPath: /workspace
               volumes:
               - name: workspace-volume
                 emptyDir: {}
