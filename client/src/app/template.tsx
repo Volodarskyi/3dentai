@@ -6,8 +6,6 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { StoreWrapper } from "@/store/provider";
 
-import "@/services/index";
-
 interface TemplateProps {
   readonly children: ReactNode;
 }
