@@ -71,6 +71,7 @@ pipeline {
                             echo "Host github.com\\n\\tStrictHostKeyChecking no\\n" >> ~/.ssh/config
                             git config --global --add safe.directory ${WORKSPACE_DIR}
                             git config --global --add safe.directory /home/jenkins/agent
+                            git config --global --add safe.directory /home/jenkins/agent/workspace/Hackaton-3DentAI/build-upload-server-docker-image
                             cd ${WORKSPACE_DIR}
                             git init
                             git remote remove origin || true
