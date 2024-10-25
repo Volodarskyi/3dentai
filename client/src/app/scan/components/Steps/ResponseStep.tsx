@@ -1,22 +1,16 @@
 import { useEffect } from "react";
 import { observer } from "mobx-react-lite";
 
+import Loading from "@/components/Loading";
 import { useStores } from "@/hooks/useStores";
 
 const ResponseStep = () => {
-  const { uploadImgStore } = useStores();
-  const { imgUrl } = uploadImgStore;
-
-  const text =
-    "На цьому зображенні ви бачите зуби людини. " +
-    "Зображення зосереджується на верхній частині зубів і показує деякі зуби в передній частині рота. " +
-    "На одному з передніх зубів є помітний темний нальоток або пляма, на який вказує велика червона стрілка.";
+  const { scanStore } = useStores();
+  const { imgUrl, imgDescription, isLoading, analyzeImage } = scanStore;
 
   useEffect(() => {
-    if (imgUrl) {
-      //TO-DO call to server
-    }
-  }, [imgUrl]);
+    analyzeImage();
+  }, [analyzeImage, imgUrl]);
 
   return (
     <div
@@ -24,7 +18,13 @@ const ResponseStep = () => {
         "flex w-full min-h-96 border border-gray-200 rounded-b-lg p-4 text-black"
       }
     >
-      {text}
+      {isLoading ? (
+        <div className={"min-h-56 w-full flex justify-center items-center"}>
+          <Loading />
+        </div>
+      ) : (
+        imgDescription
+      )}
     </div>
   );
 };
