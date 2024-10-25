@@ -4,12 +4,12 @@ import helmet from 'helmet';
 import cors from 'cors';
 import { connect } from 'mongoose';
 import morgan from 'morgan';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { generateRes } from './utils/api.js';
 import CONFIG from './config/config.js';
 import routes from './routes/index.js';
 import limiter from './middlewares/requestLimiter.js';
-import path from "path";
-import {fileURLToPath} from "url";
 
 const app = express();
 

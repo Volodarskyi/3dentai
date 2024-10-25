@@ -1,6 +1,6 @@
 import express from 'express';
 import AIRout from './AI.js';
-import PhotoRout from "./photo-route.js";
+import PhotoRout from './photo.js';
 
 const app = express();
 
