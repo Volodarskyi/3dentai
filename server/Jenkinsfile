@@ -91,6 +91,9 @@ pipeline {
             steps {
                 container('docker') {
                     script {
+                        sh"""
+                        git config --global --add safe.directory ${WORKSPACE_DIR}
+                        """
                         def commitHash = sh(script: "cd ${WORKSPACE_DIR} && git rev-parse --short HEAD", returnStdout: true).trim()
                         def date = sh(script: "date +%Y%m%d", returnStdout: true).trim()
                         def imageTag = "${DOCKER_IMAGE}-${commitHash}-${date}"
