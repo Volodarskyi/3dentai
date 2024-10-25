@@ -1,0 +1,203 @@
+pipeline {
+    agent {
+        kubernetes {
+            yaml """
+            apiVersion: v1
+            kind: Pod
+            spec:
+              containers:
+              - name: jnlp
+                image: jenkins/inbound-agent:latest
+                resources:
+                  requests:
+                    memory: "4Gi"
+                    cpu: "2"
+                  limits:
+                    memory: "8Gi"
+                    cpu: "4"
+                volumeMounts:
+                - name: workspace-volume
+                  mountPath: /workspace
+              - name: docker
+                image: docker:20.10.8-dind
+                securityContext:
+                  privileged: true
+                volumeMounts:
+                - name: docker-graph-storage
+                  mountPath: /var/lib/docker
+                - name: workspace-volume
+                  mountPath: /workspace
+                - name: dockerhub-secret
+                  mountPath: /root/.docker/config.json
+                  subPath: .dockerconfigjson
+              volumes:
+              - name: workspace-volume
+                emptyDir: {}
+              - name: docker-graph-storage
+                emptyDir: {}
+              - name: dockerhub-secret
+                secret:
+                  secretName: dockerhub-secret
+            """
+        }
+    }
+
+    environment {
+        DOCKER_HUB_TOKEN = credentials('dockerhub-token')
+        DOCKER_IMAGE = 'oleksiipasichnyk/confl:hackaton-server'
+        K8S_MANIFEST_PATH = 'server/kubernetes-configs/server-deployment-server.yaml'
+        REPO_URL = 'git@github.com:Volodarskyi/3dentai.git'
+        GIT_SSH_KEY = credentials('github-ssh-key')
+        SERVER_DIR = 'server'
+        WORKSPACE_DIR = "${env.WORKSPACE}"
+    }
+     triggers {
+        pollSCM('H/5 * * * *')  // Polling the repository every 5 minutes
+    }
+    stages {
+        stage('Install Git') {
+            steps {
+                container('docker') {
+                    sh 'apk add --no-cache git'
+                }
+            }
+        }
+
+        stage('Sparse Checkout Setup') {
+            steps {
+                container('jnlp') {
+                    sshagent(credentials: ['github-ssh-key']) {
+                        script {
+                            sh """
+                            mkdir -p ~/.ssh
+                            echo "Host github.com\\n\\tStrictHostKeyChecking no\\n" >> ~/.ssh/config
+                            git config --global --add safe.directory ${WORKSPACE_DIR}
+                            git config --global --add safe.directory /home/jenkins/agent
+                            git config --global --add safe.directory /home/jenkins/agent/workspace/Hackaton-3DentAI/build-upload-server-docker-image
+                            cd ${WORKSPACE_DIR}
+                            git init
+                            git remote remove origin || true
+                            git remote add origin ${REPO_URL}
+                            git config core.sparseCheckout true
+                            echo '${SERVER_DIR}/*' > .git/info/sparse-checkout
+                            git fetch --depth=1 origin main
+                            git checkout main
+                            """
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                container('docker') {
+                    script {
+                        sh"""
+                        git config --global --add safe.directory ${WORKSPACE_DIR}
+                        """
+                        def commitHash = sh(script: "cd ${WORKSPACE_DIR} && git rev-parse --short HEAD", returnStdout: true).trim()
+                        def date = sh(script: "date +%Y%m%d", returnStdout: true).trim()
+                        def imageTag = "${DOCKER_IMAGE}-${commitHash}-${date}"
+
+                        sh """
+                        cd ${WORKSPACE_DIR}/${SERVER_DIR}
+                        docker build -t ${imageTag} .
+                        """
+                    }
+                }
+            }
+        }
+
+        stage('Push Docker Image to DockerHub') {
+            steps {
+                container('docker') {
+                    script {
+                        def commitHash = sh(script: "cd ${WORKSPACE_DIR} && git rev-parse --short HEAD", returnStdout: true).trim()
+                        def date = sh(script: "date +%Y%m%d", returnStdout: true).trim()
+                        def imageTag = "${DOCKER_IMAGE}-${commitHash}-${date}"
+
+                        sh """
+                        docker push ${imageTag}
+                        """
+                    }
+                }
+            }
+        }
+
+        stage('Get Commit Hash and Date') {
+            steps {
+                container('jnlp') {
+                    script {
+                        env.commitHash = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
+                        env.date = sh(script: "date +%Y%m%d", returnStdout: true).trim()
+                    }
+                }
+            }
+        }
+
+        stage('Update Kubernetes Manifest') {
+            steps {
+                container('jnlp') {
+                    script {
+                        def imageTag = "${DOCKER_IMAGE}-${commitHash}-${date}"
+                        def manifestPath = "${WORKSPACE_DIR}/server/kubernetes-configs/server-deployment-server.yaml"
+
+                        sh """
+                        git config --global user.email "pasichnykoleksa@gmail.com"
+                        git config --global user.name "jenkins-PasichnykOleksa"
+                        if [ -f ${manifestPath} ]; then
+                            sed -i 's|image: oleksiipasichnyk/confl:hackaton-server-.*|image: ${imageTag}|' ${manifestPath}
+                            git add ${manifestPath}
+                            git commit -m "Update image tag to ${imageTag} in Kubernetes manifest"
+                        else
+                            echo "ERROR: ${manifestPath} not found"
+                            exit 1
+                        fi
+                        """
+                    }
+                }
+            }
+        }
+
+        stage('Rebase and Push to Deploy Branch') {
+            steps {
+                container('jnlp') {
+                    dir("${WORKSPACE_DIR}/${SERVER_DIR}") {
+                        script {
+                            sshagent(credentials: ['github-ssh-key']) {
+                               sh """
+                            # Fetch the deploy branch from origin
+                            git fetch origin
+                        
+                            # Checkout the deploy branch from origin
+                            git checkout -B deploy origin/deploy
+                        
+                            # Pull the latest changes from the deploy branch
+                            git pull origin deploy
+                        
+                            # Stage the necessary changes to the Kubernetes manifest
+                            git add kubernetes-configs/server-deployment-server.yaml
+                        
+                            # Commit the changes only if there are any
+                            if ! git diff --cached --exit-code > /dev/null; then
+                                git commit -m "Update image tag to ${DOCKER_IMAGE}-${commitHash}-${date}"
+                            else
+                                echo "No changes to commit."
+                            fi
+                        
+                            # Rebase the deploy branch on top of the latest main branch
+                            git rebase origin/main
+                        
+                            # Force push the updated deploy branch back to origin
+                            git push --force origin deploy
+                            """
+
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
