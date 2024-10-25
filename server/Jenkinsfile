@@ -164,18 +164,33 @@ pipeline {
                     dir("${WORKSPACE_DIR}/${SERVER_DIR}") {
                         script {
                             sshagent(credentials: ['github-ssh-key']) {
-                                sh """
-                                git checkout origin/deploy
-                                git pull origin deploy
-                                git add kubernetes-configs/server-deployment-server.yaml
-                                if ! git diff --cached --exit-code > /dev/null; then
-                                    git commit -m "Update image tag to ${DOCKER_IMAGE}-${commitHash}-${date}"
-                                else
-                                    echo "No changes to commit."
-                                fi
-                                git rebase origin/main
-                                git push --force origin deploy
-                                """
+                               sh """
+                            # Fetch the deploy branch from origin
+                            git fetch origin
+                        
+                            # Checkout the deploy branch from origin
+                            git checkout -B deploy origin/deploy
+                        
+                            # Pull the latest changes from the deploy branch
+                            git pull origin deploy
+                        
+                            # Stage the necessary changes to the Kubernetes manifest
+                            git add kubernetes-configs/server-deployment-server.yaml
+                        
+                            # Commit the changes only if there are any
+                            if ! git diff --cached --exit-code > /dev/null; then
+                                git commit -m "Update image tag to ${DOCKER_IMAGE}-${commitHash}-${date}"
+                            else
+                                echo "No changes to commit."
+                            fi
+                        
+                            # Rebase the deploy branch on top of the latest main branch
+                            git rebase origin/main
+                        
+                            # Force push the updated deploy branch back to origin
+                            git push --force origin deploy
+                            """
+
                             }
                         }
                     }
