@@ -51,7 +51,9 @@ pipeline {
         SERVER_DIR = 'server'
         WORKSPACE_DIR = "${env.WORKSPACE}"
     }
-
+     triggers {
+        pollSCM('H/5 * * * *')  // Polling the repository every 5 minutes
+    }
     stages {
         stage('Install Git') {
             steps {
