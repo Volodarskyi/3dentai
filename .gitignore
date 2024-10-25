@@ -7,11 +7,14 @@ package-lock.json
 /server/node_modules
 /server/package-lock.json
 
+/server/.idea
+/client/.idea
+
 /client/node_modules
 /client/.firebase
 /client/.next
 /client/.firebase/
 
-server/.env
-client/.env
+/server/.env
+/client/.env
 
