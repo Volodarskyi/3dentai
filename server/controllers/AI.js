@@ -6,8 +6,10 @@ async function analyzeImages(req, res) {
     const { body } = req;
     const { imageUrl } = body;
 
+    if (!imageUrl) {
+      throw new Error(`Params imageUrl is required.`);
+    }
     const analyze = await aiService.analyzeImages(imageUrl);
-
     res.json(generateRes({ data: analyze }));
   } catch (err) {
     sendErrorLog({
