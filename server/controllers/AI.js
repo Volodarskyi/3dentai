@@ -29,11 +29,11 @@ async function analyzeImages(req, res) {
   }
 }
 
-async function testApiAi(req,res){
+async function testApiAi(req, res) {
   try {
-    console.log('Server API: GET api/AI/analyze',req)
+    console.log('Server API: GET api/AI/analyze', req);
 
-    res.json(generateRes({ data: "pong-ai" }));
+    res.json(generateRes({ data: 'pong-ai' }));
   } catch (err) {
     sendErrorLog({
       res,
@@ -43,11 +43,11 @@ async function testApiAi(req,res){
   }
 }
 
-async function testApiAiPost(req,res){
+async function testApiAiPost(req, res) {
   try {
-    console.log('Server API: POST api/AI/analyze',req.body)
+    console.log('Server API: POST api/AI/analyze', req.body);
 
-    res.json(generateRes({ data: "pong-ai" }));
+    res.json(generateRes({ data: 'pong-ai' }));
   } catch (err) {
     sendErrorLog({
       res,
@@ -57,10 +57,9 @@ async function testApiAiPost(req,res){
   }
 }
 
-
 export default {
   getImages,
   analyzeImages,
   testApiAi,
-  testApiAiPost
+  testApiAiPost,
 };
