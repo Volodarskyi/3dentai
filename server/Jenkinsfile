@@ -162,7 +162,8 @@ pipeline {
                         script {
                             sshagent(credentials: ['github-ssh-key']) {
                                 sh """
-                                git checkout deploy || git checkout -b deploy
+                                git checkout origin/deploy
+                                git pull origin deploy
                                 git add kubernetes-configs/server-deployment-server.yaml
                                 if ! git diff --cached --exit-code > /dev/null; then
                                     git commit -m "Update image tag to ${DOCKER_IMAGE}-${commitHash}-${date}"
