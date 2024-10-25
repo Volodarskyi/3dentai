@@ -1,6 +1,6 @@
 import { makeAutoObservable, reaction } from "mobx";
 
-import dataFetcher from "@/api/dataFetcher";
+import fetch from "@/api";
 import { ISteps } from "@/types/steps";
 
 class ScanStore {
@@ -8,6 +8,10 @@ class ScanStore {
   step = 0;
   disabledPrevious = true;
   disabledNext = false;
+
+  isLoading = false;
+  imgUrl: string = "";
+  imgDescription: string = "";
 
   constructor() {
     makeAutoObservable(this);
@@ -39,24 +43,15 @@ class ScanStore {
       : true;
   };
 
-  testApiGet = async () => {
-    try {
-      const res = await dataFetcher.get("/api/ai/test");
-      console.log("api client-test:", res.data);
-    } catch (e) {
-      console.error("TEST API ERROR", e);
-    }
+  setImg = (value: string) => {
+    this.imgUrl = value;
   };
 
-  testApiPost = async () => {
-    try {
-      const res = await dataFetcher.post("/api/ai/test", {
-        someObj: "ping-ai",
-      });
-      console.log("api client-test-post:", res.data);
-    } catch (e) {
-      console.error("TEST API ERROR", e);
-    }
+  analyzeImage = async () => {
+    if (this.imgUrl === "" || this.isLoading) return;
+    this.isLoading = true;
+    this.imgDescription = await fetch.ai.analyzeImage(this.imgUrl);
+    this.isLoading = false;
   };
 }
 

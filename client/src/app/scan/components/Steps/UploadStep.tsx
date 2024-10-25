@@ -1,16 +1,22 @@
 "use client";
 
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { observer } from "mobx-react-lite";
 import Image from "next/image";
 
 import { useStores } from "@/hooks/useStores";
 
 const UploadStepComponent = () => {
-  const { uploadImgStore } = useStores();
+  const { uploadImgStore, scanStore } = useStores();
   const { imgUrl } = uploadImgStore;
   const fileRef = useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (imgUrl) {
+      scanStore.setImg(imgUrl);
+    }
+  }, [imgUrl, scanStore]);
 
   const handlerLoading = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -22,7 +28,7 @@ const UploadStepComponent = () => {
     }
   };
 
-  const clickBtn = () => fileRef.current?.click();
+  const handlerClick = () => fileRef.current?.click();
 
   return (
     <>
@@ -49,7 +55,7 @@ const UploadStepComponent = () => {
             </div>
             <button
               type="button"
-              onClick={clickBtn}
+              onClick={handlerClick}
               className={
                 "pt-3 rounded-md bg-indigo-500 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
               }
@@ -60,7 +66,7 @@ const UploadStepComponent = () => {
         ) : (
           <button
             type="button"
-            onClick={clickBtn}
+            onClick={handlerClick}
             className="relative block w-1/2 rounded-lg border-2 border-dashed border-gray-300 p-12 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
           >
             <svg
