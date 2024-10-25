@@ -1,11 +1,11 @@
 import { makeAutoObservable, reaction } from "mobx";
 
-import { apiClient } from "@/api/apiClient";
+import dataFetcher from "@/api/dataFetcher";
 import { ISteps } from "@/types/steps";
 
 class ScanStore {
   steps: ISteps[] = [];
-  step = 1;
+  step = 0;
   disabledPrevious = true;
   disabledNext = false;
 
@@ -20,6 +20,7 @@ class ScanStore {
 
   setSteps = (newSteps: ISteps[]) => {
     this.steps = newSteps;
+    this.step = 1;
     this.validationButton();
   };
 
@@ -40,7 +41,7 @@ class ScanStore {
 
   testApiGet = async () => {
     try {
-      const res = await apiClient.get("/api/ai/test");
+      const res = await dataFetcher.get("/api/ai/test");
       console.log("api client-test:", res.data);
     } catch (e) {
       console.error("TEST API ERROR", e);
@@ -49,13 +50,14 @@ class ScanStore {
 
   testApiPost = async () => {
     try {
-      const res = await apiClient.post("/api/ai/test",{someObj:'ping-ai'});
+      const res = await dataFetcher.post("/api/ai/test", {
+        someObj: "ping-ai",
+      });
       console.log("api client-test-post:", res.data);
     } catch (e) {
       console.error("TEST API ERROR", e);
     }
   };
-
 }
 
 export default ScanStore;
