@@ -2,7 +2,6 @@
 const analyzeImage = async imageUrl => {
   // TODO create dataFetcher for it.
   try {
-    console.log(`${process.env.MISTRAL_API}/v1/chat/completions`);
     const response = await fetch(
       `${process.env.MISTRAL_API}/v1/chat/completions`,
       {
