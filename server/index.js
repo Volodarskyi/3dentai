@@ -5,13 +5,14 @@ import cors from 'cors';
 import { connect } from 'mongoose';
 import morgan from 'morgan';
 import path from 'path';
+import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
 import { generateRes } from './utils/api.js';
-import CONFIG from './config/config.js';
 import routes from './routes/index.js';
 import limiter from './middlewares/requestLimiter.js';
 
 const app = express();
+dotenv.config();
 
 // Manually define __dirname for ES Modules
 const __filename = fileURLToPath(import.meta.url);
@@ -38,14 +39,15 @@ app.use((req, res) => {
 });
 
 async function start() {
-  console.log('[CONFIG_MONGO]:', CONFIG.MONGO_URI);
-  await connect(CONFIG.MONGO_URI, {
+  console.log('process.env.MONGO_URI', process.env.MONGO_URI);
+
+  await connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
 
-  app.listen(CONFIG.SERVER_PORT, () => {
-    console.log(`Server is running on port: ${CONFIG.SERVER_PORT}`);
+  app.listen(process.env.SERVER_PORT, () => {
+    console.log(`Server is running on port: ${process.env.SERVER_PORT}`);
   });
 }
 
