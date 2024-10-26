@@ -39,8 +39,6 @@ app.use((req, res) => {
 });
 
 async function start() {
-  console.log('process.env.MONGO_URI', process.env.MONGO_URI);
-
   await connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,

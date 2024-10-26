@@ -25,7 +25,6 @@ const uploadPhoto = (req, res) => {
       return res.status(400).send({ message: 'No file provided' });
     }
 
-    console.log('Generate public URL for the uploaded photo');
     const publicUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
     return res.status(200).send({ url: publicUrl });
   });
