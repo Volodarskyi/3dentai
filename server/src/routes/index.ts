@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url';
 import aiRout from './ai';
 import photoRout from './photo';
 import { generateRes } from '../utils/api';
+import authRoutes from "./authRoutes";
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
 app.use('/ai', aiRout);
 app.use('/photo', photoRout);
+app.use('/auth', authRoutes);
 
 // Default
 app.use((req: Request, res: Response) => {
