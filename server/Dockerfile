@@ -20,4 +20,4 @@ ENV PORT 5001
 EXPOSE $PORT
 
 # Define the command to start your application
-CMD ["node", "./index.js"]
+CMD ["node", "./index.ts"]

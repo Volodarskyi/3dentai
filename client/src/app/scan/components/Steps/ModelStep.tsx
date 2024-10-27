@@ -3,7 +3,7 @@ import { Canvas, useLoader } from "@react-three/fiber";
 import { GLTFLoader } from "three-stdlib";
 
 function Cube() {
-  const gltf = useLoader(GLTFLoader, "./2.gltf");
+  const gltf = useLoader(GLTFLoader, "./prod_4.gltf");
   return (
     <>
       <primitive object={gltf.scene} scale={0.4} />
