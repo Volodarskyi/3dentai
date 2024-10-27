@@ -1,11 +1,25 @@
+//{
+//  "compilerOptions": {
+//    "target": "esnext",
+//    "outDir": "./dist",
+//    "rootDir": "./src",
+//    "strict": true,
+//    "esModuleInterop": true,
+//    "module": "es2022",
+//    "moduleResolution": "Node"
+//  },
+//  "include": ["src/**/*"],
+//  "exclude": ["node_modules", "dist"]
+//}
+
 {
   "compilerOptions": {
-    "target": "esnext",
+    "target": "es2022",              // Optional: consider "es2022" for broader compatibility
+    "module": "es2022",               // Matches your use of ES modules
     "outDir": "./dist",
     "rootDir": "./src",
     "strict": true,
     "esModuleInterop": true,
-    "module": "es2022",
     "moduleResolution": "Node"
   },
   "include": ["src/**/*"],
