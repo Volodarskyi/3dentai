@@ -14,22 +14,25 @@ data "aws_ami" "ubuntu" {
   }
 }
 
-# Data Source: Get the existing VPC
-data "aws_vpc" "existing_vpc" {
-  id = "vpc-6afe2f17" # Replace with your VPC ID
+# Data Source: Get the default VPC
+data "aws_vpc" "default" {
+    default = true
 }
 
-# Data Source: Public subnet within the VPC
-data "aws_subnet_ids" "public_subnets" {
-  vpc_id = data.aws_vpc.existing_vpc.id
-
-  tags = {
-    "Network" = "public" # Replace or remove tag filter based on your setup
-  }
-}
-
+# Data Source: Find a public subnet in the default VPC
 data "aws_subnet" "public_subnet" {
-  id = data.aws_subnet_ids.public_subnets.ids[0] # Select the first public subnet
+  filter {
+    name   = "vpc-id"
+    values = [data.aws_vpc.default.id]
+  }
+
+  availability_zone = "us-east-1c"
+  filter {
+    name   = "map-public-ip-on-launch"
+    values = ["true"]
+  }
+  # Fetch the first available subnet in the default VPC
+  
 }
 
 # Data Source: Get existing Route 53 Hosted Zone for labofdev.com
