@@ -1,4 +1,4 @@
-import { Schema, model, Types } from 'mongoose';
+import { Schema, model } from 'mongoose';
 
 const UserSchema = new Schema({
     firstName: { type: String, required: true },
@@ -8,8 +8,7 @@ const UserSchema = new Schema({
     password: { type: String, required: true },
     avatar: { type: String },
     role: { type: String, required: true },
-    accessTo: [{ type: Types.ObjectId, ref: 'Question' }]
+    birthYear: { type: Number, required: true }, // Added birthYear as a number
 });
 
 export default model('User', UserSchema);
-
