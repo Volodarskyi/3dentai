@@ -1,5 +1,5 @@
 
-import React,{FC, useState} from 'react';
+import React,{ useState} from 'react';
 import { observer } from 'mobx-react-lite';
 import Form from 'react-bootstrap/Form';
 import {InputGroup} from 'react-bootstrap';
@@ -8,9 +8,9 @@ import Tabs from 'react-bootstrap/Tabs';
 import Button from 'react-bootstrap/Button';
 
 import {UiPassword} from "@/components/UI/UiPassword/UiPassword";
-import {apiClient} from "@/api/apiClient";
 import {useStores} from "@/hooks/useStores";
 import {EAuth} from "@/types/auth";
+import dataFetcher from "@/api/dataFetcher";
 const AuthorizationComponent = () => {
     const {userStore} = useStores()
     const [key, setKey] = useState<string>('register');
@@ -21,6 +21,8 @@ const AuthorizationComponent = () => {
     const [firstName, setFirstName] = useState('');
     const [secondName, setSecondName] = useState('');
     const [avatar, setAvatar] = useState('');
+    const [birthYear, setBirthYear] = useState<string>('');
+    const [errorBirthYear, setErrorBirthYear] = useState<string | null>(null);
 
     // @ts-ignore
     const setInputValue = (event, value, setValue) => {
@@ -30,6 +32,20 @@ const AuthorizationComponent = () => {
     const navigateToMain = ()=>{
         console.log('navigate to scan')
     }
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { value } = e.target;
+        const currentYear = new Date().getFullYear();
+        const numericYear = Number(value);
+
+        if (numericYear < 1900 || numericYear > currentYear) {
+            setErrorBirthYear(`birthYear must be between 1900 and ${currentYear}.`);
+        } else {
+            setErrorBirthYear(null);
+            setBirthYear(value);
+        }
+    };
+
     const singIn = async () => {
         const requestUrl = '/api/auth/register'
         //
@@ -38,7 +54,7 @@ const AuthorizationComponent = () => {
         // }
 
         try {
-            const res = await apiClient.post(requestUrl,{email, password, firstName, secondName,avatar})
+            const res = await dataFetcher.post(requestUrl,{email, password, firstName, secondName,avatar, birthYear})
             console.log('api signin res:',res.data)
             const resObj = await res.data.json();
             console.log('responseObj:', resObj)
@@ -62,7 +78,7 @@ const AuthorizationComponent = () => {
         console.log('PASS:',password)
 
         try {
-            const res = await apiClient.post(requestUrl,{email, password})
+            const res = await dataFetcher.post(requestUrl,{email, password})
             console.log('api login res:',res)
             const responseObj = await res.data.json();
 
@@ -152,6 +168,20 @@ const AuthorizationComponent = () => {
                             placeholder={'type your second name'}
                             value={secondName}
                             onChange={(event) => setInputValue(event, secondName, setSecondName)}
+                        />
+                    </InputGroup>
+                    <InputGroup size="sm" className="mb-3">
+                        <InputGroup.Text id="inputGroup-sizing-sm">Birth Year</InputGroup.Text>
+                        <Form.Control
+                            aria-label="Small"
+                            aria-describedby="inputGroup-sizing-sm"
+                            type="number"
+                            name="birthYear"
+                            placeholder="YYYY"
+                            value={birthYear}
+                            onChange={handleInputChange}
+                            min="1900"
+                            max={new Date().getFullYear()}
                         />
                     </InputGroup>
 

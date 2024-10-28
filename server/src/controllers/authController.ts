@@ -12,6 +12,7 @@ interface RegisterRequestBody {
     email: string;
     password: string;
     avatar?: string;
+    birthYear: number;
 }
 
 // Controller to handle photo upload
@@ -28,7 +29,7 @@ const registerController = async (req: Request<{}, {}, RegisterRequestBody>, res
         //   return;
         // }
 
-        const { firstName, secondName, email, password, avatar } = req.body;
+        const { firstName, secondName, email, password, avatar, birthYear } = req.body;
 
         // Check if a user with this email already exists
         const candidate = await User.findOne({ email });
@@ -56,7 +57,7 @@ const registerController = async (req: Request<{}, {}, RegisterRequestBody>, res
             role: "user",
             phone: `PHONE FOR ${email}`,
             avatar,
-            accessTo: [],
+            birthYear,
         });
 
         // Save the new user to the database
