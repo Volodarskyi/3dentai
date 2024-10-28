@@ -2,6 +2,7 @@
 import { Request, Response } from "express";
 import { generateRes, sendErrorLog } from "../utils/api";
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 import User from '../models/User';
 
 
@@ -15,7 +16,12 @@ interface RegisterRequestBody {
     birthYear: number;
 }
 
-// Controller to handle photo upload
+interface LoginRequestBody {
+    email: string;
+    password: string;
+}
+
+// 'api/auth/register'
 const registerController = async (req: Request<{}, {}, RegisterRequestBody>, res: Response): Promise<void> => {
     try {
         // const errors = validationResult(req); // Uncomment if using validation
@@ -87,6 +93,78 @@ const registerController = async (req: Request<{}, {}, RegisterRequestBody>, res
     }
 };
 
+// 'api/auth/login'
+const loginController = async (req: Request<{}, {}, LoginRequestBody>, res: Response): Promise<Response> => {
+        try {
+            // const errors = validationResult(req);
+            // if (!errors.isEmpty()) {
+            //     return res.status(400).json({
+            //         result: 'ERROR',
+            //         data: null,
+            //         message: 'Auth ERROR!',
+            //         details: 'Login invalid data'
+            //     });
+            // }
+
+            const { email, password } = req.body;
+            console.log('Login body:', req.body);
+
+            // Find user by email
+            const user = await User.findOne({ email });
+            console.log('Login user:', user);
+
+            if (!user) {
+                return res.status(400).json({
+                    result: 'ERROR',
+                    data: null,
+                    message: 'Auth ERROR!',
+                    details: 'User is not found'
+                });
+            }
+
+            // Compare provided password with stored hash
+            const isMatch = await bcrypt.compare(password, user.password);
+            console.log('Login pass match:', isMatch);
+
+            if (!isMatch) {
+                return res.status(400).json({
+                    result: 'ERROR',
+                    data: null,
+                    message: 'Auth ERROR!',
+                    details: 'Wrong e-mail or password'
+                });
+            }
+
+            // Generate JWT token
+            const token = jwt.sign(
+                { userId: user.id, firstName: user.firstName, secondName: user.secondName, role: user.role },
+                process.env.JWT_SECRET as string,
+                { expiresIn: '48h' }
+            );
+            console.log('Log token:', token);
+
+            const data = { token, refToken: 'ref-token-test', userId: user.id };
+
+            return res.status(201).json({
+                result: 'SUCCESS',
+                data,
+                message: 'Auth complete',
+                details: `${user.firstName} ${user.secondName} is logged in`
+            });
+        } catch (e) {
+            console.error('Login error:', e);
+            return res.status(500).json({
+                result: 'ERROR',
+                data: null,
+                message: 'Server ERROR!',
+                details: 'Login problem'
+            });
+        }
+    }
+
+
+
 export default {
     registerController,
+    loginController
 };
