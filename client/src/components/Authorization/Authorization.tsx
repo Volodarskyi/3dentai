@@ -5,8 +5,6 @@ import Form from 'react-bootstrap/Form';
 import {InputGroup} from 'react-bootstrap';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import Button from 'react-bootstrap/Button';
-
 import {UiPassword} from "@/components/UI/UiPassword/UiPassword";
 import {useStores} from "@/hooks/useStores";
 import {EAuth} from "@/types/auth";
@@ -80,16 +78,16 @@ const AuthorizationComponent = () => {
         try {
             const res = await dataFetcher.post(requestUrl,{email, password})
             console.log('api login res:',res)
-            const responseObj = await res.data.json();
+            // console.log('api login res.status:',res.status)
 
-            if (!res.data.ok) {
-                throw new Error(responseObj.details || 'Some thing went wrong')
+            if (res.result !== 'SUCCESS') {
+                throw new Error(res.message || 'Some thing went wrong')
             }
 
-            console.log('LOGIN:', responseObj)
+            console.log('LOGIN:', res.data)
 
             // dialogStore.setResult(responseObj, navigateToMain)
-            localStorage.setItem(EAuth.TOKEN_ITEM_NAME,responseObj.data.token)
+            localStorage.setItem(EAuth.TOKEN_ITEM_NAME,res.data.token)
             userStore.authorization()
         } catch (e) {
             console.log('ERROR! Login', e)
@@ -108,87 +106,89 @@ const AuthorizationComponent = () => {
                 onSelect={(k) => k && setKey(k)}
                 className="mb-3"
             >
-                {/*<Tab eventKey="login" title="Login" className='pd-8'>*/}
-                {/*    <InputGroup size="sm" className="mb-3">*/}
-                {/*        <InputGroup.Text*/}
-                {/*            id="inputGroup-sizing-sm"*/}
-                {/*        >*/}
-                {/*            Email*/}
-                {/*        </InputGroup.Text>*/}
-                {/*        <Form.Control*/}
-                {/*            aria-label="Small"*/}
-                {/*            aria-describedby="inputGroup-sizing-sm"*/}
-                {/*            value={email}*/}
-                {/*            onChange={(event) => setInputValue(event, email, setEmail)}*/}
-                {/*        />*/}
-                {/*    </InputGroup>*/}
-                {/*    /!*<UiPassword label={'Password'} password={password} setPassword={setPassword}/>*!/*/}
-                {/*    <div>*/}
-                {/*        <Button onClick={login} className="w-100">Login</Button>*/}
-                {/*    </div>*/}
-                {/*</Tab>*/}
-                <Tab eventKey="register" title="Sing In" className='pd-8'>
+                <Tab eventKey="login" title="Login" className='pd-8'>
                     <InputGroup size="sm" className="mb-3">
-                        <InputGroup.Text id="inputGroup-sizing-sm">Email</InputGroup.Text>
+                        <InputGroup.Text
+                            id="inputGroup-sizing-sm"
+                        >
+                            Email
+                        </InputGroup.Text>
                         <Form.Control
                             aria-label="Small"
                             aria-describedby="inputGroup-sizing-sm"
-                            placeholder={'youremail@address.com'}
                             value={email}
                             onChange={(event) => setInputValue(event, email, setEmail)}
                         />
                     </InputGroup>
-                    <UiPassword
-                        label={'Password'}
-                        placeholder={'Password'}
-                        password={password}
-                        setPassword={setPassword}/>
-
-                    <UiPassword
-                        label={'Confirm Pass'}
-                        placeholder={'Confirm Password'}
-                        password={passwordConfirm}
-                        setPassword={setPasswordConfirm}/>
-
-                    <InputGroup size="sm" className="mb-3">
-                        <InputGroup.Text id="inputGroup-sizing-sm">First Name</InputGroup.Text>
-                        <Form.Control
-                            aria-label="Small"
-                            aria-describedby="inputGroup-sizing-sm"
-                            placeholder={'type your first name'}
-                            value={firstName}
-                            onChange={(event) => setInputValue(event, firstName, setFirstName)}
-                        />
-                    </InputGroup>
-                    <InputGroup size="sm" className="mb-3">
-                        <InputGroup.Text id="inputGroup-sizing-sm">Second Name</InputGroup.Text>
-                        <Form.Control
-                            aria-label="Small"
-                            aria-describedby="inputGroup-sizing-sm"
-                            placeholder={'type your second name'}
-                            value={secondName}
-                            onChange={(event) => setInputValue(event, secondName, setSecondName)}
-                        />
-                    </InputGroup>
-                    <InputGroup size="sm" className="mb-3">
-                        <InputGroup.Text id="inputGroup-sizing-sm">Birth Year</InputGroup.Text>
-                        <Form.Control
-                            aria-label="Small"
-                            aria-describedby="inputGroup-sizing-sm"
-                            type="number"
-                            name="birthYear"
-                            placeholder="YYYY"
-                            value={birthYear}
-                            onChange={handleInputChange}
-                            min="1900"
-                            max={new Date().getFullYear()}
-                        />
-                    </InputGroup>
-
-
-
-                    <div className="mg-top-1"><button onClick={singIn} className="w-100">Sing In</button></div>
+                    <UiPassword label={'Password'} placeholder={'pass'} password={password} setPassword={setPassword}/>
+                    <div>
+                        <button onClick={login} className="w-100">Login</button>
+                    </div>
                 </Tab>
+
+                {/*REGISTER*/}
+                {/*<Tab eventKey="register" title="Sing In" className='pd-8'>*/}
+                {/*    <InputGroup size="sm" className="mb-3">*/}
+                {/*        <InputGroup.Text id="inputGroup-sizing-sm">Email</InputGroup.Text>*/}
+                {/*        <Form.Control*/}
+                {/*            aria-label="Small"*/}
+                {/*            aria-describedby="inputGroup-sizing-sm"*/}
+                {/*            placeholder={'youremail@address.com'}*/}
+                {/*            value={email}*/}
+                {/*            onChange={(event) => setInputValue(event, email, setEmail)}*/}
+                {/*        />*/}
+                {/*    </InputGroup>*/}
+                {/*    <UiPassword*/}
+                {/*        label={'Password'}*/}
+                {/*        placeholder={'Password'}*/}
+                {/*        password={password}*/}
+                {/*        setPassword={setPassword}/>*/}
+
+                {/*    <UiPassword*/}
+                {/*        label={'Confirm Pass'}*/}
+                {/*        placeholder={'Confirm Password'}*/}
+                {/*        password={passwordConfirm}*/}
+                {/*        setPassword={setPasswordConfirm}/>*/}
+
+                {/*    <InputGroup size="sm" className="mb-3">*/}
+                {/*        <InputGroup.Text id="inputGroup-sizing-sm">First Name</InputGroup.Text>*/}
+                {/*        <Form.Control*/}
+                {/*            aria-label="Small"*/}
+                {/*            aria-describedby="inputGroup-sizing-sm"*/}
+                {/*            placeholder={'type your first name'}*/}
+                {/*            value={firstName}*/}
+                {/*            onChange={(event) => setInputValue(event, firstName, setFirstName)}*/}
+                {/*        />*/}
+                {/*    </InputGroup>*/}
+                {/*    <InputGroup size="sm" className="mb-3">*/}
+                {/*        <InputGroup.Text id="inputGroup-sizing-sm">Second Name</InputGroup.Text>*/}
+                {/*        <Form.Control*/}
+                {/*            aria-label="Small"*/}
+                {/*            aria-describedby="inputGroup-sizing-sm"*/}
+                {/*            placeholder={'type your second name'}*/}
+                {/*            value={secondName}*/}
+                {/*            onChange={(event) => setInputValue(event, secondName, setSecondName)}*/}
+                {/*        />*/}
+                {/*    </InputGroup>*/}
+                {/*    <InputGroup size="sm" className="mb-3">*/}
+                {/*        <InputGroup.Text id="inputGroup-sizing-sm">Birth Year</InputGroup.Text>*/}
+                {/*        <Form.Control*/}
+                {/*            aria-label="Small"*/}
+                {/*            aria-describedby="inputGroup-sizing-sm"*/}
+                {/*            type="number"*/}
+                {/*            name="birthYear"*/}
+                {/*            placeholder="YYYY"*/}
+                {/*            value={birthYear}*/}
+                {/*            onChange={handleInputChange}*/}
+                {/*            min="1900"*/}
+                {/*            max={new Date().getFullYear()}*/}
+                {/*        />*/}
+                {/*    </InputGroup>*/}
+
+
+
+                {/*    <div className="mg-top-1"><button onClick={singIn} className="w-100">Sing In</button></div>*/}
+                {/*</Tab>*/}
             </Tabs>
 
         </div>
