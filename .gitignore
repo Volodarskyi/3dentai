@@ -17,4 +17,10 @@ package-lock.json
 
 /server/.env
 /client/.env
-
+# teraform dependencies ingore
+.terraform*
+*terraform.tfstate*
+*terraform*.backup
+/.terraform
+/.terraform.lock.hcl
+terraform.tfstate

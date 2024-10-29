@@ -11,10 +11,10 @@ pipeline {
                 resources:
                   requests:
                     memory: "4Gi"
-                    cpu: "2"
+                    cpu: "4"
                   limits:
                     memory: "8Gi"
-                    cpu: "4"
+                    cpu: "6"
                 volumeMounts:
                 - name: workspace-volume
                   mountPath: /workspace
@@ -45,15 +45,25 @@ pipeline {
     environment {
         DOCKER_HUB_TOKEN = credentials('dockerhub-token')
         DOCKER_IMAGE = 'oleksiipasichnyk/confl:hackaton-server'
-        K8S_MANIFEST_PATH = 'server/kubernetes-configs/server-deployment-server.yaml'
+        K8S_MANIFEST_PATH = 'infrastructure/kubernetes-configs/dev/server/server-deployment.yaml'
         REPO_URL = 'git@github.com:Volodarskyi/3dentai.git'
         GIT_SSH_KEY = credentials('github-ssh-key')
         SERVER_DIR = 'server'
         WORKSPACE_DIR = "${env.WORKSPACE}"
     }
-     triggers {
+    
+    parameters {
+        string(name: 'DOCKER_IMAGE_BASE', defaultValue: 'oleksiipasichnyk/confl', description: 'Base Docker image name')
+        string(name: 'K8S_NAMESPACE', defaultValue: 'hackaton-argo', description: 'Kubernetes namespace')
+        string(name: 'COMMIT_AUTHOR_EMAIL', defaultValue: 'pasichnykoleksa@gmail.com', description: 'Email for commit author')
+        string(name: 'COMMIT_AUTHOR_NAME', defaultValue: 'Jenkins-PasichnykOleksa', description: 'Name for commit author')
+        string(name: 'BUILD_BRANCH', defaultValue: 'develop', description: 'Branch to build Docker image from')
+    }
+
+    triggers {
         pollSCM('H/5 * * * *')  // Polling the repository every 5 minutes
     }
+
     stages {
         stage('Install Git') {
             steps {
@@ -63,7 +73,7 @@ pipeline {
             }
         }
 
-        stage('Sparse Checkout Setup') {
+        stage('Full Repository Checkout') {
             steps {
                 container('jnlp') {
                     sshagent(credentials: ['github-ssh-key']) {
@@ -72,16 +82,12 @@ pipeline {
                             mkdir -p ~/.ssh
                             echo "Host github.com\\n\\tStrictHostKeyChecking no\\n" >> ~/.ssh/config
                             git config --global --add safe.directory ${WORKSPACE_DIR}
-                            git config --global --add safe.directory /home/jenkins/agent
-                            git config --global --add safe.directory /home/jenkins/agent/workspace/Hackaton-3DentAI/build-upload-server-docker-image
                             cd ${WORKSPACE_DIR}
                             git init
                             git remote remove origin || true
                             git remote add origin ${REPO_URL}
-                            git config core.sparseCheckout true
-                            echo '${SERVER_DIR}/*' > .git/info/sparse-checkout
-                            git fetch --depth=1 origin main
-                            git checkout main
+                            git fetch --depth=1 origin ${params.BUILD_BRANCH}
+                            git checkout ${params.BUILD_BRANCH}
                             """
                         }
                     }
@@ -93,16 +99,16 @@ pipeline {
             steps {
                 container('docker') {
                     script {
-                        sh"""
+                         sh """
                         git config --global --add safe.directory ${WORKSPACE_DIR}
                         """
                         def commitHash = sh(script: "cd ${WORKSPACE_DIR} && git rev-parse --short HEAD", returnStdout: true).trim()
                         def date = sh(script: "date +%Y%m%d", returnStdout: true).trim()
-                        def imageTag = "${DOCKER_IMAGE}-${commitHash}-${date}"
+                        env.IMAGE_TAG = "${params.DOCKER_IMAGE_BASE}:${params.K8S_NAMESPACE}-${commitHash}-${date}"
 
                         sh """
                         cd ${WORKSPACE_DIR}/${SERVER_DIR}
-                        docker build -t ${imageTag} .
+                        docker build -t ${IMAGE_TAG} .
                         """
                     }
                 }
@@ -113,12 +119,8 @@ pipeline {
             steps {
                 container('docker') {
                     script {
-                        def commitHash = sh(script: "cd ${WORKSPACE_DIR} && git rev-parse --short HEAD", returnStdout: true).trim()
-                        def date = sh(script: "date +%Y%m%d", returnStdout: true).trim()
-                        def imageTag = "${DOCKER_IMAGE}-${commitHash}-${date}"
-
                         sh """
-                        docker push ${imageTag}
+                        docker push ${IMAGE_TAG}
                         """
                     }
                 }
@@ -140,16 +142,15 @@ pipeline {
             steps {
                 container('jnlp') {
                     script {
-                        def imageTag = "${DOCKER_IMAGE}-${commitHash}-${date}"
-                        def manifestPath = "${WORKSPACE_DIR}/server/kubernetes-configs/server-deployment-server.yaml"
+                        def manifestPath = "${WORKSPACE_DIR}/infrastructure/kubernetes-configs/dev/server/server-deployment.yaml"
 
                         sh """
-                        git config --global user.email "pasichnykoleksa@gmail.com"
-                        git config --global user.name "jenkins-PasichnykOleksa"
+                        git config --global user.email "${params.COMMIT_AUTHOR_EMAIL}"
+                        git config --global user.name "${params.COMMIT_AUTHOR_NAME}"
                         if [ -f ${manifestPath} ]; then
-                            sed -i 's|image: oleksiipasichnyk/confl:hackaton-server-.*|image: ${imageTag}|' ${manifestPath}
+                            sed -i 's|image: ${params.DOCKER_IMAGE_BASE}:.*|image: ${IMAGE_TAG}|' ${manifestPath}
                             git add ${manifestPath}
-                            git commit -m "Update image tag to ${imageTag} in Kubernetes manifest"
+                            git commit -m "Update image tag to ${IMAGE_TAG} in Kubernetes manifest"
                         else
                             echo "ERROR: ${manifestPath} not found"
                             exit 1
@@ -166,33 +167,19 @@ pipeline {
                     dir("${WORKSPACE_DIR}/${SERVER_DIR}") {
                         script {
                             sshagent(credentials: ['github-ssh-key']) {
-                               sh """
-                            # Fetch the deploy branch from origin
-                            git fetch origin
-                        
-                            # Checkout the deploy branch from origin
-                            git checkout -B deploy origin/deploy
-                        
-                            # Pull the latest changes from the deploy branch
-                            git pull origin deploy
-                        
-                            # Stage the necessary changes to the Kubernetes manifest
-                            git add kubernetes-configs/server-deployment-server.yaml
-                        
-                            # Commit the changes only if there are any
-                            if ! git diff --cached --exit-code > /dev/null; then
-                                git commit -m "Update image tag to ${DOCKER_IMAGE}-${commitHash}-${date}"
-                            else
-                                echo "No changes to commit."
-                            fi
-                        
-                            # Rebase the deploy branch on top of the latest main branch
-                            git rebase origin/main
-                        
-                            # Force push the updated deploy branch back to origin
-                            git push --force origin deploy
-                            """
-
+                                sh """
+                                git fetch origin
+                                git checkout -B deploy origin/deploy
+                                git pull origin deploy
+                                git add infrastructure/kubernetes-configs/dev/server/server-deployment.yaml
+                                if ! git diff --cached --exit-code > /dev/null; then
+                                    git commit -m "Update image tag to ${IMAGE_TAG}"
+                                else
+                                    echo "No changes to commit."
+                                fi
+                                git rebase origin/${params.BUILD_BRANCH}
+                                git push --force origin deploy
+                                """
                             }
                         }
                     }

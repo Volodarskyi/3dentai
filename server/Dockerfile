@@ -1,23 +1,17 @@
-# Use an official Node.js runtime as the base image with Node.js version 18.13.0
-FROM node:18.13.0
+# Use an official Node.js runtime as the base image with Node.js version 20.10.0
+FROM node:20.10.0
 
-# Set the working directory in the container
+# Set the working directory in the container to /app
 WORKDIR /app
 
 # Copy package.json and package-lock.json if available first to take advantage of Docker cache for 'npm install'
+COPY package*.json ./
+
+# Install dependencies only once during build
+RUN yarn install
+
+# Copy the remaining project files (including src) to the container
 COPY . .
 
-# Install dependencies
-RUN npm install
-
-# Copy the remaining project files (including ./src) to the container
-
-# Set the NODE_ENV environment variable to 'production'
-ENV NODE_ENV production
-
-# Expose the port your Node.js application is running on
-ENV PORT 5001
-EXPOSE $PORT
-
-# Define the command to start your application
-CMD ["node", "./index.ts"]
+# Build and run the application in development mode
+CMD ["yarn", "start"]
