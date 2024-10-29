@@ -12,7 +12,7 @@ import routes from './routes';
 const app = express();
 dotenv.config();
 
-app.use(cors({ origin: true }));
+app.use(cors({ origin: '*' }));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(helmet());
