@@ -8,11 +8,10 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install dependencies only once during build
-RUN export UV_THREADPOOL_SIZE=4
-RUN npm install --legacy-peer-deps
+RUN yarn install
 
 # Copy the remaining project files (including src) to the container
 COPY . .
 
 # Build and run the application in development mode
-CMD ["npm", "run", "start"]
+CMD ["yarn", "start"]
