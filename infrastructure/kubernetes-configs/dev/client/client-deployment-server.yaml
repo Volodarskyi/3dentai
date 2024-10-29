@@ -1,11 +1,3 @@
-# Namespace Definition
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: hackaton-argo
-
----
-
 # Ingress Definition
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -31,7 +23,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: hackaton-server
+                name: hackaton-client
                 port:
                   number: 80
   tls:
