@@ -8,6 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install dependencies only once during build
+RUN export UV_THREADPOOL_SIZE=4
 RUN npm install --legacy-peer-deps
 
 # Copy the remaining project files (including src) to the container
