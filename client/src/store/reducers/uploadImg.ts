@@ -31,6 +31,8 @@ export class UploadImg {
       console.log("MY ENV:", process.env.NEXT_PUBLIC_APP_ENV);
       const url = await DataFetcher.postFile("api/photo/upload", formData);
 
+      console.log("url", url);
+
       this.setImgUrl(url);
     } catch (error) {
       console.error("Error uploading file:", error);
