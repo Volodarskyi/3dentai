@@ -14,6 +14,10 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "hackaton-server.paxel.ca"
+      },
+      {
+        protocol: "https",
+        hostname: "nginx-files.paxel.ca"
       }
     ],
     deviceSizes: [360, 414, 768, 1366, 1536, 1920],
