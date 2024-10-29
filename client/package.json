@@ -39,5 +39,5 @@
     "three": "^0.169.0",
     "typescript": "^5"
   },
-  "proxy": "http://localhost:5001"
+  "proxy": "http://localhost:80"
 }
