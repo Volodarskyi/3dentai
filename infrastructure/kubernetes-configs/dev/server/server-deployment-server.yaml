@@ -55,7 +55,7 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 5001
+      targetPort: 80
 
 ---
 
@@ -85,7 +85,7 @@ spec:
           imagePullPolicy: Always
           ports:
             - name: http-server
-              containerPort: 5001
+              containerPort: 80
           volumeMounts:
             - name: file-storage
               mountPath: /app/uploads  # Mount the 25GB PVC to a directory for file storage
