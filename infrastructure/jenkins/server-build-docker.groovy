@@ -11,10 +11,10 @@ pipeline {
                 resources:
                   requests:
                     memory: "4Gi"
-                    cpu: "2"
+                    cpu: "4"
                   limits:
                     memory: "8Gi"
-                    cpu: "4"
+                    cpu: "6"
                 volumeMounts:
                 - name: workspace-volume
                   mountPath: /workspace
@@ -57,6 +57,7 @@ pipeline {
         string(name: 'K8S_NAMESPACE', defaultValue: 'hackaton-argo', description: 'Kubernetes namespace')
         string(name: 'COMMIT_AUTHOR_EMAIL', defaultValue: 'pasichnykoleksa@gmail.com', description: 'Email for commit author')
         string(name: 'COMMIT_AUTHOR_NAME', defaultValue: 'Jenkins-PasichnykOleksa', description: 'Name for commit author')
+        string(name: 'BUILD_BRANCH', defaultValue: 'develop', description: 'Branch to build Docker image from')
     }
 
     triggers {
@@ -85,8 +86,8 @@ pipeline {
                             git init
                             git remote remove origin || true
                             git remote add origin ${REPO_URL}
-                            git fetch --depth=1 origin develop
-                            git checkout develop
+                            git fetch --depth=1 origin ${params.BUILD_BRANCH}
+                            git checkout ${params.BUILD_BRANCH}
                             """
                         }
                     }
@@ -98,7 +99,7 @@ pipeline {
             steps {
                 container('docker') {
                     script {
-                        sh """
+                         sh """
                         git config --global --add safe.directory ${WORKSPACE_DIR}
                         """
                         def commitHash = sh(script: "cd ${WORKSPACE_DIR} && git rev-parse --short HEAD", returnStdout: true).trim()
@@ -176,7 +177,7 @@ pipeline {
                                 else
                                     echo "No changes to commit."
                                 fi
-                                git rebase origin/develop
+                                git rebase origin/${params.BUILD_BRANCH}
                                 git push --force origin deploy
                                 """
                             }
