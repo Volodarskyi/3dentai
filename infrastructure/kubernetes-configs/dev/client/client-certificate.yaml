@@ -1,13 +1,13 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: hackaton-server.paxel.ca
+  name: hackaton-client.paxel.ca
   namespace: hackaton-argo
 spec:
-  secretName: hackaton-server.paxel.ca-tls
+  secretName: hackaton-client.paxel.ca-tls
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer
-  commonName: hackaton-server.paxel.ca
+  commonName: hackaton-client.paxel.ca
   dnsNames:
-  - hackaton-server.paxel.ca
+  - hackaton-client.paxel.ca

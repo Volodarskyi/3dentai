@@ -13,10 +13,8 @@ spec:
   source:
     repoURL: https://github.com/Volodarskyi/3dentai
     targetRevision: develop
-    path: infrastructure/kubernetes-configs/dev/argo-cd/server
+    path: infrastructure/kubernetes-configs/dev/argo-cd/client
   syncPolicy:
     automated:
       prune: false
       selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
