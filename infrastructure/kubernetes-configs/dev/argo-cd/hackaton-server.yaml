@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  labels:
+    argocd.argoproj.io/instance: root-app-of-apps
+  name: backend-hackaton
+  namespace: argocd
+spec:
+  destination:
+    namespace:  backend-hackaton
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    repoURL: https://github.com/Volodarskyi/3dentai
+    targetRevision: deploy
+    path: server/kubernetes-configs
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

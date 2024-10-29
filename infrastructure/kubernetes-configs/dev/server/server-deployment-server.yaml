@@ -1,0 +1,99 @@
+# Namespace Definition
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: hackaton-argo
+
+---
+
+# Ingress Definition
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hackaton-server
+  namespace: hackaton-argo
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    external-dns.alpha.kubernetes.io/hostname: "hackaton-server.paxel.ca."
+    external-dns.alpha.kubernetes.io/target: "router.paxel.ca."
+    
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: hackaton-server.paxel.ca
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: hackaton-server
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - hackaton-server.paxel.ca
+      secretName: hackaton-server.paxel.ca-tls
+
+---
+
+# Service Definition for Hackaton Server
+apiVersion: v1
+kind: Service
+metadata:
+  name: hackaton-server
+  namespace: hackaton-argo
+  labels:
+    name: hackaton-server
+spec:
+  selector:
+    name: hackaton-server
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5001
+
+---
+
+# Deployment Definition for Hackaton Server with Longhorn PVC
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hackaton-server
+  namespace: hackaton-argo
+  labels:
+    name: hackaton-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: hackaton-server
+  template:
+    metadata:
+      labels:
+        name: hackaton-server
+    spec:
+      imagePullSecrets:
+        - name: dockerhubaccess
+      containers:
+        - name: hackaton-server
+          image: oleksiipasichnyk/confl:hackaton-server-cdde8dc-20241025
+          imagePullPolicy: Always
+          ports:
+            - name: http-server
+              containerPort: 5001
+          volumeMounts:
+            - name: file-storage
+              mountPath: /app/uploads  # Mount the 25GB PVC to a directory for file storage
+          env:
+            - name: NODE_ENV
+              value: "production"
+      volumes:
+        - name: file-storage
+          persistentVolumeClaim:
+            claimName: longhorn-file-storage-pvc  # Use the same PVC as Nginx (25GB)
+
