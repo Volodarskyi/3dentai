@@ -19,7 +19,7 @@ pipeline {
                 - name: workspace-volume
                   mountPath: /workspace
               - name: docker
-                image: docker:20.10.6-dind
+                image: docker:20.10.8-dind
                 securityContext:
                   privileged: true
                 volumeMounts:
