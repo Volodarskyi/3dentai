@@ -4,10 +4,13 @@ import helmet from 'helmet';
 import cors from 'cors';
 import { connect } from 'mongoose';
 import morgan from 'morgan';
+import { fileURLToPath } from 'url';
+import path from 'path';
 
 import dotenv from 'dotenv';
 
 import routes from './routes';
+import { generateRes } from './utils/api';
 
 const app = express();
 dotenv.config();
@@ -19,7 +22,20 @@ app.use(helmet());
 app.set('trust proxy', 1);
 app.use(morgan('tiny'));
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 app.use('/api', routes);
+
+// Set static folder for public access
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
+
+app.use((req, res) => {
+  res.status(404);
+  res.json(
+    generateRes({ data: {}, message: 'Use not registered API', status: 404 }),
+  );
+});
 
 async function start() {
   if (typeof process.env.MONGO_URI === 'string') {
