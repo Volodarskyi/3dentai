@@ -38,7 +38,7 @@ const analyzeImage = async (imageUrl: string) => {
     throw new Error(`API request failed with status ${response.status}`);
   } catch (error) {
     console.log('error', error);
-    return `Error occurred. Please try again later. ${error?.toString()}`;
+    return `Error occurred. ${error?.toString()}`;
   }
 };
 
