@@ -20,9 +20,9 @@ const ModelStep = () => {
     >
       <Canvas
         fallback={<div>Sorry no WebGL supported!</div>}
-        camera={{ position: [5, 5, 5], fov: 25 }}
+        camera={{ position: [-8, 5, 10], fov: 0.4 }}
         className={"w-full h-full min-h-96"}
-        style={{ width: "50vh", height: "50vh" }}
+        style={{ width: "100vh", height: "50vh" }}
       >
         <ambientLight intensity={1} />
         <directionalLight position={[10, 10, 5]} />
