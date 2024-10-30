@@ -12,7 +12,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/Volodarskyi/3dentai
-    targetRevision: develop
+    targetRevision: deploy
     path: infrastructure/kubernetes-configs/dev/argo-cd/server
   syncPolicy:
     automated:
