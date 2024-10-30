@@ -20,18 +20,39 @@
   },
   "overrides": [
     {
-      "files": ["*.js", "*.jsx", "*.ts", "*.tsx"],
+      "files": [
+        "*.js",
+        "*.jsx",
+        "*.ts",
+        "*.tsx"
+      ],
       "rules": {
         "simple-import-sort/imports": [
           "error",
           {
             "groups": [
-              ["^react", "^@?\\w"],
-              ["^(@|components|assets|components|constants|containers|helpers|hooks|navigation|pages|services|store|styles|UIComponent|)(/.*|$)"],
-              ["^\\u0000"],
-              ["^\\.\\.(?!/?$)", "^\\.\\./?$"],
-              ["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"],
-              ["^.+\\.?(css)$"]
+              [
+                "^react",
+                "^@?\\w"
+              ],
+              [
+                "^(@|components|assets|components|constants|containers|helpers|hooks|navigation|pages|services|store|styles|UIComponent|)(/.*|$)"
+              ],
+              [
+                "^\\u0000"
+              ],
+              [
+                "^\\.\\.(?!/?$)",
+                "^\\.\\./?$"
+              ],
+              [
+                "^\\./(?=.*/)(?!/?$)",
+                "^\\.(?!/?$)",
+                "^\\./?$"
+              ],
+              [
+                "^.+\\.?(css)$"
+              ]
             ]
           }
         ]
@@ -40,6 +61,7 @@
   ],
   "rules": {
     "@typescript-eslint/no-explicit-any": "off",
-    "import/no-anonymous-default-export": "off"
+    "import/no-anonymous-default-export": "off",
+    "typescript-eslint/ban-ts-comment": "off"
   }
 }

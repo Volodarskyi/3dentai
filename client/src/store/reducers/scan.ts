@@ -10,8 +10,8 @@ class ScanStore {
   disabledNext = false;
 
   isLoading = false;
-  imgUrl: string = "";
-  imgDescription: string = "";
+  imgUrl = "";
+  imgDescription = "";
 
   constructor() {
     makeAutoObservable(this);
