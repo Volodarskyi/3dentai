@@ -81,3 +81,13 @@ spec:
           env:
             - name: NODE_ENV
               value: "production"
+          envFrom:
+           - secretRef:
+               name: client-env-secret  # Reference to the secret for environment variables
+          resources:
+            requests:
+              memory: "4Gi"
+              cpu: "2"
+            limits:
+              memory: "6Gi"
+              cpu: "4"
