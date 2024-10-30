@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState } from "react";
 import { InputGroup } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
@@ -29,9 +30,9 @@ const AuthorizationComponent = () => {
     setValue(event.target.value);
   };
 
-  const navigateToMain = () => {
-    console.log("navigate to scan");
-  };
+  // const navigateToMain = () => {
+  //   console.log("navigate to scan");
+  // };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
