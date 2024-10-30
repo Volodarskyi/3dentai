@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url';
 import aiRout from './ai';
 import photoRout from './photo';
 import { generateRes } from '../utils/api';
-import authRoutes from "./authRoutes";
+import authRoutes from './authRoutes';
 
 const app = express();
 
