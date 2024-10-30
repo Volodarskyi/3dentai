@@ -15,6 +15,7 @@ const initSteps: ISteps[] = [
   { name: "Step 1", description: "Upload video (photo)." },
   { name: "Step 2", description: "Send to Chat GPT API and receive response." },
   { name: "Step 3", description: "Convert photo to 3D." },
+  { name: "Step 4", description: "Paint Assessment" },
 ];
 
 const ScanComponent = () => {
