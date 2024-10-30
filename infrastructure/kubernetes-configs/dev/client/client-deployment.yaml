@@ -81,6 +81,11 @@ spec:
           env:
             - name: NODE_ENV
               value: "production"
+            - name: NEXT_PUBLIC_APP_BASE_URL_PRODUCTION
+              valueFrom:
+                secretKeyRef:
+                  name: client-env-secret
+                  key: NEXT_PUBLIC_APP_BASE_URL_PRODUCTION
           envFrom:
            - secretRef:
                name: client-env-secret  # Reference to the secret for environment variables
