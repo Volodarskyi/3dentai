@@ -51,7 +51,7 @@ const UploadStepComponent = () => {
                 "flex items-center w-full min-h-96 relative overflow-hidden"
               }
             >
-              <Image src={imgUrl} alt="upload" fill={true} />
+              <Image src={imgUrl} alt="upload" fill={true} unoptimized />
             </div>
             <button
               type="button"
