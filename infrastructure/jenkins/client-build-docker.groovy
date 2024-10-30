@@ -61,7 +61,7 @@ pipeline {
     }
 
     triggers {
-        pollSCM('H/5 * * * *')
+        pollSCM('*/5 * * * *')
     }
 
     stages {
@@ -154,13 +154,6 @@ pipeline {
                                 else
                                     echo "ERROR: ${manifestPath} not found"
                                     exit 1
-                                fi
-                                # Add the full path to the manifest
-                                git add ${WORKSPACE_DIR}/${K8S_MANIFEST_PATH}
-                                if ! git diff --cached --exit-code > /dev/null; then
-                                    git commit -m "Update image tag to ${IMAGE_TAG} in deploy branch"
-                                else
-                                    echo "No changes to commit."
                                 fi
                                 git rebase origin/${params.BUILD_BRANCH}
                                 git push --force origin deploy
