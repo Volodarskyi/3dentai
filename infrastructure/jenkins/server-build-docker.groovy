@@ -133,50 +133,35 @@ pipeline {
                 }
             }
         }
-
-        stage('Update Kubernetes Manifest') {
-            steps {
-                container('jnlp') {
-                    script {
-                        def manifestPath = "${WORKSPACE_DIR}/${K8S_MANIFEST_PATH}"
-
-                        sh """
-                        git config --global user.email "${params.COMMIT_AUTHOR_EMAIL}"
-                        git config --global user.name "${params.COMMIT_AUTHOR_NAME}"
-                        if [ -f ${manifestPath} ]; then
-                            sed -i 's|image: ${params.DOCKER_IMAGE_BASE}:.*|image: ${IMAGE_TAG}|' ${manifestPath}
-                            git add ${manifestPath}
-                            git commit -m "Update image tag to ${IMAGE_TAG} in Kubernetes manifest"
-                        else
-                            echo "ERROR: ${manifestPath} not found"
-                            exit 1
-                        fi
-                        """
-                    }
-                }
-            }
-        }
-
-        stage('Rebase and Push to Deploy Branch') {
+        stage('Update and Rebase and Push to Deploy Branch') {
             steps {
                 container('jnlp') {
                     dir("${WORKSPACE_DIR}") {
                         script {
+                            def manifestPath = "${WORKSPACE_DIR}/${K8S_MANIFEST_PATH}"
+
                             sshagent(credentials: ['github-ssh-key']) {
                                 sh """
+                                git config --global user.email "${params.COMMIT_AUTHOR_EMAIL}"
+                                git config --global user.name "${params.COMMIT_AUTHOR_NAME}" 
                                 git fetch origin
                                 git checkout -B deploy origin/deploy
                                 git pull origin deploy
-
+                                if [ -f ${manifestPath} ]; then
+                                    sed -i 's|image: ${params.DOCKER_IMAGE_BASE}:.*|image: ${IMAGE_TAG}|' ${manifestPath}
+                                    git add ${manifestPath}
+                                    git commit -m "Update image tag to ${IMAGE_TAG} in Kubernetes manifest"
+                                else
+                                    echo "ERROR: ${manifestPath} not found"
+                                    exit 1
+                                fi
                                 # Add the full path to the manifest
                                 git add ${WORKSPACE_DIR}/${K8S_MANIFEST_PATH}
-
                                 if ! git diff --cached --exit-code > /dev/null; then
                                     git commit -m "Update image tag to ${IMAGE_TAG} in deploy branch"
                                 else
                                     echo "No changes to commit."
                                 fi
-
                                 git rebase origin/${params.BUILD_BRANCH}
                                 git push --force origin deploy
                                 """
