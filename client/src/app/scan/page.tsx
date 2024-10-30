@@ -4,13 +4,13 @@ import { useEffect } from "react";
 import { observer } from "mobx-react-lite";
 
 import Steps from "@/app/scan/components/Steps";
+import { Authorization } from "@/components/Authorization/Authorization";
 import Loading from "@/components/Loading";
 import { useStores } from "@/hooks/useStores";
 import { ISteps } from "@/types/steps";
 
 import Navigation from "./components/Navigation";
 import Processor from "./components/Progress";
-import {Authorization} from "@/components/Authorization/Authorization";
 
 const initSteps: ISteps[] = [
   { name: "Step 1", description: "Upload video (photo)." },
@@ -26,28 +26,22 @@ const ScanComponent = () => {
     setSteps(initSteps);
   }, [setSteps]);
 
-    return (
-        <div className="bg-white min-h-svh flex items-center flex-col">
-            <Processor/>
-            <Steps/>
-            <Navigation/>
-
-            <div>
-                <input type="file" onChange={uploadImgStore.setImgFile} />
-                <button onClick={uploadImgStore.handleUpload}>Upload Photo</button>
-            </div>
-
-            {uploadImgStore.imgUrl && (
-                <div>
-                    <h2>Uploaded Image:</h2>
-                    <img src={uploadImgStore.imgUrl} alt="Uploaded file" style={{width: '300px'}}/>
-                    <p>Public URL: <a href={uploadImgStore.imgUrl}>{uploadImgStore.imgUrl}</a></p>
-                </div>
-            )}
-
-            <Authorization/>
-
-        </div>);
+  return (
+    <div className="bg-white min-h-svh flex items-center flex-col">
+      {steps.length ? (
+        <>
+          <Processor />
+          <Steps />
+          <Navigation />
+          <Authorization />
+        </>
+      ) : (
+        <div className={"min-h-56 w-full flex justify-center items-center"}>
+          <Loading />
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default observer(ScanComponent);
