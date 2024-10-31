@@ -41,7 +41,6 @@ const PainAssessmentForm: React.FC = () => {
     });
   };
 
-  // @ts-ignore
   return (
     <Form>
       <h2>Pain Assessment Form</h2>
@@ -186,9 +185,7 @@ const PainAssessmentForm: React.FC = () => {
         </InputGroup>
       </Form.Group>
 
-      <button variant="primary" type="submit">
-        Submit
-      </button>
+      <button type="submit">Submit</button>
     </Form>
   );
 };
