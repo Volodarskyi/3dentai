@@ -1,21 +1,20 @@
 import React, { ChangeEvent, useState } from "react";
 import { InputGroup } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
-import { observer } from "mobx-react-lite";
 
-interface UiPasswordComponentProps {
+interface PasswordProps {
   label: string;
   placeholder: string;
   password: string;
   setPassword: (value: string) => void;
 }
 
-const UiPasswordComponent: React.FC<UiPasswordComponentProps> = ({
+const Password = ({
   label,
   placeholder,
   password,
   setPassword,
-}) => {
+}: PasswordProps) => {
   const [passHide, setPassHide] = useState(true);
 
   const setInputValue = (event: ChangeEvent<HTMLInputElement>) => {
@@ -50,4 +49,4 @@ const UiPasswordComponent: React.FC<UiPasswordComponentProps> = ({
   );
 };
 
-export const UiPassword = observer(UiPasswordComponent);
+export default Password;

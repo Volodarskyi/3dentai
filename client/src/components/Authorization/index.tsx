@@ -1,4 +1,6 @@
+"use client";
 /* eslint-disable */
+
 import React, { useState } from "react";
 import { InputGroup } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
@@ -7,11 +9,11 @@ import Tabs from "react-bootstrap/Tabs";
 import { observer } from "mobx-react-lite";
 
 import dataFetcher from "@/api/dataFetcher";
-import { UiPassword } from "@/components/UI/UiPassword/UiPassword";
+import Password from "@/components/Password";
 import { useStores } from "@/hooks/useStores";
 import { EAuth } from "@/types/auth";
 
-const AuthorizationComponent = () => {
+const Index = () => {
   const { userStore } = useStores();
   const [key, setKey] = useState<string>("register");
 
@@ -123,7 +125,7 @@ const AuthorizationComponent = () => {
               onChange={(event) => setInputValue(event, email, setEmail)}
             />
           </InputGroup>
-          <UiPassword
+          <Password
             label={"Password"}
             placeholder={"pass"}
             password={password}
@@ -202,4 +204,4 @@ const AuthorizationComponent = () => {
   );
 };
 
-export const Authorization = observer(AuthorizationComponent);
+export default observer(Index);
