@@ -1,6 +1,10 @@
 // TODO refactoring
 const analyzeImage = async (imageUrl: string) => {
   // TODO create dataFetcher for it.
+
+  console.log(`url - ${process.env.MISTRAL_API}/v1/chat/completions`);
+  console.log(`token - ${process.env.MISTRAL_TOKEN}`);
+
   try {
     const response = await fetch(
       `${process.env.MISTRAL_API}/v1/chat/completions`,
@@ -35,6 +39,7 @@ const analyzeImage = async (imageUrl: string) => {
       // TODO return only needed data
       return await response.json();
     }
+    console.log('response', response);
     throw new Error(`API request failed with status ${response.status}`);
   } catch (error) {
     console.log('error', error);
