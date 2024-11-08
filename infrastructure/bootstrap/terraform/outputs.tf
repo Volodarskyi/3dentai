@@ -10,5 +10,5 @@ output "elastic_ip" {
 
 output "subdomain_url" {
   description = "URL of the subdomain"
-  value       = "http://3dentai.labofdev.com"
+  value       = aws_route53_record.subdomain.fqdn
 }
