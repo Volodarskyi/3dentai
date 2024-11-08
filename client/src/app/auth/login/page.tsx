@@ -1,5 +1,5 @@
-const Login = () => {
-  return <div>Login</div>;
-};
+import AuthScreen from "@/screens/AuthLogin";
 
-export default Login;
+export default function Login() {
+  return <AuthScreen />;
+}
