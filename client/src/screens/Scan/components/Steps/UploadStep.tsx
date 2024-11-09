@@ -1,6 +1,7 @@
 "use client";
 
 import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { Button } from "antd";
 import { observer } from "mobx-react-lite";
 import Image from "next/image";
 
@@ -9,12 +10,15 @@ import { useStores } from "@/hooks/useStores";
 const UploadStepComponent = () => {
   const { uploadImgStore, scanStore } = useStores();
   const { imgUrl } = uploadImgStore;
+  const { imgUrl: savedImage } = scanStore;
   const fileRef = useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (imgUrl) {
-      scanStore.setImg(imgUrl);
+      setTimeout(() => {
+        scanStore.setImg(imgUrl);
+      }, 2000);
     }
   }, [imgUrl, scanStore]);
 
@@ -44,24 +48,46 @@ const UploadStepComponent = () => {
           "flex justify-center items-center w-full min-h-96 border border-gray-200 rounded-b-lg overflow-hidden p-2"
         }
       >
-        {imgUrl ? (
-          <div className={"w-full min-h-96 flex justify-center flex-col gap-2"}>
+        {savedImage ? (
+          <div
+            style={{
+              width: "100%",
+              minHeight: "24rem",
+              display: "flex",
+              justifyContent: "center",
+              flexDirection: "column",
+              gap: "2rem",
+            }}
+          >
             <div
+              style={{
+                position: "relative",
+                minHeight: "24rem",
+                width: "100%",
+              }}
               className={
                 "flex items-center w-full min-h-96 relative overflow-hidden"
               }
             >
-              <Image src={imgUrl} alt="upload" fill={true} unoptimized />
+              <Image src={savedImage} alt="upload" fill={true} unoptimized />
             </div>
-            <button
-              type="button"
+            <Button
               onClick={handlerClick}
-              className={
-                "pt-3 rounded-md bg-indigo-500 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-              }
+              style={{
+                color: "black",
+                display: "flex",
+                alignContent: "center",
+                justifyContent: "center",
+                borderRadius: "0.5rem",
+                border: "none",
+                cursor: "pointer",
+                outline: "none",
+                fontSize: "1rem",
+                height: "2.5rem",
+              }}
             >
               Upload Photo Again
-            </button>
+            </Button>
           </div>
         ) : (
           <button
