@@ -24,7 +24,7 @@ class ScanStore {
 
   setSteps = (newSteps: ISteps[]) => {
     this.steps = newSteps;
-    this.step = 1;
+    this.step = 0;
     this.validationButton();
   };
 
@@ -37,9 +37,9 @@ class ScanStore {
   };
 
   validationButton = () => {
-    this.disabledPrevious = this.step <= 1;
+    this.disabledPrevious = this.step <= 0;
     this.disabledNext = this.steps.length
-      ? this.step >= this.steps.length
+      ? this.step >= this.steps.length - 1
       : true;
   };
 

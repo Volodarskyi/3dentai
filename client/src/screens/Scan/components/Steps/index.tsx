@@ -1,24 +1,30 @@
+import { theme } from "antd";
 import { observer } from "mobx-react-lite";
 
 import { useStores } from "@/hooks/useStores";
 
-import ModelStep from "./ModelStep";
-import ResponseStep from "./ResponseStep";
-import { UploadStep } from "./UploadStep";
-
 const Steps = () => {
+  const { token } = theme.useToken();
   const { scanStore } = useStores();
-  const { step } = scanStore;
+  const { steps, step } = scanStore;
 
   return (
     <div
-      className={
-        "flex items-start justify-center bg-white mx-auto px-4 sm:px-6 lg:px-8 w-full max-w-7xl"
-      }
+      style={{
+        width: "100%",
+        minHeight: "260px",
+        display: "flex",
+        justifyContent: "center",
+        lineHeight: "260px",
+        textAlign: "center",
+        color: token.colorTextTertiary,
+        backgroundColor: token.colorFillAlter,
+        borderRadius: token.borderRadiusLG,
+        border: `1px dashed ${token.colorBorder}`,
+        marginTop: 16,
+      }}
     >
-      {step === 1 && <UploadStep />}
-      {step === 2 && <ResponseStep />}
-      {step === 3 && <ModelStep />}
+      {steps[step].content}
     </div>
   );
 };
