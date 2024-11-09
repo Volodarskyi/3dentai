@@ -17,6 +17,9 @@ package-lock.json
 
 /server/.env
 /client/.env
+
+/client/yarn.lcck
+/server/yarn.lcck
 # teraform dependencies ingore
 .terraform*
 *terraform.tfstate*
