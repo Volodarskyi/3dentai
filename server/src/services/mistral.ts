@@ -1,9 +1,9 @@
 // TODO refactoring
 const analyzeImage = async (imageUrl: string) => {
   // TODO create dataFetcher for it.
-
+  const token = process.env.MISTRAL_TOKEN;
   console.log(`url - ${process.env.MISTRAL_API}/v1/chat/completions`);
-  console.log(`token - ${process.env.MISTRAL_TOKEN}`);
+  console.log(`Token: ${token}`);
 
   try {
     const response = await fetch(
@@ -12,7 +12,7 @@ const analyzeImage = async (imageUrl: string) => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${process.env.MISTRAL_TOKEN}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           model: 'pixtral-12b-2409',
