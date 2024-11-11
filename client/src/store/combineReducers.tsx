@@ -1,6 +1,6 @@
-import scanStore from "@/store/reducers/scan";
-import { UploadImgStore } from "@/store/reducers/uploadImgStore";
-import { UserStore } from "@/store/reducers/user-store";
+import scanStore from "./reducers/scanStore";
+import { UploadImgStore } from "./reducers/uploadImgStore";
+import { UserStore } from "./reducers/userStore";
 
 export const RootStore = {
   scanStore: new scanStore(),

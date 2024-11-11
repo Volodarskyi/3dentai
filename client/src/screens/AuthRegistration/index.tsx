@@ -1,7 +1,3 @@
-import Authorization from "@/components/Authorization";
+import AuthRegistration from "./AuthRegistration";
 
-const RegistrationScreen = () => {
-  return <Authorization />;
-};
-
-export default RegistrationScreen;
+export default AuthRegistration;

@@ -2,12 +2,11 @@
 
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { Button } from "antd";
-import { observer } from "mobx-react-lite";
 import Image from "next/image";
 
 import { useStores } from "@/hooks/useStores";
 
-const UploadStepComponent = () => {
+const UploadPhoto = () => {
   const { uploadImgStore, scanStore } = useStores();
   const { imgUrl } = uploadImgStore;
   const { imgUrl: savedImage } = scanStore;
@@ -119,4 +118,4 @@ const UploadStepComponent = () => {
   );
 };
 
-export const UploadStep = observer(UploadStepComponent);
+export default UploadPhoto;

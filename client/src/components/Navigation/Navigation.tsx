@@ -1,11 +1,12 @@
-import { observer } from "mobx-react-lite";
+interface NavigationProps {
+  nextStep: () => void;
+  previousStep: () => void;
+  disabledPrevious: boolean;
+  disabledNext: boolean;
+}
 
-import { useStores } from "@/hooks/useStores";
-
-const Navigation = observer(() => {
-  const { scanStore } = useStores();
-  const { nextStep, previousStep, disabledPrevious, disabledNext } = scanStore;
-
+const Navigation = (props: NavigationProps) => {
+  const { nextStep, previousStep, disabledPrevious, disabledNext } = props;
   const disabledStyle = "disabled:opacity-50 disabled:pointer-events-none";
 
   return (
@@ -31,6 +32,6 @@ const Navigation = observer(() => {
       </div>
     </nav>
   );
-});
+};
 
 export default Navigation;

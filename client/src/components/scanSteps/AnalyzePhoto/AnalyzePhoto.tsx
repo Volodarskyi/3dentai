@@ -4,13 +4,18 @@ import { observer } from "mobx-react-lite";
 import Loading from "@/components/Loading";
 import { useStores } from "@/hooks/useStores";
 
-const ResponseStep = () => {
+const AnalyzePhoto = () => {
   const { scanStore } = useStores();
-  const { imgUrl, imgDescription, isLoading, analyzeImage } = scanStore;
+  const {
+    imgUrl,
+    imgDescription,
+    isLoading,
+    analyzeImage: analyze,
+  } = scanStore;
 
   useEffect(() => {
-    analyzeImage();
-  }, [analyzeImage, imgUrl]);
+    analyze();
+  }, [analyze, imgUrl]);
 
   return (
     <div
@@ -29,4 +34,4 @@ const ResponseStep = () => {
   );
 };
 
-export default observer(ResponseStep);
+export default observer(AnalyzePhoto);

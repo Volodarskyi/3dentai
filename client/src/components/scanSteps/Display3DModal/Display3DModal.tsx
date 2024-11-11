@@ -2,16 +2,8 @@ import { OrbitControls } from "@react-three/drei";
 import { Canvas, useLoader } from "@react-three/fiber";
 import { GLTFLoader } from "three-stdlib";
 
-function Cube() {
+const Display3DModal = () => {
   const gltf = useLoader(GLTFLoader, "./prod_4.gltf");
-  return (
-    <>
-      <primitive object={gltf.scene} scale={0.4} />
-    </>
-  );
-}
-
-const ModelStep = () => {
   return (
     <div
       className={
@@ -26,11 +18,11 @@ const ModelStep = () => {
       >
         <ambientLight intensity={1} />
         <directionalLight position={[10, 10, 5]} />
-        <Cube />
+        <primitive object={gltf.scene} scale={0.4} />
         <OrbitControls />
       </Canvas>
     </div>
   );
 };
 
-export default ModelStep;
+export default Display3DModal;
