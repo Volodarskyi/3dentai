@@ -2,6 +2,7 @@
 
 import { ReactNode } from "react";
 import { Layout, Row } from "antd";
+import { usePathname } from "next/navigation";
 
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
@@ -15,6 +16,12 @@ interface TemplateProps {
 
 function Template(props: TemplateProps) {
   const { children } = props;
+
+  const pathname = usePathname();
+
+  if (pathname === "/scan") {
+    console.log("display or hide footer");
+  }
 
   return (
     <StoreWrapper>
