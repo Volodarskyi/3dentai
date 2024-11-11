@@ -8,7 +8,6 @@ import morgan from 'morgan';
 import dotenv from 'dotenv';
 
 import routes from './routes';
-import { generateRes } from './utils/api';
 
 const app = express();
 dotenv.config();
@@ -22,19 +21,9 @@ app.use(morgan('tiny'));
 
 app.use('/api', routes);
 
-app.use((req, res) => {
-  res.status(404);
-  res.json(
-    generateRes({ data: {}, message: 'Use not registered API', status: 404 }),
-  );
-});
-
 async function start() {
   if (typeof process.env.MONGO_URI === 'string') {
-    await connect(process.env.MONGO_URI, {
-      // useNewUrlParser: true,
-      // useUnifiedTopology: true,
-    });
+    await connect(process.env.MONGO_URI);
   }
 
   app.listen(process.env.SERVER_PORT, () => {
