@@ -15,7 +15,6 @@ const Steps = () => {
         minHeight: "260px",
         display: "flex",
         justifyContent: "center",
-        lineHeight: "260px",
         textAlign: "center",
         color: token.colorTextTertiary,
         backgroundColor: token.colorFillAlter,
