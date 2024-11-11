@@ -2,6 +2,7 @@
 
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { Button } from "antd";
+import { observer } from "mobx-react-lite";
 import Image from "next/image";
 
 import { useStores } from "@/hooks/useStores";
@@ -118,4 +119,4 @@ const UploadPhoto = () => {
   );
 };
 
-export default UploadPhoto;
+export default observer(UploadPhoto);

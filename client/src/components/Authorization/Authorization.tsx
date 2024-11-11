@@ -13,7 +13,7 @@ import Password from "@/components/Password";
 import { useStores } from "@/hooks/useStores";
 import { EAuth } from "@/types/auth";
 
-const Index = () => {
+const Authorization = () => {
   const { userStore } = useStores();
   const [key, setKey] = useState<string>("register");
 
@@ -204,4 +204,4 @@ const Index = () => {
   );
 };
 
-export default observer(Index);
+export default observer(Authorization);

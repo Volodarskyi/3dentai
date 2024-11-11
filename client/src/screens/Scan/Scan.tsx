@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { Row, Steps, theme } from "antd";
+import { observer } from "mobx-react-lite";
 
 import Loading from "@/components/Loading";
 import Navigation from "@/components/Navigation";
@@ -85,4 +86,4 @@ const ScanScreen = () => {
   );
 };
 
-export default ScanScreen;
+export default observer(ScanScreen);
