@@ -53,15 +53,17 @@ pipeline {
     }
 
     parameters {
+        text(name: 'ENV_FILE_CONTENT', defaultValue: 'NEXT_PUBLIC_APP_BASE_URL_PRODUCTION=https://backend.api\nNEXT_PUBLIC_APP_BASE_URL_DEVELOPMENT=http://localhost:5001\nNEXT_PUBLIC_APP_IMAGE_STORE=https://image-server.api', description: 'Environment variables for .env file')
         string(name: 'DOCKER_IMAGE_BASE', defaultValue: 'oleksiipasichnyk/confl', description: 'Base Docker image name')
         string(name: 'K8S_NAMESPACE', defaultValue: 'hackaton-argo', description: 'Kubernetes namespace')
         string(name: 'COMMIT_AUTHOR_EMAIL', defaultValue: 'pasichnykoleksa@gmail.com', description: 'Email for commit author')
         string(name: 'COMMIT_AUTHOR_NAME', defaultValue: 'Jenkins-PasichnykOleksa', description: 'Name for commit author')
         string(name: 'BUILD_BRANCH', defaultValue: 'develop', description: 'Branch to build Docker image from')
+
     }
 
     triggers {
-        pollSCM('*/1 * * * *')
+        pollSCM('*/5 * * * *')
     }
     
     stages {
@@ -91,20 +93,30 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 container('docker') {
-                    script {
-                        sh "git config --global --add safe.directory ${WORKSPACE_DIR}"
-                        def commitHash = sh(script: "cd ${WORKSPACE_DIR} && git rev-parse --short HEAD", returnStdout: true).trim()
-                        def date = sh(script: "date +%Y%m%d", returnStdout: true).trim()
-                        env.IMAGE_TAG = "${params.DOCKER_IMAGE_BASE}:${params.K8S_NAMESPACE}-client-${commitHash}-${date}"
+                            script {
+                                // Change to the workspace directory containing the Dockerfile
+                                dir("${WORKSPACE_DIR}/${SERVER_DIR}") {
+                                    // Create or overwrite the .env file with the content from the parameter
+                                    writeFile file: '.env', text: params.ENV_FILE_CONTENT
 
-                        sh """
-                        cd ${WORKSPACE_DIR}/${SERVER_DIR}
-                        docker build -t ${IMAGE_TAG} .
-                        """
+                                    // Configure Git to recognize the directory as safe
+                                    sh "git config --global --add safe.directory ${WORKSPACE_DIR}"
+
+                                    // Retrieve the latest commit hash and date for tagging
+                                    def commitHash = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
+                                    def date = sh(script: "date +%Y%m%d", returnStdout: true).trim()
+                                    env.IMAGE_TAG = "${params.DOCKER_IMAGE_BASE}:${params.K8S_NAMESPACE}-client-${commitHash}-${date}"
+
+                                    // Build the Docker image including the .env file
+                                    sh """
+                                    docker build -t ${IMAGE_TAG} .
+                                    """
+                        }
                     }
                 }
             }
         }
+
 
         stage('Push Docker Image to DockerHub') {
             steps {

@@ -73,16 +73,11 @@ spec:
         - name: dockerhubaccess
       containers:
         - name: hackaton-client
-          image: oleksiipasichnyk/confl:hackaton-client-v1
+          image: oleksiipasichnyk/confl:hackaton-client-placeholder
           imagePullPolicy: Always
           ports:
             - name: http-server
               containerPort: 3000
-          env:
-            - name: NODE_ENV
-              value: "production"
-            - name: NEXT_PUBLIC_APP_BASE_URL_PRODUCTION
-              value: "https://hackaton-server.paxel.ca"  # Reference to the secret for environment variables
           resources:
             requests:
               memory: "4Gi"
