@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { Row, Steps, theme } from "antd";
 import { observer } from "mobx-react-lite";
 
+import GlobalLoading from "@/components/GlobalLoading";
 import Loading from "@/components/Loading";
 import Navigation from "@/components/Navigation";
 import {
@@ -23,6 +24,7 @@ const ScanScreen = () => {
     step,
     nextStep,
     previousStep,
+    isLoading,
     disabledPrevious,
     disabledNext,
   } = scanStore;
@@ -51,6 +53,7 @@ const ScanScreen = () => {
 
   return (
     <Row style={{ width: "100%" }}>
+      {isLoading && <GlobalLoading />}
       {steps.length ? (
         <>
           <Steps current={step} items={steps} />

@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, useRef } from "react";
 import { Button } from "antd";
 import { observer } from "mobx-react-lite";
 import Image from "next/image";
@@ -8,25 +8,14 @@ import Image from "next/image";
 import { useStores } from "@/hooks/useStores";
 
 const UploadPhoto = () => {
-  const { uploadImgStore, scanStore } = useStores();
-  const { imgUrl } = uploadImgStore;
-  const { imgUrl: savedImage } = scanStore;
+  const { scanStore } = useStores();
+  const { imgUrl, isLoading } = scanStore;
   const fileRef = useRef<HTMLInputElement>(null);
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    if (imgUrl) {
-      setTimeout(() => {
-        scanStore.setImg(imgUrl);
-      }, 2000);
-    }
-  }, [imgUrl, scanStore]);
 
   const handlerLoading = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      uploadImgStore.setImgFile(e.target.files[0]);
-      uploadImgStore.handleUpload().finally(() => {
-        setLoading(false);
+      scanStore.setImgFile(e.target.files[0]);
+      scanStore.handleUpload().finally(() => {
         e.target.value = "";
       });
     }
@@ -48,7 +37,7 @@ const UploadPhoto = () => {
           "flex justify-center items-center w-full min-h-96 border border-gray-200 rounded-b-lg overflow-hidden p-2"
         }
       >
-        {savedImage ? (
+        {imgUrl ? (
           <div
             style={{
               width: "100%",
@@ -69,7 +58,7 @@ const UploadPhoto = () => {
                 "flex items-center w-full min-h-96 relative overflow-hidden"
               }
             >
-              <Image src={savedImage} alt="upload" fill={true} unoptimized />
+              <Image src={imgUrl} alt="upload" fill={true} unoptimized />
             </div>
             <Button
               onClick={handlerClick}
@@ -110,7 +99,7 @@ const UploadPhoto = () => {
               />
             </svg>
             <span className="mt-2 block text-sm font-semibold text-gray-900">
-              {loading ? "Loading..." : "Upload Photo"}
+              {isLoading ? "Loading..." : "Upload Photo"}
             </span>
           </button>
         )}
