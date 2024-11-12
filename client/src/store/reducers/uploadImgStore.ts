@@ -2,7 +2,7 @@ import { makeAutoObservable } from "mobx";
 
 import DataFetcher from "@/api/dataFetcher";
 
-export class UploadImgStore {
+class UploadImgStore {
   imgFile: File | undefined = undefined;
   imgUrl: string | undefined = undefined;
 
@@ -38,3 +38,5 @@ export class UploadImgStore {
     }
   };
 }
+
+export default new UploadImgStore();

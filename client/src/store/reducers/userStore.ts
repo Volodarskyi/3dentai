@@ -2,7 +2,8 @@ import { makeAutoObservable } from "mobx";
 
 import { jwtDecode } from "@/helper/parseFunctions";
 import { EAuth } from "@/types/auth";
-export class UserStore {
+
+class UserStore {
   isAuth = false;
   firstName = "";
   secondName = "";
@@ -50,3 +51,5 @@ export class UserStore {
     localStorage.removeItem(EAuth.TOKEN_ITEM_NAME);
   };
 }
+
+export default new UserStore();
