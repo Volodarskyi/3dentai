@@ -1,15 +1,20 @@
+import Image from "next/image";
 import Link from "next/link";
+
+import Logo from "@/assets/images/logo.png";
+
+import styles from "./styles.module.scss";
 
 const Header = () => {
   return (
-    <header className="bg-white">
+    <header className={styles.container}>
       <nav
-        className="mx-auto flex max-w-7xl items-center justify-between gap-x-6 p-6 lg:px-8"
-        aria-label="Global"
+        className={`${styles.items} flex max-w-7xl items-center justify-between gap-x-6 lg:px-8 w-max`}
       >
         <div className="flex lg:flex-1">
-          <Link href="#" className="-m-1.5 p-1.5">
-            <span className="text-lg text-gray-900 font-semibold">3DentIA</span>
+          <Link href="#" className={styles.logoContainer}>
+            <Image src={Logo} alt="3DentAL" width={45} height={40} />
+            <span className={styles.name}>3DentAL</span>
           </Link>
         </div>
 
@@ -19,13 +24,6 @@ const Header = () => {
             className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
             Scan
-          </Link>
-
-          <Link
-            href="/auth/login"
-            className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          >
-            Log in
           </Link>
         </div>
 
