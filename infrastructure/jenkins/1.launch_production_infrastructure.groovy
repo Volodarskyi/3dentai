@@ -14,10 +14,10 @@ pipeline {
 
     environment {
         GIT_REPO = 'https://github.com/Volodarskyi/3dentai'
-        GIT_BRANCH = 'develop'
+        GIT_BRANCH = 'deploy'
         GIT_CREDENTIALS = 'jenkins_access_to_git'  // Replace with your Jenkins Git credentials ID
         AWS_REGION = 'us-east-1'                    // AWS region for Terraform
-        TF_VAR_ssh_key_name = 'my-key'              // SSH key name in AWS (replace as necessary)
+        INSTANCE_SSH_KEY_NAME = 'access_for_new_node_js_app'              // SSH key name in AWS (replace as necessary)
         ANSIBLE_HOST_KEY_CHECKING = 'False'         // Disable host key checking for Ansible
     }
 
@@ -94,7 +94,7 @@ pipeline {
 
         stage('Run Ansible Playbook') {
             steps {
-                withCredentials([sshUserPrivateKey(credentialsId: 'access_for_new_node_js_app', keyFileVariable: 'SSH_KEY')]) {
+                withCredentials([sshUserPrivateKey(credentialsId: "${params.INSTANCE_SSH_KEY_NAME}", keyFileVariable: 'SSH_KEY')]) {
                     dir("${params.ANSIBLE_DIRECTORY}") {
                         script {
                             timeout(time: 5, unit: 'MINUTES') {
@@ -102,7 +102,7 @@ pipeline {
                                     id: 'ConfirmAnsibleRun', 
                                     message: 'Confirm Ansible playbook run immediately or wait for timeout to pass:',
                                     parameters: [choice(name: 'Confirm', choices: ['yes', 'no'], description: 'Confirm to run Ansible')],
-                                    defaultValue: 'no'
+                                    defaultValue: 'yes'
                                 )
                                 if (userConfirmation == 'no') {
                                     error('Ansible playbook run was aborted by the user.')

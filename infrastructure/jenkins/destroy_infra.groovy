@@ -5,7 +5,7 @@ pipeline {
     }
     environment {
         AWS_REGION = 'us-east-1'                       // AWS region for Terraform
-        TF_VAR_ssh_key_name = 'my-key'                 // SSH key name for the instance (already set up in AWS)
+        INSTANCE_SSH_KEY_NAME = 'access_for_new_node_js_app'              // SSH key name in AWS (replace as necessary)
         ANSIBLE_HOST_KEY_CHECKING = 'False'            // Disable host key checking for Ansible
         SSH_KEY_PATH = '/path/to/your/private-key.pem' // Path to SSH private key
     }
@@ -20,41 +20,18 @@ pipeline {
                 }
             }
         }
-
-        stage('Terraform Apply or Destroy') {
-            when {
-                expression { return !params.DESTROY }
-            }
+        stage('Terraform Plan Destroy') {
             steps {
                 script {
                     dir('terraform') {
-                        sh 'terraform apply -auto-approve'
+                        sh '''
+                        terraform init -input=false
+                        terraform plan -destroy -out=terraform_destroy.tfplan'
+                        '''
                     }
                 }
             }
-        }
-
-        stage('Ansible Setup') {
-            when {
-                expression { return !params.DESTROY }
-            }
-            steps {
-                script {
-                    // Fetch the public IP output from Terraform
-                    def instance_ip = sh(script: "terraform output -raw instance_ip", returnStdout: true).trim()
-
-                    // Generate an Ansible inventory dynamically
-                    writeFile file: 'inventory.ini', text: """
-                    [app_instance]
-                    ${instance_ip} ansible_user=ubuntu ansible_ssh_private_key_file=${SSH_KEY_PATH}
-                    """
-
-                    // Run the Ansible playbook to configure the instance
-                    sh 'ansible-playbook -i inventory.ini ansible/setup.yml'
-                }
-            }
-        }
-
+        },
         stage('Terraform Destroy') {
             when {
                 expression { return params.DESTROY }
@@ -62,7 +39,7 @@ pipeline {
             steps {
                 script {
                     dir('terraform') {
-                        sh 'terraform destroy -auto-approve'
+                        sh 'terraform apply -auto-approve terraform_destroy.tfplan'
                     }
                 }
             }
