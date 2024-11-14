@@ -12,9 +12,16 @@ File Server Location: /files serves files from the uploads volume directory.
 Generate Initial Certificates
 Before running the setup, you’ll need to generate initial certificates with Certbot. Run the following command in a terminal to obtain the certificates:
 
+### standalone configuration
 bash
 
-``` docker run --rm -v $(pwd)/nginx/ssl:/etc/letsencrypt certbot/certbot certonly --webroot -w /usr/share/nginx/html -d example.com -d www.example.com ```
+``` docker run --rm -p 80:80 -p 443:443 \
+    -v $(pwd)/nginx/ssl:/etc/letsencrypt \
+    -v $(pwd)/nginx/ssl-dhparams:/ssl-dhparams \
+    certbot/certbot certonly --standalone \
+    -d 3dentai.labofdev.com -d 3dentai-be.labofdev.com -d 3dentai-nginx.labofdev.com \
+    --email axelpasechnik@gmail.com --agree-tos -n -vvvv
+```
 
 Replace example.com and www.example.com with your actual domain names.
 

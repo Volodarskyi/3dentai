@@ -17,7 +17,8 @@ package-lock.json
 
 /server/.env
 /client/.env
-
+.env*
+*.env
 /client/yarn.lcck
 /server/yarn.lcck
 # teraform dependencies ingore
