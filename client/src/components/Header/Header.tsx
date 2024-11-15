@@ -1,8 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import Logo from "@/assets/images/logo.png";
-
 import styles from "./styles.module.scss";
 
 const Header = () => {
@@ -13,7 +11,12 @@ const Header = () => {
       >
         <div className="flex lg:flex-1">
           <Link href="#" className={styles.logoContainer}>
-            <Image src={Logo} alt="3DentAL" width={45} height={40} />
+            <Image
+              src={"/assets/images/logo.png"}
+              alt="3DentAL"
+              width={45}
+              height={40}
+            />
             <span className={styles.name}>3DentAL</span>
           </Link>
         </div>
