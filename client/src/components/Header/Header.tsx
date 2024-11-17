@@ -12,7 +12,7 @@ const Header = () => {
         <div className="flex lg:flex-1">
           <Link href="#" className={styles.logoContainer}>
             <Image
-              src={"/assets/images/logo.png"}
+              src={"/assets/images/3dentai_logo.png"}
               alt="3DentAL"
               width={45}
               height={40}

@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 
 import "./globals.scss";
 import "@/styles/index.scss";
+import "@/styles/styles.css";
 
 export const metadata: Metadata = {
   title: "3DentAI",
