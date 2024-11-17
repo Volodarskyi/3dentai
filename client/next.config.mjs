@@ -8,10 +8,15 @@ const nextConfig = {
     NEXT_PUBLIC_APP_BASE_URL_DEVELOPMENT: process.env.NEXT_PUBLIC_APP_BASE_URL_DEVELOPMENT || "http://localhost:5001"
   },
   images: {
+    unoptimized: true, // Disable image optimization. TODO: Remove this line once we know hostnames properly
     remotePatterns: [
       {
         protocol: "https",
         hostname: "tailwindui.com"
+      },
+      {
+        protocol: "https",
+        hostname: "3dentai.paxel.ca",
       },
       {
         protocol: "https",
@@ -21,6 +26,14 @@ const nextConfig = {
         protocol: "https",
         hostname: "nginx-files.paxel.ca",
       },
+      {
+        protocol: "https",
+        hostname: "3dentai.labofdev.com",
+      },
+      {
+        protocol: "https",
+        hostname: "3dentai-be.labofdev.com",
+      }
 
     ],
     deviceSizes: [360, 414, 768, 1366, 1536, 1920],
