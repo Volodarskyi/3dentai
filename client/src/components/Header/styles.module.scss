@@ -1,14 +1,18 @@
 .container {
+  position: fixed;
+  top: 0;
   display: flex;
   align-content: center;
   width: 100%;
-  height: 84px;
-  border-bottom: 2px solid #00f5f5;
-  background-color: #15164D;
+  height: 70px;
+
+  border-bottom: 2px solid var(--color-second-600);
+  background-color: var(--color-main-750);
 }
 
 .items {
   width: 100%;
+  margin: 0 1rem;
 }
 
 .logoContainer {
@@ -19,6 +23,7 @@
 
 .name {
   font-size: 28px;
+  font-weight: 500;
   color: #8cf2ff
 }
 
