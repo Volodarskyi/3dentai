@@ -19,21 +19,23 @@ services:
       - app-network
 
   frontend:
-    image: your-frontend-image:latest  # Replace with your frontend image
+    image: oleksiipasichnyk/confl:null-client-84494db-20241114  # Replace with your frontend image
     container_name: frontend
-    environment:
-      - BACKEND_URL=http://backend:4000  # Backend service URL
     depends_on:
       - backend
     networks:
       - app-network
 
   backend:
-    image: your-backend-image:latest  # Replace with your backend image
+    image: oleksiipasichnyk/confl:hackaton-argo-293d489-20241113 # Replace with your backend image
     container_name: backend
     environment:
-      - MONGO_URI=mongodb://external-mongo-db-url:27017/dbname  # Replace with your MongoDB URI
-      - UPLOAD_DIR=/uploads
+      MONGO_URI: "################################"
+      SERVER_PORT: 5001
+      JWT_SECRET: "sup per key 8426"
+      MISTRAL_API: "https://api.mistral.ai/v1/chat/completions"
+      MISTRAL_TOKEN: "#####################"  # Replace with your MongoDB URI
+      UPLOAD_DIR: "/uploads"
     volumes:
       - uploads:/uploads  # Mount shared uploads directory
     networks:

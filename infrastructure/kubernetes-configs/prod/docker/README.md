@@ -12,6 +12,7 @@ File Server Location: /files serves files from the uploads volume directory.
 Generate Initial Certificates
 Before running the setup, you’ll need to generate initial certificates with Certbot. Run the following command in a terminal to obtain the certificates:
 
+
 ### standalone configuration
 bash
 
