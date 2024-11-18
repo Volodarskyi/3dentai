@@ -19,7 +19,7 @@ services:
       - app-network
 
   frontend:
-    image: oleksiipasichnyk/confl:null-client-84494db-20241114  # Replace with your frontend image
+    image: oleksiipasichnyk/confl:null-client-2a77b51-20241118  # Replace with your frontend image
     container_name: frontend
     depends_on:
       - backend
@@ -27,17 +27,18 @@ services:
       - app-network
 
   backend:
-    image: oleksiipasichnyk/confl:hackaton-argo-293d489-20241113 # Replace with your backend image
+    image: oleksiipasichnyk/confl:hackaton-argo-2a77b51-20241118 # Replace with your backend image
     container_name: backend
     environment:
-      MONGO_URI: "################################"
+      MONGO_URI: "#####################" # Replace with your MongoDB URI
       SERVER_PORT: 5001
       JWT_SECRET: "sup per key 8426"
-      MISTRAL_API: "https://api.mistral.ai/v1/chat/completions"
-      MISTRAL_TOKEN: "#####################"  # Replace with your MongoDB URI
+      MISTRAL_API: "https://api.mistral.ai"
+      MISTRAL_TOKEN: "#####################" # Replace with your MongoDB URI
       UPLOAD_DIR: "/uploads"
+      SERVER_IMAGE_STORE: "https://3dentai-nginx.labofdev.com/files"
     volumes:
-      - uploads:/uploads  # Mount shared uploads directory
+      - uploads:/app/uploads  # Mount shared uploads directory
     networks:
       - app-network
 
@@ -46,7 +47,6 @@ services:
     container_name: certbot
     volumes:
       - ./nginx/ssl:/etc/letsencrypt  # Mount to store SSL certificates
-      - ./nginx/ssl-dhparams:/ssl-dhparams  # Custom Diffie-Hellman params for security
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h; done'"
     depends_on:
       - nginx
@@ -55,6 +55,11 @@ services:
 
 volumes:
   uploads:
+    driver: local
+    driver_opts:
+      type: none
+      device: "/app/uploads"  # Update with the path to your mounted hard drive
+      o: bind
 
 networks:
   app-network:
