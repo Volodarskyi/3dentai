@@ -1,0 +1,18 @@
+.ui-modal{
+
+  &__title{
+    color: var(--color-success-600);
+  }
+}
+
+//OVERWRITE BOOSTRAP STYLES
+.css-dev-only-do-not-override-apn68.ant-modal-root .ant-modal-mask{
+
+  background: rgba(0, 7, 28, 0.87);
+}
+
+.ant-modal .css-dev-only-do-not-override-apn68 .ui-modal .ant-modal-title{
+  background: red;
+}
+
+

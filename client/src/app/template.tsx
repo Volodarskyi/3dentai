@@ -6,6 +6,7 @@ import {usePathname} from "next/navigation";
 import Header from "@/components/Header";
 import {StoreWrapper} from "@/store/provider";
 import {Footer} from "@/components/Footer/Footer";
+import {UiModal} from "@/components/UI/UiModal/UiModal";
 
 
 interface TemplateProps {
@@ -25,6 +26,7 @@ function Template(props: TemplateProps) {
         <StoreWrapper>
             <Header/>
             {children}
+            <UiModal/>
             <Footer/>
         </StoreWrapper>
     );
