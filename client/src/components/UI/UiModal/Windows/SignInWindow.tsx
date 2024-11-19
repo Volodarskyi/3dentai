@@ -1,13 +1,64 @@
-import {FC} from 'react';
+import React, {FC, useState} from 'react';
 import {observer} from "mobx-react-lite";
+import dataFetcher from "@/api/dataFetcher";
+import {useStores} from "@/hooks/useStores";
+import {EAuth} from "@/types/auth";
+import UiPassword from "@/components/UI/UiPassword/UiPassword";
 
 interface ISignInWindowProps {
 }
 
 const SignInWindowComponent: FC<ISignInWindowProps> = () => {
+    const {userStore} = useStores();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const setInputValue = (
+        event: React.ChangeEvent<HTMLInputElement>,
+        value: string,
+        setValue: React.Dispatch<React.SetStateAction<string>>
+    ): void => {
+        setValue(event.target.value);
+    };
+
+    const signIn = async () => {
+        console.log("login");
+
+        const requestUrl = "api/auth/login";
+        console.log("Sign-In-EMAIL:", email);
+        console.log("Sign-In-PASS:", password);
+
+        try {
+            const res = await dataFetcher.post(requestUrl, {email, password});
+            console.log("api signIn res:", res);
+
+            // if (res.result !== "SUCCESS") {
+            //     throw new Error(res.message || "Some thing went wrong");
+            // }
+
+            console.log("LOGIN:", res.data);
+
+            localStorage.setItem(EAuth.TOKEN_ITEM_NAME, res.data.token);
+            userStore.authorization();
+        } catch (e) {
+            console.log("ERROR! Login", e);
+        }
+    };
+
     return (
         <div>
-            SignInWindow
+            <input
+                type={'email'}
+                placeholder={'Email'}
+                value={email}
+                onChange={(event) => setInputValue(event, email, setEmail)}/>
+
+            <UiPassword
+                password={password}
+                setPassword={setPassword}
+            />
+
+            <button onClick={signIn}>Confirm</button>
         </div>
     );
 };

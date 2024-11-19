@@ -17,7 +17,7 @@ const Header = () => {
               width={45}
               height={40}
             />
-            <span className={styles.name}>3DentAL</span>
+            <span className={styles.name}>3DentAI</span>
           </Link>
         </div>
 

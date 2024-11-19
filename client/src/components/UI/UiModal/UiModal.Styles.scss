@@ -1,7 +1,16 @@
 .ui-modal{
 
   &__title{
+    font-size: 1.2rem;
+    font-weight: 700;
     color: var(--color-success-600);
+  }
+
+  &__input{
+    background: rgba(19, 149, 171, 0.25);
+    border: 2px solid rgba(19, 149, 171, 0.1);
+    border-radius: 30px;
+    display: flex;
   }
 }
 

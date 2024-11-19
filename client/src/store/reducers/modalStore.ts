@@ -1,28 +1,22 @@
 import {makeAutoObservable} from "mobx";
+import {EModalWindows} from "@/types/modal";
 
 class ModalStore {
     isShowUiModal: boolean = false;
-    titleModal: string | undefined = undefined
-    windowModal: any = undefined;
+    currentModal: EModalWindows | null = null;
 
     constructor() {
         makeAutoObservable(this);
     }
 
-    openUiModal = (titleModal:string,windowModal: any) => {
-        this.titleModal = titleModal
-        this.windowModal = windowModal
-        this.isShowUiModal = true
+    openModal = (modalType: EModalWindows) => {
+        this.currentModal = modalType;
+        this.isShowUiModal = true;
     };
 
-    clearAll = ()=>{
-        this.titleModal = undefined
-        this.windowModal = undefined
-    }
-
     closeUiModal = () => {
-        this.clearAll()
-        this.isShowUiModal = false
+        this.currentModal = null;
+        this.isShowUiModal = false;
     };
 
 }
