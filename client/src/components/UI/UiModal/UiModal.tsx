@@ -1,12 +1,33 @@
 import React from 'react';
-import {Modal} from 'antd';
-import {observer} from "mobx-react-lite";
-import {useStores} from "@/hooks/useStores";
+import { Modal } from 'antd';
+import { observer } from "mobx-react-lite";
+import { useStores } from "@/hooks/useStores";
+import {EModalWindows} from "@/types/modal";
+import {SignInWindow} from "@/components/UI/UiModal/Windows/SignInWindow";
+import {SignUpWindow} from "@/components/UI/UiModal/Windows/SignUpWidow";
 
 import './UiModal.Styles.scss';
 
+// Utility function to parse the title from the enum
+const getTitleFromEnum = (modalType: EModalWindows | null): string => {
+    if (!modalType) return "";
+    return modalType.replace(/([A-Z])/g, " $1").trim(); // Convert "ENumTitleWindow" -> "ENum Title Window"
+};
+
+
 const UiModalComponent: React.FC = () => {
-    const {modalStore} = useStores()
+    const { modalStore } = useStores();
+
+    const renderModalContent = () => {
+        switch (modalStore.currentModal) {
+            case EModalWindows.SignIn:
+                return <SignInWindow/>;
+            case EModalWindows.SignUp:
+                return <SignUpWindow/>;
+            default:
+                return null;
+        }
+    };
 
     const modalStyles = {
         header: {
@@ -14,26 +35,24 @@ const UiModalComponent: React.FC = () => {
         },
         content: {
             backdropFilter: 'blur(1px)',
-            border:'2px solid #43D3FFFF',
+            border: '2px solid #43D3FFFF',
             backgroundColor: 'rgba(125,226,255,0.2)',
         },
         mask: {
             backdropFilter: 'blur(3px)',
-            backgroundColor: 'rgba(0,7,28,0.85)'
+            backgroundColor: 'rgba(0,7,28,0.85)',
         },
     };
 
     return (
-
         <Modal
             className="ui-modal"
-            title={<div className="ui-modal__title">{modalStore.titleModal}</div>}
+            title={<div className="ui-modal__title">{getTitleFromEnum(modalStore.currentModal)}</div>}
             open={modalStore.isShowUiModal}
-            onOk={modalStore.closeUiModal}
             onCancel={modalStore.closeUiModal}
             footer={null}
             styles={modalStyles}>
-            {modalStore.windowModal}
+            {renderModalContent()}
         </Modal>
     );
 };
