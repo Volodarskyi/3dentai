@@ -2,7 +2,7 @@ import React, {FC, useState} from 'react';
 import {observer} from "mobx-react-lite";
 import dataFetcher from "@/api/dataFetcher";
 import {useStores} from "@/hooks/useStores";
-import UiPassword from "@/components/UI/UiPassword/UiPassword";
+import {UiIcon} from "@/components/UI/UiIcon/UiIcon";
 
 import'../UiModal.Styles.scss';
 
@@ -74,7 +74,7 @@ const SignUpWindowComponent: FC<ISignUpWindowProps> = () => {
 
 
     return (
-        <>
+        <div className="ui-modal__window">
             <input
                 className="ui-modal__input"
                 type={'email'}
@@ -82,24 +82,29 @@ const SignUpWindowComponent: FC<ISignUpWindowProps> = () => {
                 value={email}
                 onChange={(event) => setInputValue(event, email, setEmail)}/>
 
-            <UiPassword
-                password={password}
-                setPassword={setPassword}
-            />
-
-            <UiPassword
-                password={passwordConfirm}
-                setPassword={setPasswordConfirm}/>
+            <input
+                className="ui-modal__input mt-075"
+                type={'text'}
+                placeholder={'First Name'}
+                value={password}
+                onChange={(event) => setInputValue(event, password, setPassword)}/>
 
             <input
-                className="ui-modal__input"
+                className="ui-modal__input mt-075"
+                type={'text'}
+                placeholder={'First Name'}
+                value={password}
+                onChange={(event) => setInputValue(event, passwordConfirm, setPasswordConfirm)}/>
+
+            <input
+                className="ui-modal__input mt-075"
                 type={'text'}
                 placeholder={'First Name'}
                 value={firstName}
                 onChange={(event) => setInputValue(event, firstName, setFirstName)}/>
 
             <input
-                className="ui-modal__input"
+                className="ui-modal__input mt-075"
                 type={'text'}
                 placeholder={'Second Name'}
                 value={secondName}
@@ -107,18 +112,19 @@ const SignUpWindowComponent: FC<ISignUpWindowProps> = () => {
             />
 
             <input
-                className="ui-modal__input"
+                className="ui-modal__input mt-075"
                 type="number"
                 name="birthYear"
-                placeholder="YYYY"
+                placeholder="Birth Year"
                 value={birthYear}
                 onChange={handleInputChange}
-                min="1900"
+                min="1950"
                 max={new Date().getFullYear()}
             />
+            <UiIcon name={'key'}/>
 
             <button onClick={singUp}>Confirm</button>
-        </>
+        </div>
     );
 };
 export const SignUpWindow = observer(SignUpWindowComponent)
