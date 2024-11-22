@@ -24,8 +24,15 @@ const FooterComponent: FC<IFooterProps> = () => {
     return (
         <footer className="footer">
             <div className="footer__container">
-                <UiButton text={'Sign In'} onClick={singIn}/>
-                <UiButton text={'Sign Up'} onClick={signUp}/>
+                <UiButton
+                    text={'Sign In'}
+                    onClick={singIn}
+                    className="ml-025 mr-025"/>
+
+                <UiButton
+                    text={'Sign Up'}
+                    onClick={signUp}
+                    className="ml-025 mr-025"/>
             </div>
         </footer>
     );

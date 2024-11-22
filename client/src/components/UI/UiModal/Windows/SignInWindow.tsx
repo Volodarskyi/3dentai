@@ -3,7 +3,10 @@ import {observer} from "mobx-react-lite";
 import dataFetcher from "@/api/dataFetcher";
 import {useStores} from "@/hooks/useStores";
 import {EAuth} from "@/types/auth";
-import UiPassword from "@/components/UI/UiPassword/UiPassword";
+import {UiInputModal} from "@/components/UI/UiModal/UiInputModal/UiInputModal";
+import {UiButton} from "@/components/UI/UiButton/UiButton";
+
+import'../UiModal.Styles.scss';
 
 interface ISignInWindowProps {
 }
@@ -46,19 +49,26 @@ const SignInWindowComponent: FC<ISignInWindowProps> = () => {
     };
 
     return (
-        <div>
-            <input
-                type={'email'}
-                placeholder={'Email'}
+        <div className="ui-modal__window">
+            <UiInputModal
+                icon={'email'}
+                key={'email'}
                 value={email}
-                onChange={(event) => setInputValue(event, email, setEmail)}/>
-
-            <UiPassword
-                password={password}
-                setPassword={setPassword}
+                onChange={(event) => setInputValue(event, email, setEmail)}
+                placeholder={'Email'}
             />
 
-            <button onClick={signIn}>Confirm</button>
+            <UiInputModal
+                icon={'key'}
+                key={'key'}
+                value={password}
+                onChange={(event) => setInputValue(event, password, setPassword)}
+                placeholder={'Password'}
+                className="mt-075"
+            />
+
+            <UiButton className="mt-15" text={'Confirm'} onClick={signIn} width={200} height={40}/>
+
         </div>
     );
 };

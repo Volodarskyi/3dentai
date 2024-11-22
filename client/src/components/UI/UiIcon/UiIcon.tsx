@@ -3,10 +3,11 @@ import {observer} from "mobx-react-lite";
 import './UiIcon.Styles.scss';
 interface IUiIconProps {
     name:string;
-    size?:number | undefined
+    size?:number | undefined;
+    className?: string;
 }
 
-const UiIconComponent: FC<IUiIconProps> = ({ name, size = 24 }) => {
+const UiIconComponent: FC<IUiIconProps> = ({ name, size = 24,className = '' }) => {
     const src = `/assets/icons/${name}.png`;
 
     return (
@@ -15,7 +16,7 @@ const UiIconComponent: FC<IUiIconProps> = ({ name, size = 24 }) => {
             alt={`icon-${name}`}
             width={size}
             height={size}
-            className="ui-icon"
+            className={`ui-icon ${className}`}
         />
     );
 };

@@ -2,9 +2,10 @@ import React, {FC, useState} from 'react';
 import {observer} from "mobx-react-lite";
 import dataFetcher from "@/api/dataFetcher";
 import {useStores} from "@/hooks/useStores";
-import {UiIcon} from "@/components/UI/UiIcon/UiIcon";
 
 import'../UiModal.Styles.scss';
+import {UiInputModal} from "@/components/UI/UiModal/UiInputModal/UiInputModal";
+import {UiButton} from "@/components/UI/UiButton/UiButton";
 
 interface ISignUpWindowProps {
 }
@@ -45,8 +46,9 @@ const SignUpWindowComponent: FC<ISignUpWindowProps> = () => {
     const singUp = async () => {
         const requestUrl = "/api/auth/register";
 
+        // TODO implement dialog window
         if (password !== passwordConfirm) {
-            console.log('check pass dialog')
+            console.log('check pass dialog TODO')
             return
         }
 
@@ -75,55 +77,102 @@ const SignUpWindowComponent: FC<ISignUpWindowProps> = () => {
 
     return (
         <div className="ui-modal__window">
-            <input
-                className="ui-modal__input"
-                type={'email'}
-                placeholder={'Email'}
+
+            <UiInputModal
+                icon={'email'}
+                key={'email'}
                 value={email}
-                onChange={(event) => setInputValue(event, email, setEmail)}/>
+                onChange={(event) => setInputValue(event, email, setEmail)}
+                placeholder={'Email'}
+            />
 
-            <input
-                className="ui-modal__input mt-075"
-                type={'text'}
-                placeholder={'First Name'}
+            <UiInputModal
+                icon={'key'}
+                key={'key'}
                 value={password}
-                onChange={(event) => setInputValue(event, password, setPassword)}/>
+                onChange={(event) => setInputValue(event, password, setPassword)}
+                placeholder={'Password'}
+                className="mt-075"
+            />
 
-            <input
-                className="ui-modal__input mt-075"
-                type={'text'}
-                placeholder={'First Name'}
-                value={password}
-                onChange={(event) => setInputValue(event, passwordConfirm, setPasswordConfirm)}/>
+            <UiInputModal
+                icon={'key'}
+                key={'passwordConfirm'}
+                value={passwordConfirm}
+                onChange={(event) => setInputValue(event, password, setPasswordConfirm)}
+                placeholder={'Password Confirm'}
+                className="mt-075"
+            />
 
-            <input
-                className="ui-modal__input mt-075"
-                type={'text'}
+            <UiInputModal
+                icon={'name-tag'}
+                key={'firstName'}
                 placeholder={'First Name'}
                 value={firstName}
-                onChange={(event) => setInputValue(event, firstName, setFirstName)}/>
+                onChange={(event) => setInputValue(event, firstName, setFirstName)}
+                className="mt-075"
+            />
 
-            <input
-                className="ui-modal__input mt-075"
-                type={'text'}
+            <UiInputModal
+                icon={'name-tag'}
+                key={'secondName'}
                 placeholder={'Second Name'}
                 value={secondName}
                 onChange={(event) => setInputValue(event, secondName, setSecondName)}
+                className="mt-075"
             />
 
-            <input
-                className="ui-modal__input mt-075"
-                type="number"
-                name="birthYear"
+            <UiInputModal
+                icon={'calendar'}
+                key={'birthYear'}
                 placeholder="Birth Year"
                 value={birthYear}
                 onChange={handleInputChange}
-                min="1950"
-                max={new Date().getFullYear()}
+                className="mt-075"
             />
-            <UiIcon name={'key'}/>
 
-            <button onClick={singUp}>Confirm</button>
+            {/*<input*/}
+            {/*    className="ui-modal__input mt-075"*/}
+            {/*    type={'text'}*/}
+            {/*    placeholder={'First Name'}*/}
+            {/*    value={password}*/}
+            {/*    onChange={(event) => setInputValue(event, password, setPassword)}/>*/}
+
+            {/*<input*/}
+            {/*    className="ui-modal__input mt-075"*/}
+            {/*    type={'text'}*/}
+            {/*    placeholder={'First Name'}*/}
+            {/*    value={password}*/}
+            {/*    onChange={(event) => setInputValue(event, passwordConfirm, setPasswordConfirm)}/>*/}
+
+            {/*<input*/}
+            {/*    className="ui-modal__input mt-075"*/}
+            {/*    type={'text'}*/}
+            {/*    placeholder={'First Name'}*/}
+            {/*    value={firstName}*/}
+            {/*    onChange={(event) => setInputValue(event, firstName, setFirstName)}/>*/}
+
+            {/*<input*/}
+            {/*    className="ui-modal__input mt-075"*/}
+            {/*    type={'text'}*/}
+            {/*    placeholder={'Second Name'}*/}
+            {/*    value={secondName}*/}
+            {/*    onChange={(event) => setInputValue(event, secondName, setSecondName)}*/}
+            {/*/>*/}
+
+            {/*<input*/}
+            {/*    className="ui-modal__input mt-075"*/}
+            {/*    type="number"*/}
+            {/*    name="birthYear"*/}
+            {/*    placeholder="Birth Year"*/}
+            {/*    value={birthYear}*/}
+            {/*    onChange={handleInputChange}*/}
+            {/*    min="1950"*/}
+            {/*    max={new Date().getFullYear()}*/}
+            {/*/>*/}
+
+            <UiButton className="mt-15" text={'Confirm'} onClick={singUp} width={200} height={40}/>
+
         </div>
     );
 };
