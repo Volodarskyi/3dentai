@@ -1,3 +1,41 @@
-.ui-input-modal{
+.ui-input-modal {
+  position: relative; // Ensures positioning for the icon
+  background: rgba(19, 149, 171, 0.25);
+  border: 2px solid rgba(19, 149, 171, 0.1);
+  border-radius: 30px;
+  padding: 4px 8px;
+  width: 100%;
+  max-width: 400px; // Adjust as needed
 
+
+  &:focus-within {
+    border-color: rgba(66, 246, 150, 0.50);
+    box-shadow: 0 0 5px rgba(94, 250, 167, 0.54);
+  }
+
+  .input-field {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 16px;
+
+    padding: 4px 8px 4px 40px;// Space for the icon inside the input
+    background-color: transparent;
+    color: var(--color-text-white); // Text color
+
+    &::placeholder {
+      color: #01E3E3;
+      font-style: italic;
+    }
+  }
+
+  .input-icon {
+    position: absolute;
+    left: 12px; // Position icon inside the input field
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none; // Makes the icon unclickable
+    width: 24px; // Default icon size
+    height: 24px; // Default icon size
+  }
 }

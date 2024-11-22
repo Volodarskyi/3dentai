@@ -36,18 +36,18 @@ const Authorization = () => {
   //   console.log("navigate to scan");
   // };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    const currentYear = new Date().getFullYear();
-    const numericYear = Number(value);
-
-    if (numericYear < 1900 || numericYear > currentYear) {
-      setErrorBirthYear(`birthYear must be between 1900 and ${currentYear}.`);
-    } else {
-      setErrorBirthYear(null);
-      setBirthYear(value);
-    }
-  };
+  // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const { value } = e.target;
+  //   const currentYear = new Date().getFullYear();
+  //   const numericYear = Number(value);
+  //
+  //   if (numericYear < 1900 || numericYear > currentYear) {
+  //     setErrorBirthYear(`birthYear must be between 1900 and ${currentYear}.`);
+  //   } else {
+  //     setErrorBirthYear(null);
+  //     setBirthYear(value);
+  //   }
+  // };
 
   const singIn = async () => {
     const requestUrl = "/api/auth/register";
