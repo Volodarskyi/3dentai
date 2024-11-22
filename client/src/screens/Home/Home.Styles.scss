@@ -1,12 +1,17 @@
 .home {
   height: 100vh; // Full viewport height
+  width: 100%; // Full width
   display: flex;
   justify-content: center;
   align-items: center;
-  background: radial-gradient(circle, #011456, #00061a);
+  //background: radial-gradient(circle, #011456, #00061a);
   color: white;
   overflow: hidden;
   padding: 0 1rem;
+  background-image: url('/assets/images/3dentai-background-home-page.png'); // path starts from the public folder
+  background-size: cover; // Adjusts the image size
+  background-position: center;
+  background-repeat: no-repeat;
 
   &__content {
     width: 100%;
