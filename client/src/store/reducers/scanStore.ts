@@ -6,14 +6,14 @@ import { ISteps } from "@/types/steps";
 
 class ScanStore {
   steps: ISteps[] = [];
-  step: number = 0;
-  disabledPrevious: boolean = true;
-  disabledNext: boolean = false;
+  step = 0;
+  disabledPrevious = true;
+  disabledNext = false;
 
   imgFile: File | undefined = undefined;
-  isLoading: boolean = false;
-  imgUrl: string = "";
-  imgDescription: string = "";
+  isLoading = false;
+  imgUrl = "";
+  imgDescription = "";
 
   constructor() {
     makeAutoObservable(this);
