@@ -1,12 +1,12 @@
 "use client";
 
-import { useEffect } from "react";
-import { Row, Steps, theme } from "antd";
+import { useEffect, useRef } from "react";
+import { Carousel, theme } from "antd";
+import { CarouselRef } from "antd/lib/carousel";
 import { observer } from "mobx-react-lite";
 
-import GlobalLoading from "@/components/GlobalLoading";
-import Loading from "@/components/Loading";
-import Navigation from "@/components/Navigation";
+import BottomNavigation from "@/components/BottomNavigation";
+import ScanNavigation from "@/components/ScanNavigation";
 import {
   AnalyzePhoto,
   Display3DModal,
@@ -14,6 +14,8 @@ import {
 } from "@/components/scanSteps";
 import { useStores } from "@/hooks/useStores";
 import { ISteps } from "@/types/steps";
+
+import styles from "./styles.module.scss";
 
 const ScanScreen = () => {
   const { scanStore } = useStores();
@@ -28,6 +30,15 @@ const ScanScreen = () => {
     disabledPrevious,
     disabledNext,
   } = scanStore;
+
+  const ref = useRef<CarouselRef>(null);
+
+  useEffect(() => {
+    if (ref.current) {
+      console.log("step", step);
+      ref.current?.goTo(step);
+    }
+  }, [step]);
 
   useEffect(() => {
     const initSteps: ISteps[] = [
@@ -52,40 +63,44 @@ const ScanScreen = () => {
   }, [setSteps]);
 
   return (
-    <Row style={{ width: "100%" }}>
-      {isLoading && <GlobalLoading />}
-      {steps.length ? (
-        <>
-          <Steps current={step} items={steps} />
-          <div
-            style={{
-              width: "100%",
-              minHeight: "260px",
-              display: "flex",
-              justifyContent: "center",
-              textAlign: "center",
-              color: token.colorTextTertiary,
-              backgroundColor: token.colorFillAlter,
-              borderRadius: token.borderRadiusLG,
-              border: `1px dashed ${token.colorBorder}`,
-              marginTop: 16,
-            }}
-          >
-            {steps[step].content}
-          </div>
-          <Navigation
-            disabledPrevious={disabledPrevious}
-            disabledNext={disabledNext}
-            previousStep={previousStep}
-            nextStep={nextStep}
-          />
-        </>
-      ) : (
-        <div className={"min-h-56 w-full flex justify-center items-center"}>
-          <Loading />
-        </div>
-      )}
-    </Row>
+    <>
+      {/*<Row style={{ width: "100%" }}>*/}
+      {/*<Steps current={step} items={steps} />*/}
+      {/*<div*/}
+      {/*  style={{*/}
+      {/*    width: "100%",*/}
+      {/*    minHeight: "260px",*/}
+      {/*    display: "flex",*/}
+      {/*    justifyContent: "center",*/}
+      {/*    textAlign: "center",*/}
+      {/*    color: token.colorTextTertiary,*/}
+      {/*    backgroundColor: token.colorFillAlter,*/}
+      {/*    borderRadius: token.borderRadiusLG,*/}
+      {/*    border: `1px dashed ${token.colorBorder}`,*/}
+      {/*    marginTop: 16,*/}
+      {/*  }}*/}
+      {/*>*/}
+      {/*  {steps[step]?.content}*/}
+      {/*</div>*/}
+      {/*</Row>*/}
+
+      <div className={styles.container}>
+        <Carousel effect="fade" ref={ref} className={styles.slider}>
+          <UploadPhoto />
+          <AnalyzePhoto />
+          <Display3DModal />
+        </Carousel>
+      </div>
+
+      <BottomNavigation>
+        <ScanNavigation
+          disabledPrevious={disabledPrevious}
+          disabledNext={disabledNext}
+          previousStep={previousStep}
+          nextStep={nextStep}
+        />
+      </BottomNavigation>
+    </>
   );
 };
 

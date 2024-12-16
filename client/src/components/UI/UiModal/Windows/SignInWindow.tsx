@@ -2,7 +2,7 @@ import React, { FC, useState } from "react";
 import { observer } from "mobx-react-lite";
 
 import dataFetcher from "@/api/dataFetcher";
-import { UiButton } from "@/components/UI/UiButton/UiButton";
+import UiButton from "@/components/UI/UiButton";
 import { UiInputModal } from "@/components/UI/UiModal/UiInputModal/UiInputModal";
 import { useStores } from "@/hooks/useStores";
 import { EAuth } from "@/types/auth";

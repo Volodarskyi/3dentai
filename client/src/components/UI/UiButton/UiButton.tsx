@@ -1,7 +1,6 @@
-import { FC } from "react";
 import { observer } from "mobx-react-lite";
 
-import "./UiButton.Styles.scss";
+import styles from "./styles.module.scss";
 
 interface IUiButtonProps {
   text: string;
@@ -12,19 +11,19 @@ interface IUiButtonProps {
   className?: string | undefined;
 }
 
-const UiButtonComponent: FC<IUiButtonProps> = ({
+const UiButton = ({
   text,
   onClick,
   width = 150,
   height = 45,
   disabled = false,
   className = "",
-}) => {
+}: IUiButtonProps) => {
   return (
     <button
       onClick={onClick}
-      className={`ui-btn ui-btn__action ${className}`}
-      style={{ width: `${width}px`, height: `${height}px` }}
+      className={`${styles.btn} ${styles.btn__action} ${className}`}
+      style={{ width, height }}
       disabled={disabled}
     >
       {text}
@@ -32,4 +31,4 @@ const UiButtonComponent: FC<IUiButtonProps> = ({
   );
 };
 
-export const UiButton = observer(UiButtonComponent);
+export default observer(UiButton);

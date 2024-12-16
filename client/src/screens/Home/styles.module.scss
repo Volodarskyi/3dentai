@@ -1,5 +1,5 @@
 .home {
-  height: 100vh; // Full viewport height
+  min-height: calc(100vh - 70px); // Full viewport height
   width: 100%; // Full width
   display: flex;
   justify-content: center;
@@ -14,32 +14,31 @@
   background-repeat: no-repeat;
 
   &__content {
-    width: 100%;
-    position: relative;
     display: flex;
+    flex-direction: column;
+    width: 100%;
     justify-content: center;
+    align-items: center;
+    gap: 1rem;
 
 
-    &-title {
-      position: absolute;
-      top: -9rem;
+    &__title {
       color: var(--color-success-500);
       text-align: center;
       font-size: 4rem;
       font-weight: 600;
     }
 
-    &-description {
-      position: absolute;
-      top: -3rem;
+    &__description {
       font-size: 1.5rem;
       font-weight: 600;
       color: var(--color-text-white);
       text-align: center;
     }
 
-    &-animation {
-
+    &__animation {
+      width: 256px;
+      height: 400px;
     }
   }
 }
