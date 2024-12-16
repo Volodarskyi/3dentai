@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-import styles from "./styles.module.scss";
+import styles from "./bottomNavigation.module.scss";
 
 interface IFooter {
   children: ReactNode;

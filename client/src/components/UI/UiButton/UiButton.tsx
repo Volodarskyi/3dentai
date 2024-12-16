@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 
-import styles from "./styles.module.scss";
+import styles from "./button.module.scss";
 
 interface IUiButtonProps {
   text: string;

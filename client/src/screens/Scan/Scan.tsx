@@ -15,7 +15,7 @@ import {
 import { useStores } from "@/hooks/useStores";
 import { ISteps } from "@/types/steps";
 
-import styles from "./styles.module.scss";
+import styles from "./scan.module.scss";
 
 const ScanScreen = () => {
   const { scanStore } = useStores();

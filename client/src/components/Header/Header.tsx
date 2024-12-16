@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import styles from "./styles.module.scss";
+import styles from "./header.module.scss";
 
 const Header = () => {
   return (

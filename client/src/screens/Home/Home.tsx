@@ -3,7 +3,7 @@
 import AuthNavigation from "@/components/AuthNavigation";
 import BottomNavigation from "@/components/BottomNavigation";
 
-import styles from "./styles.module.scss";
+import styles from "./home.module.scss";
 
 const HomeScreen = () => {
   return (
