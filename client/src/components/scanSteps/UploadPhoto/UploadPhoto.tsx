@@ -34,14 +34,14 @@ const UploadPhoto = () => {
       />
       <div
         className={
-          "flex justify-center items-center w-full min-h-96 border border-gray-200 rounded-b-lg overflow-hidden p-2"
+          "flex justify-center items-center w-full border border-gray-200 rounded-b-lg overflow-hidden p-2"
         }
       >
         {imgUrl ? (
           <div
             style={{
               width: "100%",
-              minHeight: "24rem",
+              // minHeight: "24rem",
               display: "flex",
               justifyContent: "center",
               flexDirection: "column",

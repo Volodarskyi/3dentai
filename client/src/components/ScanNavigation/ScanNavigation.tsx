@@ -16,8 +16,14 @@ const ScanNavigation = (props: NavigationProps) => {
         text={"Back"}
         onClick={previousStep}
         className="ml-025 mr-025"
+        disabled={disabledPrevious}
       />
-      <UiButton text={"Next"} onClick={nextStep} className="ml-025 mr-025" />
+      <UiButton
+        text={"Next"}
+        onClick={nextStep}
+        className="ml-025 mr-025"
+        disabled={disabledNext}
+      />
     </>
   );
 };
