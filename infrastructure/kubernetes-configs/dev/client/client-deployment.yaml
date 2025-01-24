@@ -81,9 +81,8 @@ spec:
           env:
             - name: NODE_ENV
               value: "production"
-          envFrom:
-           - secretRef:
-               name: client-env-secret  # Reference to the secret for environment variables
+            - name: NEXT_PUBLIC_APP_BASE_URL_PRODUCTION
+              value: "https://hackaton-server.paxel.ca"  # Reference to the secret for environment variables
           resources:
             requests:
               memory: "4Gi"

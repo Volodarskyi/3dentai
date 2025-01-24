@@ -60,10 +60,10 @@ pipeline {
         string(name: 'BUILD_BRANCH', defaultValue: 'develop', description: 'Branch to build Docker image from')
     }
 
-    triggers {
-        pollSCM('*/5 * * * *')
+     triggers {
+        pollSCM('*/1 * * * *')
     }
-
+    
     stages {
         stage('Install Git') {
             steps {
@@ -75,23 +75,16 @@ pipeline {
 
         stage('Full Repository Checkout') {
             steps {
-                container('jnlp') {
-                    sshagent(credentials: ['github-ssh-key']) {
-                        script {
-                            sh """
-                            mkdir -p ~/.ssh
-                            echo "Host github.com\\n\\tStrictHostKeyChecking no\\n" >> ~/.ssh/config
-                            git config --global --add safe.directory ${WORKSPACE_DIR}
-                            cd ${WORKSPACE_DIR}
-                            git init
-                            git remote remove origin || true
-                            git remote add origin ${REPO_URL}
-                            git fetch --depth=1 origin ${params.BUILD_BRANCH}
-                            git checkout ${params.BUILD_BRANCH}
-                            """
-                        }
-                    }
-                }
+                // container('jnlp') {
+                    checkout([
+                        $class: 'GitSCM',
+                        branches: [[name: "*/develop"]],
+                        userRemoteConfigs: [[
+                            url: "${REPO_URL}",
+                            credentialsId: 'github-ssh-key'
+                        ]]
+                    ])
+                //}
             }
         }
 
@@ -155,8 +148,8 @@ pipeline {
                                     echo "ERROR: ${manifestPath} not found"
                                     exit 1
                                 fi
-                                git rebase origin/${params.BUILD_BRANCH}
                                 git push --force origin deploy
+                                git checkout develop
                                 """
                             }
                         }
