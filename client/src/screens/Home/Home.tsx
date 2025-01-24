@@ -1,10 +1,12 @@
 "use client";
 
 import './Home.Styles.scss';
+import {PageDecorations} from "@/components/PageDecorations/PageDecorations";
 
 const HomeScreen = () => {
     return (
         <div className="home">
+            <PageDecorations/>
             <div className="home__content">
                 <div className="home__content-title">
                     <h1>3DentAI</h1>
@@ -15,7 +17,7 @@ const HomeScreen = () => {
                 </div>
                 <img
                     className="home__animation"
-                    src="/assets/images/3dentai-animation-main_v02.gif"
+                    src="/assets/images/3dentai-animation-main_v03.gif"
                     alt="Loading Animation"
                 />
             </div>
