@@ -1,16 +1,17 @@
 {
   "name": "client_new",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
-    "dev": "cross-env NEXT_PUBLIC_APP_ENV=production next dev",
-    "dev:local": "cross-env NEXT_PUBLIC_APP_ENV=development next dev",
-    "build": "cross-env NEXT_PUBLIC_APP_ENV=production next build",
+    "dev": "cross-env APP_ENV=production next dev",
+    "dev:local": "cross-env APP_ENV=development next dev",
+    "build": "cross-env APP_ENV=production next build",
     "start": "next start",
-    "deploy": "cross-env NEXT_PUBLIC_APP_ENV=production next build && firebase deploy"
+    "deploy": "cross-env APP_ENV=production next build && firebase deploy"
   },
   "dependencies": {
     "@heroicons/react": "^2.1.5",
+    "antd": "^5.21.6",
     "axios": "^1.7.7",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "firebase": "^10.14.1",
@@ -18,7 +19,9 @@
     "mobx-react-lite": "^4.0.7",
     "next": "14.2.15",
     "react": "^18",
-    "react-dom": "^18"
+    "react-bootstrap": "^2.10.5",
+    "react-dom": "^18",
+    "sass": "^1.80.6"
   },
   "devDependencies": {
     "@react-three/drei": "^9.114.6",
@@ -39,5 +42,5 @@
     "three": "^0.169.0",
     "typescript": "^5"
   },
-  "proxy": "http://localhost:5001"
+  "proxy": "http://localhost:80"
 }

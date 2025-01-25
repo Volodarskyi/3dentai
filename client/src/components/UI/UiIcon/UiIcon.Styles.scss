@@ -1,0 +1,10 @@
+.ui-icon{
+  display: inline-block;
+  vertical-align: middle;
+  object-fit: contain;
+  opacity: .85;
+
+  &:hover{
+    opacity: .99;
+  }
+}

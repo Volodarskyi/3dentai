@@ -12,7 +12,7 @@ import routes from './routes';
 const app = express();
 dotenv.config();
 
-app.use(cors({ origin: true }));
+app.use(cors({ origin: '*' }));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(helmet());
@@ -23,10 +23,7 @@ app.use('/api', routes);
 
 async function start() {
   if (typeof process.env.MONGO_URI === 'string') {
-    await connect(process.env.MONGO_URI, {
-      // useNewUrlParser: true,
-      // useUnifiedTopology: true,
-    });
+    await connect(process.env.MONGO_URI);
   }
 
   app.listen(process.env.SERVER_PORT, () => {

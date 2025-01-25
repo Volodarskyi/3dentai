@@ -1,6 +1,10 @@
 // TODO refactoring
 const analyzeImage = async (imageUrl: string) => {
   // TODO create dataFetcher for it.
+  const token = process.env.MISTRAL_TOKEN;
+  console.log(`url - ${process.env.MISTRAL_API}/v1/chat/completions`);
+  console.log(`Token: ${token}`);
+
   try {
     const response = await fetch(
       `${process.env.MISTRAL_API}/v1/chat/completions`,
@@ -8,7 +12,7 @@ const analyzeImage = async (imageUrl: string) => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${process.env.MISTRAL_TOKEN}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           model: 'pixtral-12b-2409',
@@ -35,10 +39,11 @@ const analyzeImage = async (imageUrl: string) => {
       // TODO return only needed data
       return await response.json();
     }
+    console.log('response', response);
     throw new Error(`API request failed with status ${response.status}`);
   } catch (error) {
     console.log('error', error);
-    return 'Error occurred. Please try again later.';
+    return `Error occurred. ${error?.toString()}`;
   }
 };
 

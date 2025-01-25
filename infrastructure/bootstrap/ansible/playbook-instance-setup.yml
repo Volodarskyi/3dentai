@@ -1,0 +1,88 @@
+---
+- name: Configure EC2 instance with Docker, Docker Compose, and Zsh
+  hosts: all
+  become: true
+  vars:
+    docker_compose_version: "v2.20.2"  # Latest Docker Compose version as of this update
+    user: ubuntu  # Adjust this to the specific username on your instance if different
+
+  tasks:
+    - name: Update and upgrade system packages
+      apt:
+        update_cache: yes
+        upgrade: dist
+
+    - name: Install prerequisites for Docker and Zsh
+      apt:
+        name: 
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+          - zsh
+        state: present
+
+    - name: Add Docker GPG key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker repository
+      apt_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
+        state: present
+
+    - name: Install Docker
+      apt:
+        name: docker-ce
+        state: latest
+        update_cache: yes
+
+    - name: Start Docker service
+      systemd:
+        name: docker
+        enabled: true
+        state: started
+
+    - name: Add user to the Docker group
+      user:
+        name: "{{ user }}"
+        groups: docker
+        append: true
+
+    - name: Download Docker Compose
+      get_url:
+        url: "https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-{{ ansible_system }}-{{ ansible_architecture }}"
+        dest: /usr/local/bin/docker-compose
+        mode: '0755'
+
+    - name: Set permissions on Docker Compose
+      file:
+        path: /usr/local/bin/docker-compose
+        mode: '0755'
+        owner: root
+        group: root
+
+    - name: Verify Docker installation
+      command: docker --version
+      register: docker_version_output
+
+    - name: Print Docker version
+      debug:
+        var: docker_version_output.stdout
+
+    - name: Verify Docker Compose installation
+      command: docker-compose --version
+      register: docker_compose_version_output
+
+    - name: Print Docker Compose version
+      debug:
+        var: docker_compose_version_output.stdout
+
+    - name: Verify Zsh installation
+      command: zsh --version
+      register: zsh_version_output
+
+    - name: Print Zsh version
+      debug:
+        var: zsh_version_output.stdout

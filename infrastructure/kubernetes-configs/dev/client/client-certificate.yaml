@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: 3dentai.paxel.ca
+  namespace: hackaton-argo
+spec:
+  secretName: 3dentai.paxel.ca-tls
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  commonName:  3dentai.paxel.ca
+  dnsNames:
+  - 3dentai.paxel.ca

@@ -1,7 +1,9 @@
-import scanStore from "./reducers/scan";
-import { UploadImg } from "./reducers/uploadImg";
+import scanStore from "./reducers/scanStore";
+import userStore from "./reducers/userStore";
+import modalStore from "./reducers/modalStore";
 
 export const RootStore = {
-  scanStore: new scanStore(),
-  uploadImgStore: new UploadImg(),
+  scanStore,
+  userStore,
+  modalStore
 };

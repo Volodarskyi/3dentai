@@ -1,0 +1,32 @@
+.container {
+  position: fixed;
+  top: 0;
+  display: flex;
+  align-content: center;
+  width: 100%;
+  height: 70px;
+
+  border-bottom: 2px solid var(--color-second-600);
+  background-color: var(--color-main-750);
+  opacity: .95;
+
+  z-index: 10000;
+}
+
+.items {
+  width: 100%;
+  margin: 0 1rem;
+}
+
+.logoContainer {
+  display: flex;
+  align-content: center;
+  gap: 8px;
+}
+
+.name {
+  font-size: 28px;
+  font-weight: 500;
+  color: #8cf2ff
+}
+

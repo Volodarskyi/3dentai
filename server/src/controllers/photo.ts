@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import multer from 'multer';
 import path from 'path';
+import { DEFAULT_SERVER_IMAGE_STORE } from '../constants/config';
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -26,7 +27,7 @@ const uploadPhoto = async (req: Request, res: Response) => {
       return res.status(400).send({ message: 'No file provided' });
     }
 
-    const publicUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+    const publicUrl = `${process.env.SERVER_IMAGE_STORE ?? DEFAULT_SERVER_IMAGE_STORE}/${req.file.filename}`;
     return res.status(200).send({ url: publicUrl });
   });
 };

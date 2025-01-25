@@ -1,13 +1,5 @@
-"use client";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import HomeScreen from "@/screens/Home";
 
 export default function Home() {
-  const router = useRouter();
-
-  useEffect(() => {
-    router.push("/scan");
-  }, [router]);
-
-  return <div className="min-h-full" />;
+  return <HomeScreen />;
 }

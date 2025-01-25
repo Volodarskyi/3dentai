@@ -8,7 +8,7 @@ interface IGenerateRes {
 }
 
 export function generateRes(values: IGenerateRes) {
-  const { status = 200, data, error, message = 'unexpected error' } = values;
+  const { status = 200, data, error, message = '' } = values;
 
   return {
     status,

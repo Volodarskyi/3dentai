@@ -27,11 +27,15 @@ class DataFetcher {
   }
 
   static async postFile(url: string, file: FormData) {
-    const res = await axiosFetcher.post(url, file, {
-      headers: {
-        "Content-Type": "multipart/form-data",
+    const res = await axiosFetcher.post(
+      `${process.env.NEXT_PUBLIC_APP_IMAGE_STORE}/${url}`,
+      file,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       },
-    });
+    );
     return res.data.url;
   }
 }

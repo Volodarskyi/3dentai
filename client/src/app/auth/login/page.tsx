@@ -1,5 +1,11 @@
-const Login = () => {
-  return <div>Login</div>;
+import { Metadata } from "next";
+
+import AuthScreen from "@/screens/AuthLogin";
+
+export const metadata: Metadata = {
+  title: "Login",
 };
 
-export default Login;
+export default function Login() {
+  return <AuthScreen />;
+}
