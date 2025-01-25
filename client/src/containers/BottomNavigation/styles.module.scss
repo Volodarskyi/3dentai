@@ -1,6 +1,4 @@
-.footer{
-  position: fixed;
-  bottom: 0;
+.container {
   height: 70px;
   display: flex;
   width: 100%;
@@ -8,10 +6,5 @@
   align-items: center;
   justify-content: center;
   border-top: 2px solid var(--color-second-600);
-  z-index: 10000;
   opacity: .95;
-
-  &__container {
-    justify-content: space-between;
-  }
 }

@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-import BottomNavigation from "@/components/BottomNavigation";
+import BottomNavigation from "@/containers/BottomNavigation";
 import Navigation from "@/screens/Scan/components/Navigation";
 
 interface TemplateProps {

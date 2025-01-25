@@ -1,4 +1,4 @@
 export enum EModalWindows {
-    SignIn = "SignIn",
-    SignUp = "SignUp"
+  SignIn = "SignIn",
+  SignUp = "SignUp",
 }

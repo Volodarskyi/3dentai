@@ -1,0 +1,35 @@
+.ui-modal{
+
+  &__title{
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--color-success-600);
+  }
+
+  &__window{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__input{
+    display: flex;
+    width: 80%;
+    background: rgba(19, 149, 171, 0.25);
+    border: 2px solid rgba(19, 149, 171, 0.1);
+    border-radius: 30px;
+  }
+}
+
+//OVERWRITE BOOSTRAP STYLES
+.css-dev-only-do-not-override-apn68.ant-modal-root .ant-modal-mask{
+
+  background: rgba(0, 7, 28, 0.87);
+}
+
+.ant-modal .css-dev-only-do-not-override-apn68 .ui-modal .ant-modal-title{
+  background: red;
+}
+
+

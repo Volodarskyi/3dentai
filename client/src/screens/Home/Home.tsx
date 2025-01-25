@@ -1,29 +1,40 @@
 "use client";
 
-import './Home.Styles.scss';
-import {PageDecorations} from "@/components/PageDecorations/PageDecorations";
+import { PageDecorations } from "@/components/PageDecorations/PageDecorations";
+import AuthNavigation from "@/containers/AuthNavigation";
+import BottomNavigation from "@/containers/BottomNavigation";
+
+import styles from "./home.module.scss";
 
 const HomeScreen = () => {
-    return (
-        <div className="home">
-            <PageDecorations/>
-            <div className="home__content">
-                <div className="home__content-title">
-                    <h1>3DentAI</h1>
-                </div>
-                <div className="home__content-description">
-                    <h2>Primary diagnosis of tooth and gum
-                        diseases at home using a compact camera and AI</h2>
-                </div>
-                <img
-                    className="home__animation"
-                    src="/assets/images/3dentai-animation-main_v03.gif"
-                    alt="Loading Animation"
-                />
-            </div>
+  return (
+    <>
+      {/*<PageDecorations />*/}
+      <div className={styles.home}>
+        <div className={styles.empty} />
+        <div className={styles.content}>
+          <div className={styles.title}>
+            <h1>3DentAI</h1>
+          </div>
+          <div className={styles.description}>
+            <h2>
+              Primary diagnosis of tooth and gum diseases at home using a
+              compact camera and AI
+            </h2>
+          </div>
+          <img
+            className={styles.img}
+            src="/assets/images/3dentai-animation-main_v03.gif"
+            alt="Loading Animation"
+          />
         </div>
-    )
-
+        <div className={styles.empty} />
+      </div>
+      <BottomNavigation>
+        <AuthNavigation />
+      </BottomNavigation>
+    </>
+  );
 };
 
 export default HomeScreen;
