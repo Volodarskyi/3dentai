@@ -3,9 +3,9 @@ import { observer } from "mobx-react-lite";
 
 import "./UiIcon.Styles.scss";
 interface IUiIconProps {
-  name: string;
-  size?: number | undefined;
-  className?: string;
+    name:string;
+    size?:number | undefined;
+    className?: string;
 }
 
 const UiIconComponent: FC<IUiIconProps> = ({
@@ -15,8 +15,8 @@ const UiIconComponent: FC<IUiIconProps> = ({
 }) => {
   const src = `/assets/icons/${name}.png`;
 
-  return (
-    // eslint-disable-next-line @next/next/no-img-element
+    return (
+        // eslint-disable-next-line @next/next/no-img-element
     <img
       src={src}
       alt={`icon-${name}`}
@@ -27,4 +27,4 @@ const UiIconComponent: FC<IUiIconProps> = ({
   );
 };
 
-export const UiIcon = observer(UiIconComponent);
+export const UiIconComponent;

@@ -1,33 +1,36 @@
-import React from "react";
-import { Modal } from "antd";
+import React from 'react';
+import { Modal } from 'antd';
 import { observer } from "mobx-react-lite";
 
 import { SignInWindow } from "@/components/UI/UiModal/Windows/SignInWindow";
 import { SignUpWindow } from "@/components/UI/UiModal/Windows/SignUpWidow";
 import { useStores } from "@/hooks/useStores";
-import { EModalWindows } from "@/types/modal";
+import {EModalWindows} from "@/types/modal";
+import {SignInWindow} from "@/components/UI/UiModal/Windows/SignInWindow";
+import {SignUpWindow} from "@/components/UI/UiModal/Windows/SignUpWidow";
 
 import "./UiModal.Styles.scss";
 
 // Utility function to parse the title from the enum
 const getTitleFromEnum = (modalType: EModalWindows | null): string => {
-  if (!modalType) return "";
-  return modalType.replace(/([A-Z])/g, " $1").trim(); // Convert "ENumTitleWindow" -> "ENum Title Window"
+    if (!modalType) return "";
+    return modalType.replace(/([A-Z])/g, " $1").trim(); // Convert "ENumTitleWindow" -> "ENum Title Window"
 };
 
-const UiModalComponent: React.FC = () => {
-  const { modalStore } = useStores();
 
-  const renderModalContent = () => {
-    switch (modalStore.currentModal) {
-      case EModalWindows.SignIn:
-        return <SignInWindow />;
-      case EModalWindows.SignUp:
-        return <SignUpWindow />;
-      default:
-        return null;
-    }
-  };
+const UiModalComponent: React.FC = () => {
+    const { modalStore } = useStores();
+
+    const renderModalContent = () => {
+        switch (modalStore.currentModal) {
+            case EModalWindows.SignIn:
+                return <SignInWindow/>;
+            case EModalWindows.SignUp:
+                return <SignUpWindow/>;
+            default:
+                return null;
+        }
+    };
 
   const modalStyles = {
     header: {
@@ -44,10 +47,10 @@ const UiModalComponent: React.FC = () => {
     },
   };
 
-  return (
-    <Modal
-      className="ui-modal"
-      title={
+    return (
+        <Modal
+            className="ui-modal"
+            title={
         <div className="ui-modal__title">
           {getTitleFromEnum(modalStore.currentModal)}
         </div>
@@ -57,9 +60,9 @@ const UiModalComponent: React.FC = () => {
       footer={null}
       styles={modalStyles}
     >
-      {renderModalContent()}
-    </Modal>
-  );
+            {renderModalContent()}
+        </Modal>
+    );
 };
 
 export const UiModal = observer(UiModalComponent);

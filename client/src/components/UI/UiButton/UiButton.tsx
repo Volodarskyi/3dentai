@@ -1,10 +1,11 @@
-import { observer } from "mobx-react-lite";
+import {FC} from 'react';
+import {observer} from "mobx-react-lite";
+import './UiButton.Styles.scss';
 
 import styles from "./button.module.scss";
 
 interface IUiButtonProps {
   text: string;
-  onClick: () => void;
   width?: number | undefined;
   height?: number | undefined;
   disabled?: boolean | undefined;
@@ -31,4 +32,4 @@ const UiButton = ({
   );
 };
 
-export default observer(UiButton);
+export default UiButton;

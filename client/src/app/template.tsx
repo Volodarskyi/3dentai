@@ -4,21 +4,23 @@ import { ReactNode } from "react";
 
 import Header from "@/components/Header";
 import { UiModal } from "@/components/UI/UiModal/UiModal";
-import { StoreWrapper } from "@/store/provider";
+import {StoreWrapper} from "@/store/provider";
+import {Footer} from "@/components/Footer/Footer";
+import {UiModal} from "@/components/UI/UiModal/UiModal";
 
 interface TemplateProps {
-  readonly children: ReactNode;
+    readonly children: ReactNode;
 }
 
 function Template(props: TemplateProps) {
-  const { children } = props;
+    const {children} = props;
 
-  return (
+    return (
     <StoreWrapper>
       <Header />
       {children}
       <UiModal />
     </StoreWrapper>
-  );
+    );
 }
 export default Template;

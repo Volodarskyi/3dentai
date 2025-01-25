@@ -1,18 +1,19 @@
 import React, { FC } from "react";
 import { observer } from "mobx-react-lite";
 
-import { UiIcon } from "@/components/UI/UiIcon/UiIcon";
+import './UiIntputModal.Styles.scss';
+import {UiIcon} from "@/components/UI/UiIcon/UiIcon";
 
 import "./UiIntputModal.Styles.scss";
 
 interface IUiInputModalProps {
-  type?: string;
-  icon: string; // Icon name for UiIcon
-  placeholder?: string;
-  value?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  size?: number; // Icon size
-  className?: string; // Custom class for additional styling
+    type?: string;
+    icon: string; // Icon name for UiIcon
+    placeholder?: string;
+    value?: string;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    size?: number; // Icon size
+    className?: string; // Custom class for additional styling
 }
 
 const UiInputModalComponent: FC<IUiInputModalProps> = ({
@@ -37,4 +38,4 @@ const UiInputModalComponent: FC<IUiInputModalProps> = ({
     </div>
   );
 };
-export const UiInputModal = observer(UiInputModalComponent);
+export default UiInputModalComponent;
