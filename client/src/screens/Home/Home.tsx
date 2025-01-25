@@ -12,16 +12,14 @@ const HomeScreen = () => {
       <PageDecorations />
       <div className={styles.home}>
         <div className={styles.content}>
-          <div className={styles.empty}>
-            <div className={styles.title}>
-              <h1>3DentAI</h1>
-            </div>
-            <div className={styles.description}>
-              <h2>
-                Primary diagnosis of tooth and gum diseases at home using a
-                compact camera and AI
-              </h2>
-            </div>
+          <div className={styles.title}>
+            <h1>3DentAI</h1>
+          </div>
+          <div className={styles.description}>
+            <h2>
+              Primary diagnosis of tooth and gum diseases at home using a
+              compact camera and AI
+            </h2>
           </div>
           <div className={styles.imgContainer}>
             <img
@@ -30,12 +28,12 @@ const HomeScreen = () => {
               alt="Loading Animation"
             />
           </div>
-          <div className={styles.empty} />
         </div>
       </div>
       <BottomNavigation>
         <AuthNavigation />
       </BottomNavigation>
+      <PageDecorations />
     </>
   );
 };
