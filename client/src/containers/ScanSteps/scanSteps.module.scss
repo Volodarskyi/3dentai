@@ -1,0 +1,20 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  width: 100%;
+  max-width: 1200px;
+  padding: 2rem;
+}
+
+.wrapper {
+  width: 100%;
+  min-height: 260px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  border-radius: 0.5rem;
+  border: 2px solid var(--color-second-750);
+  margin-top: 16px;
+}

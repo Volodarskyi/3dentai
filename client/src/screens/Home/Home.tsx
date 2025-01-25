@@ -1,6 +1,6 @@
 "use client";
 
-import { PageDecorations } from "@/components/PageDecorations/PageDecorations";
+import PageDecorations from "@/components/PageDecorations";
 import AuthNavigation from "@/containers/AuthNavigation";
 import BottomNavigation from "@/containers/BottomNavigation";
 

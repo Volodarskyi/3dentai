@@ -1,29 +1,25 @@
 import { FC } from "react";
+import { observer } from "mobx-react-lite";
 
-import { UiButton } from "@/UI/UiButton/UiButton";
+import Button from "@/components/Button";
+import { useStores } from "@/hooks/useStores";
 
-import styles from "./styles.module.scss";
+import styles from "./scanNavigation.module.scss";
 
-interface IScanNavigationProps {
-  nextStep: () => void;
-  previousStep: () => void;
-  disabledPrevious: boolean;
-  disabledNext: boolean;
-}
-
-const ScanNavigation: FC<IScanNavigationProps> = (props) => {
-  const { nextStep, previousStep, disabledPrevious, disabledNext } = props;
+const ScanNavigation: FC = () => {
+  const { scanStore } = useStores();
+  const { nextStep, previousStep, disabledPrevious, disabledNext } = scanStore;
 
   return (
     <div className={styles.container}>
-      <UiButton
+      <Button
         disabled={disabledPrevious}
         onClick={previousStep}
         text={"Previous"}
       />
-      <UiButton disabled={disabledNext} onClick={nextStep} text={"Next"} />
+      <Button disabled={disabledNext} onClick={nextStep} text={"Next"} />
     </div>
   );
 };
 
-export default ScanNavigation;
+export default observer(ScanNavigation);

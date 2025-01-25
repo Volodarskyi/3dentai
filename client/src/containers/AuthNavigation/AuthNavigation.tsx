@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite";
 
 import { useStores } from "@/hooks/useStores";
 import { EModalWindows } from "@/types/modal";
-import { UiButton } from "@/UI/UiButton/UiButton";
+import Button  from "@/components/Button";
 
 import styles from "./styles.module.scss";
 
@@ -22,8 +22,8 @@ const AuthNavigation: FC = () => {
 
   return (
     <div className={styles.container}>
-      <UiButton onClick={singIn} text={"Sign In"} />
-      <UiButton onClick={signUp} text={"Sign Up"} />
+      <Button onClick={singIn} text={"Sign In"} />
+      <Button onClick={signUp} text={"Sign Up"} />
     </div>
   );
 };

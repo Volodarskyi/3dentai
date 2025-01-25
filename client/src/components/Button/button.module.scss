@@ -1,0 +1,22 @@
+.btn {
+
+}
+
+.bntActive {
+  color: var(--color-success-250);
+  font-size: 1.2rem;
+  font-weight: 500;
+  border-radius:45px;
+  border: 2px solid var(--color-success-250);
+
+  &:hover{
+    color: var(--color-success-250);
+    border: 2px solid var(--color-success-600);
+    background: rgba(72,255,188,.1);
+  }
+
+  &:disabled{
+    color: var(--color-success-900);
+    border: 2px solid var(--color-success-900);
+  }
+}

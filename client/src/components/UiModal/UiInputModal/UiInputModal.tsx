@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { observer } from "mobx-react-lite";
 
-import UiIcon from "@/UI/UiIcon/UiIcon";
+import UiIcon from "@/components/Icon";
 
 import "./UiIntputModal.Styles.scss";
 

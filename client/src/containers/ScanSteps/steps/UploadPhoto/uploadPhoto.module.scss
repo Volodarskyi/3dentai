@@ -1,0 +1,28 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 24rem;
+  overflow: hidden;
+  padding: 0.5rem;
+}
+
+.uploadPhotoContainer {
+  position: relative;
+  display: block;
+  width: 50%;
+  border-radius: 0.5rem;
+  border: 2px dashed var(--color-second-600);
+  padding: 3rem;
+  text-align: center;
+
+  &:hover {
+    border-color: var(--color-success-750);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--color-second-750), 0 0 0 4px var(--color-second-100);
+  }
+}

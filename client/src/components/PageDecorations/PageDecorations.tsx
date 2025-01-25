@@ -11,7 +11,7 @@ interface IPageDecorationsProps {
   pentagonsRight?: boolean;
 }
 
-export const PageDecorations: FC<IPageDecorationsProps> = () => {
+const PageDecorations: FC<IPageDecorationsProps> = () => {
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
@@ -50,3 +50,5 @@ export const PageDecorations: FC<IPageDecorationsProps> = () => {
     </div>
   );
 };
+
+export default PageDecorations;

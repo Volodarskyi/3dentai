@@ -2,10 +2,10 @@ import React, { FC, useState } from "react";
 import { observer } from "mobx-react-lite";
 
 import dataFetcher from "@/api/dataFetcher";
+import  Button from "@/components/Button";
+import UiInputModal from "@/components/UiModal/UiInputModal/UiInputModal";
 import { useStores } from "@/hooks/useStores";
 import { EAuth } from "@/types/auth";
-import { UiButton } from "@/UI/UiButton/UiButton";
-import UiInputModal from "@/UI/UiModal/UiInputModal/UiInputModal";
 
 import "./UiModal.Styles.scss";
 
@@ -65,7 +65,7 @@ const SignInWindow: FC = () => {
         className="mt-075"
       />
 
-      <UiButton
+      <Button
         className="mt-15"
         text={"Confirm"}
         onClick={signIn}

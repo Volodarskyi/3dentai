@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import "./UiIcon.Styles.scss";
+import "./icon.module.scss";
 
 interface IUiIconProps {
   name: string;
@@ -8,11 +8,7 @@ interface IUiIconProps {
   className?: string;
 }
 
-const UiIconComponent: FC<IUiIconProps> = ({
-  name,
-  size = 24,
-  className = "",
-}) => {
+const Icon: FC<IUiIconProps> = ({ name, size = 24, className = "" }) => {
   const src = `/assets/icons/${name}.png`;
 
   return (
@@ -26,4 +22,4 @@ const UiIconComponent: FC<IUiIconProps> = ({
   );
 };
 
-export default UiIconComponent;
+export default Icon;
