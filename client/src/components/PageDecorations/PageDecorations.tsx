@@ -13,39 +13,39 @@ interface IPageDecorationsProps {
 
 export const PageDecorations: FC<IPageDecorationsProps> = () => {
   return (
-    <div className={styles.pageDecorations}>
-      <div className={styles.pageDecorations__wrapper}>
+    <div className={styles.container}>
+      <div className={styles.wrapper}>
         <img
-          className={styles.pageDecorations__pentagonsLeft}
+          className={styles.pentagonsLeft}
           src="/assets/images/dent-hitech-decor-pentagons-L.png"
           alt="decor-pentagons"
         />
         <img
-          className={styles.pageDecorations__pentagonsRight}
+          className={styles.pentagonsRight}
           src="/assets/images/dent-hitech-decor-pentagons-R.png"
           alt="decor-pentagons"
         />
         <img
-          className={styles.pageDecorations__decorTopLeft}
+          className={styles.decorTopLeft}
           src="/assets/images/dent-hitech-decor-TL.png"
           alt="decor-pentagons"
         />
         <img
-          className={styles.pageDecorations__decorTopRight}
+          className={styles.decorTopRight}
           src="/assets/images/dent-hitech-decor-TR.png"
           alt="decor-pentagons"
         />
         <img
-          className={styles.pageDecorations__decorBottomLeft}
+          className={styles.decorBottomLeft}
           src="/assets/images/dent-hitech-decor-BL.png"
           alt="decor-pentagons"
         />
         <img
-          className={styles.pageDecorations__decorBottomRight}
+          className={styles.decorBottomLeft}
           src="/assets/images/dent-hitech-decor-BR.png"
           alt="decor-pentagons"
         />
-        <div className={styles.pageDecorations__circuleAnimation} />
+        <div className={styles.circuleAnimation} />
       </div>
     </div>
   );
