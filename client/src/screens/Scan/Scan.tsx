@@ -6,14 +6,17 @@ import { observer } from "mobx-react-lite";
 
 import GlobalLoading from "@/components/GlobalLoading";
 import Loading from "@/components/Loading";
-import Navigation from "@/components/Navigation";
 import {
   AnalyzePhoto,
   Display3DModal,
   UploadPhoto,
 } from "@/components/scanSteps";
+import BottomNavigation from "@/containers/BottomNavigation";
+import ScanNavigation from "@/containers/ScanNavigation";
 import { useStores } from "@/hooks/useStores";
 import { ISteps } from "@/types/steps";
+
+import styles from "./scan.module.scss";
 
 const ScanScreen = () => {
   const { scanStore } = useStores();
@@ -52,40 +55,44 @@ const ScanScreen = () => {
   }, [setSteps]);
 
   return (
-    <Row style={{ width: "100%" }}>
-      {isLoading && <GlobalLoading />}
-      {steps.length ? (
-        <>
-          <Steps current={step} items={steps} />
-          <div
-            style={{
-              width: "100%",
-              minHeight: "260px",
-              display: "flex",
-              justifyContent: "center",
-              textAlign: "center",
-              color: token.colorTextTertiary,
-              backgroundColor: token.colorFillAlter,
-              borderRadius: token.borderRadiusLG,
-              border: `1px dashed ${token.colorBorder}`,
-              marginTop: 16,
-            }}
-          >
-            {steps[step].content}
+    <>
+      <Row className={styles.page}>
+        {isLoading && <GlobalLoading />}
+        {steps.length ? (
+          <div className={styles.container}>
+            <Steps current={step} items={steps} />
+            <div
+              style={{
+                width: "100%",
+                minHeight: "260px",
+                display: "flex",
+                justifyContent: "center",
+                textAlign: "center",
+                color: token.colorTextTertiary,
+                backgroundColor: token.colorFillAlter,
+                borderRadius: token.borderRadiusLG,
+                border: `1px dashed ${token.colorBorder}`,
+                marginTop: 16,
+              }}
+            >
+              {steps[step].content}
+            </div>
           </div>
-          <Navigation
-            disabledPrevious={disabledPrevious}
-            disabledNext={disabledNext}
-            previousStep={previousStep}
-            nextStep={nextStep}
-          />
-        </>
-      ) : (
-        <div className={"min-h-56 w-full flex justify-center items-center"}>
-          <Loading />
-        </div>
-      )}
-    </Row>
+        ) : (
+          <div className={"min-h-56 w-full flex justify-center items-center"}>
+            <Loading />
+          </div>
+        )}
+      </Row>
+      <BottomNavigation>
+        <ScanNavigation
+          disabledPrevious={disabledPrevious}
+          disabledNext={disabledNext}
+          previousStep={previousStep}
+          nextStep={nextStep}
+        />
+      </BottomNavigation>
+    </>
   );
 };
 
