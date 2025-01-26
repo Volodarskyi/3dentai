@@ -45,7 +45,7 @@ const PageDecorations: FC<IPageDecorationsProps> = () => {
           src="/assets/images/dent-hitech-decor-BR.png"
           alt="decor-pentagons"
         />
-        <div className={styles.circuleAnimation} />
+        <div className={styles.circleAnimation} />
       </div>
     </div>
   );
