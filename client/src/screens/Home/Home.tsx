@@ -33,7 +33,6 @@ const HomeScreen = () => {
       <BottomNavigation>
         <AuthNavigation />
       </BottomNavigation>
-      <PageDecorations />
     </>
   );
 };

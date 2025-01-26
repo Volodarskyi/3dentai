@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Steps } from "antd";
+import { observer } from "mobx-react-lite";
 
 import { useStores } from "@/hooks/useStores";
 import { ISteps } from "@/types/steps";
@@ -37,11 +38,11 @@ const ScanSteps = () => {
   return steps.length ? (
     <>
       <div className={styles.container}>
-        <Steps current={step} items={steps} />
+        <Steps current={step} items={steps} className={styles.steps} />
         <div className={styles.wrapper}>{steps[step].content}</div>
       </div>
     </>
   ) : null;
 };
 
-export default ScanSteps;
+export default observer(ScanSteps);

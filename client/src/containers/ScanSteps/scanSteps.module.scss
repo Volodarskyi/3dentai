@@ -6,6 +6,7 @@
   width: 100%;
   max-width: 1200px;
   padding: 2rem;
+  border-radius: 16px;
 }
 
 .wrapper {
@@ -14,7 +15,6 @@
   display: flex;
   justify-content: center;
   text-align: center;
-  border-radius: 0.5rem;
-  border: 2px solid var(--color-second-750);
+  border-radius: 16px;
   margin-top: 16px;
 }

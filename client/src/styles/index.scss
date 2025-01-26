@@ -3,3 +3,7 @@
 @import "mixins";
 @import "helpers";
 
+body {
+  background-color: var(--color-bg-page);
+}
+

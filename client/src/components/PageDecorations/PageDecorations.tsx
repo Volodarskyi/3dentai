@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import styles from "./decorations.module.scss";
+import "./PageDecorations.Styles.scss";
 
 interface IPageDecorationsProps {
   topLeft?: boolean;
@@ -11,41 +11,48 @@ interface IPageDecorationsProps {
   pentagonsRight?: boolean;
 }
 
-const PageDecorations: FC<IPageDecorationsProps> = () => {
+const PageDecorations: FC<IPageDecorationsProps> = ({
+  topLeft = false,
+  topRight = false,
+  bottomLeft = false,
+  bottomRight = false,
+  pentagonsLeft = false,
+  pentagonsRight = false,
+}) => {
   return (
-    <div className={styles.container}>
-      <div className={styles.wrapper}>
+    <div className="page-decorations">
+      <div className="page-decorations__wrappers">
         <img
-          className={styles.pentagonsLeft}
+          className="page-decorations__pentagons-left"
           src="/assets/images/dent-hitech-decor-pentagons-L.png"
           alt="decor-pentagons"
         />
         <img
-          className={styles.pentagonsRight}
+          className="page-decorations__pentagons-right"
           src="/assets/images/dent-hitech-decor-pentagons-R.png"
           alt="decor-pentagons"
         />
         <img
-          className={styles.decorTopLeft}
+          className="page-decorations__decor-top-left"
           src="/assets/images/dent-hitech-decor-TL.png"
           alt="decor-pentagons"
         />
         <img
-          className={styles.decorTopRight}
+          className="page-decorations__decor-top-right"
           src="/assets/images/dent-hitech-decor-TR.png"
           alt="decor-pentagons"
         />
         <img
-          className={styles.decorBottomLeft}
+          className="page-decorations__decor-bottom-left"
           src="/assets/images/dent-hitech-decor-BL.png"
           alt="decor-pentagons"
         />
         <img
-          className={styles.decorBottomLeft}
+          className="page-decorations__decor-bottom-right"
           src="/assets/images/dent-hitech-decor-BR.png"
           alt="decor-pentagons"
         />
-        <div className={styles.circleAnimation} />
+        <div className="page-decorations__circule-animation"></div>
       </div>
     </div>
   );

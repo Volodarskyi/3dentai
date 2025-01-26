@@ -6,6 +6,8 @@
   min-height: 24rem;
   overflow: hidden;
   padding: 0.5rem;
+  background-color: rgba(255,255,255, 0.1);
+  border-radius: 16px;
 }
 
 .uploadPhotoContainer {
@@ -13,7 +15,7 @@
   display: block;
   width: 50%;
   border-radius: 0.5rem;
-  border: 2px dashed var(--color-second-600);
+  border: 3px dashed var(--color-success-500);
   padding: 3rem;
   text-align: center;
 
@@ -44,6 +46,10 @@
   margin-top: 0.5rem;
   display: block;
   font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--color-second-750);
+  font-weight: 400;
+  color: var(--color-success-500);
+}
+
+.svg {
+  color: var(--color-success-500);
 }
