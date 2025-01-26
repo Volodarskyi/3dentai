@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite";
 
 import dataFetcher from "@/api/dataFetcher";
 import Button from "@/components/Button";
-import UiInputModal from "@/components/UiModal/UiInputModal/UiInputModal";
+import UiInputModal from "@/containers/UiModal/UiInputModal/UiInputModal";
 import { useStores } from "@/hooks/useStores";
 
 import "./UiModal.Styles.scss";

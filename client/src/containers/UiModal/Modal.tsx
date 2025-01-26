@@ -1,7 +1,7 @@
 "use client";
 
 import React, { FC } from "react";
-import { Modal } from "antd";
+import { Modal as AntModal } from "antd";
 import { observer } from "mobx-react-lite";
 
 import SignInWindow from "@/containers/modal/SignInWindow";
@@ -9,7 +9,7 @@ import SignUpWindow from "@/containers/modal/SignUpWidow";
 import { useStores } from "@/hooks/useStores";
 import { EModalWindows } from "@/types/modal";
 
-import "./UiModal.Styles.scss";
+import "./modal.styles.scss";
 
 // Utility function to parse the title from the enum
 const getTitleFromEnum = (modalType: EModalWindows | null): string => {
@@ -17,7 +17,7 @@ const getTitleFromEnum = (modalType: EModalWindows | null): string => {
   return modalType.replace(/([A-Z])/g, " $1").trim(); // Convert "ENumTitleWindow" -> "ENum Title Window"
 };
 
-const UiModal: FC = () => {
+const Modal: FC = () => {
   const { modalStore } = useStores();
 
   const renderModalContent = () => {
@@ -47,7 +47,7 @@ const UiModal: FC = () => {
   };
 
   return (
-    <Modal
+    <AntModal
       className="ui-modal"
       title={
         <div className="ui-modal__title">
@@ -60,8 +60,8 @@ const UiModal: FC = () => {
       styles={modalStyles}
     >
       {renderModalContent()}
-    </Modal>
+    </AntModal>
   );
 };
 
-export default observer(UiModal);
+export default observer(Modal);

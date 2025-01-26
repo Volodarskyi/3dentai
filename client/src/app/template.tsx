@@ -2,8 +2,8 @@
 
 import { ReactNode } from "react";
 
-import UiModal from "@/components/UiModal/UiModal";
-import Header from "@/containers/Header";
+import Header from "@/components/Header";
+import UiModal from "@/containers/UiModal";
 import { StoreWrapper } from "@/store/provider";
 
 interface TemplateProps {
