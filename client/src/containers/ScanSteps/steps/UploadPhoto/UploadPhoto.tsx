@@ -58,21 +58,7 @@ const UploadPhoto = () => {
             >
               <Image src={imgUrl} alt="upload" fill={true} unoptimized />
             </div>
-            <Button
-              onClick={handlerClick}
-              style={{
-                color: "black",
-                display: "flex",
-                alignContent: "center",
-                justifyContent: "center",
-                borderRadius: "0.5rem",
-                border: "none",
-                cursor: "pointer",
-                outline: "none",
-                fontSize: "1rem",
-                height: "2.5rem",
-              }}
-            >
+            <Button onClick={handlerClick} className={styles.btnAgain}>
               Upload Photo Again
             </Button>
           </div>
@@ -96,7 +82,7 @@ const UploadPhoto = () => {
                 strokeLinejoin="round"
               />
             </svg>
-            <span className="mt-2 block text-sm font-semibold text-gray-900">
+            <span className={styles.dropZone}>
               {isLoading ? "Loading..." : "Upload Photo"}
             </span>
           </button>

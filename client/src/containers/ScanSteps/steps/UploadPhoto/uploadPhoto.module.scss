@@ -26,3 +26,24 @@
     box-shadow: 0 0 0 2px var(--color-second-750), 0 0 0 4px var(--color-second-100);
   }
 }
+
+.btnAgain {
+  color: var(--color-second-600);
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  font-size: 1rem;
+  height: 2.5rem;
+}
+
+.dropZone {
+  margin-top: 0.5rem;
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-second-750);
+}
