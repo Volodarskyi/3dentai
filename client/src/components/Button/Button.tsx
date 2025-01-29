@@ -22,7 +22,7 @@ const Button: FC<IButtonProps> = ({
   return (
     <button
       onClick={onClick}
-      className={`${styles.btn} ${styles.bntActive} ${className}`}
+      className={`${styles.btn ? styles.btn : ""} ${styles.bntActive} ${className}`}
       style={{ width: `${width}px`, height: `${height}px` }}
       disabled={disabled}
     >
