@@ -6,9 +6,10 @@ import { observer } from "mobx-react-lite";
 import GlobalLoading from "@/components/GlobalLoading";
 import Loading from "@/components/Loading";
 import BottomNavigation from "@/containers/BottomNavigation";
-import ScanNavigation from "@/containers/ScanNavigation";
 import ScanSteps from "@/containers/ScanSteps";
 import { useStores } from "@/hooks/useStores";
+
+import ScanNavigation from "./components/ScanNavigation";
 
 import styles from "./scan.module.scss";
 
