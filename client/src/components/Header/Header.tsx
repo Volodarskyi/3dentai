@@ -10,7 +10,7 @@ const Header = () => {
         className={`${styles.items} flex max-w-7xl items-center justify-between gap-x-6 lg:px-8 w-max`}
       >
         <div className="flex lg:flex-1">
-          <Link href="#" className={styles.logoContainer}>
+          <Link href="/" className={styles.logoContainer}>
             <Image
               src={"/assets/images/3dentai_logo.png"}
               alt="3DentAL"
@@ -18,15 +18,6 @@ const Header = () => {
               height={40}
             />
             <span className={styles.name}>3DentAI</span>
-          </Link>
-        </div>
-
-        <div className="flex flex-1 items-center justify-end gap-x-6">
-          <Link
-            href="/scan"
-            className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          >
-            Scan
           </Link>
         </div>
 
