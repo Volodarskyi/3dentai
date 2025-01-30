@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { observer } from "mobx-react-lite";
 
-import Loading from "@/components/Loading";
+import Loading from "@/components/UI/Loading";
 import { useStores } from "@/hooks/useStores";
 
 const AnalyzePhoto = () => {
