@@ -5,7 +5,7 @@ import Button from "@/components/UI/UiButton/UiButton";
 import { useStores } from "@/hooks/useStores";
 import { EModalWindows } from "@/types/modal";
 
-import styles from "./styles.module.scss";
+import "./authNavigation.styles.scss";
 
 const AuthNavigation: FC = () => {
   const { modalStore } = useStores();
@@ -19,7 +19,7 @@ const AuthNavigation: FC = () => {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={"authNavigation"}>
       <Button onClick={singIn} text={"Sign In"} />
       <Button onClick={signUp} text={"Sign Up"} />
     </div>
