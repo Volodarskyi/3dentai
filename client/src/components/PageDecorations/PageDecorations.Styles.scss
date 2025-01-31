@@ -19,7 +19,7 @@
     bottom: 0;
     opacity: .12;
     max-width: 60%;
-    z-index: 5000;
+    z-index: 800;
   }
 
   &__pentagons-right {
@@ -28,7 +28,7 @@
     bottom: 0;
     opacity: .12;
     max-width: 60%;
-    z-index: 5000
+    z-index: 800
   }
 
   &__decor-top-left {
@@ -37,7 +37,7 @@
     left: 0;
     opacity: .75;
     max-width: 45%;
-    z-index: 5000;
+    z-index: 800;
   }
 
   &__decor-top-right {
@@ -46,7 +46,7 @@
     right: 0;
     opacity: .75;
     max-width: 45%;
-    z-index: 5000
+    z-index: 800
   }
 
   &__decor-bottom-left {
@@ -55,7 +55,7 @@
     left: 0;
     opacity: .75;
     max-width: 45%;
-    z-index: 5000;
+    z-index: 800;
   }
 
   &__decor-bottom-right {
@@ -64,7 +64,7 @@
     right: 0;
     opacity: .75;
     max-width: 45%;
-    z-index: 5000
+    z-index: 800
   }
 
   &__circule-animation{
