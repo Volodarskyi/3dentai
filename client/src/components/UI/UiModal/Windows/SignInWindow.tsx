@@ -4,7 +4,7 @@ import dataFetcher from "@/api/dataFetcher";
 import {useStores} from "@/hooks/useStores";
 import {EAuth} from "@/types/auth";
 import {UiInputModal} from "@/components/UI/UiModal/UiInputModal/UiInputModal";
-import {UiButton} from "@/components/UI/UiButton/UiButton";
+import UiButton from "@/components/UI/UiButton/UiButton";
 
 import'../UiModal.Styles.scss';
 

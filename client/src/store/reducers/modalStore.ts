@@ -15,6 +15,7 @@ class ModalStore {
     };
 
     closeUiModal = () => {
+        console.log('closeUiModal')
         this.currentModal = null;
         this.isShowUiModal = false;
     };

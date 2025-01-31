@@ -5,7 +5,7 @@ import {useStores} from "@/hooks/useStores";
 
 import'../UiModal.Styles.scss';
 import {UiInputModal} from "@/components/UI/UiModal/UiInputModal/UiInputModal";
-import {UiButton} from "@/components/UI/UiButton/UiButton";
+import UiButton from "@/components/UI/UiButton/UiButton";
 
 interface ISignUpWindowProps {
 }
@@ -130,46 +130,6 @@ const SignUpWindowComponent: FC<ISignUpWindowProps> = () => {
                 onChange={handleInputChange}
                 className="mt-075"
             />
-
-            {/*<input*/}
-            {/*    className="ui-modal__input mt-075"*/}
-            {/*    type={'text'}*/}
-            {/*    placeholder={'First Name'}*/}
-            {/*    value={password}*/}
-            {/*    onChange={(event) => setInputValue(event, password, setPassword)}/>*/}
-
-            {/*<input*/}
-            {/*    className="ui-modal__input mt-075"*/}
-            {/*    type={'text'}*/}
-            {/*    placeholder={'First Name'}*/}
-            {/*    value={password}*/}
-            {/*    onChange={(event) => setInputValue(event, passwordConfirm, setPasswordConfirm)}/>*/}
-
-            {/*<input*/}
-            {/*    className="ui-modal__input mt-075"*/}
-            {/*    type={'text'}*/}
-            {/*    placeholder={'First Name'}*/}
-            {/*    value={firstName}*/}
-            {/*    onChange={(event) => setInputValue(event, firstName, setFirstName)}/>*/}
-
-            {/*<input*/}
-            {/*    className="ui-modal__input mt-075"*/}
-            {/*    type={'text'}*/}
-            {/*    placeholder={'Second Name'}*/}
-            {/*    value={secondName}*/}
-            {/*    onChange={(event) => setInputValue(event, secondName, setSecondName)}*/}
-            {/*/>*/}
-
-            {/*<input*/}
-            {/*    className="ui-modal__input mt-075"*/}
-            {/*    type="number"*/}
-            {/*    name="birthYear"*/}
-            {/*    placeholder="Birth Year"*/}
-            {/*    value={birthYear}*/}
-            {/*    onChange={handleInputChange}*/}
-            {/*    min="1950"*/}
-            {/*    max={new Date().getFullYear()}*/}
-            {/*/>*/}
 
             <UiButton className="mt-15" text={'Confirm'} onClick={singUp} width={200} height={40}/>
 
