@@ -6,13 +6,12 @@
     "dev": "cross-env APP_ENV=production next dev",
     "dev:local": "cross-env APP_ENV=development next dev",
     "build": "cross-env APP_ENV=production next build",
-    "start": "next start",
-    "deploy": "cross-env APP_ENV=production next build && firebase deploy"
+    "start": "next start"
   },
   "dependencies": {
     "@heroicons/react": "^2.1.5",
     "antd": "^5.21.6",
-    "axios": "^1.7.7",
+    "axios": "^1.7.9",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "firebase": "^10.14.1",
     "mobx": "^6.13.5",

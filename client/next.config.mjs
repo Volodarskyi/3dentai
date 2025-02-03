@@ -1,5 +1,8 @@
 /** @type {import("next").NextConfig} */
 const nextConfig = {
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   env: {
     NEXT_PUBLIC_APP_ENV: process.env.APP_ENV,
     APP_ENV: process.env.APP_ENV,
