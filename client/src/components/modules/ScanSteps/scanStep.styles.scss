@@ -21,62 +21,72 @@
   }
 }
 
-:where(.css-dev-only-do-not-override-apn68).ant-steps .ant-steps-item-process .ant-steps-item-icon {
+.css-dev-only-do-not-override-apn68.ant-steps .ant-steps-item-process .ant-steps-item-icon {
   background-color: var(--color-success-500);
   border-color: var(--color-success-500);
 }
 
-:where(.css-dev-only-do-not-override-apn68).ant-steps .ant-steps-item-wait .ant-steps-item-icon >.ant-steps-icon {
+.css-dev-only-do-not-override-apn68.ant-steps .ant-steps-item-wait .ant-steps-item-icon >.ant-steps-icon {
   color: var(--color-main-500);
   font-weight: 500;
 }
 
-:where(.css-dev-only-do-not-override-apn68).ant-steps .ant-steps-item-process>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title {
+.css-dev-only-do-not-override-apn68.ant-steps .ant-steps-item-process>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title {
   color: var(--color-success-500)
 }
 
-:where(.css-dev-only-do-not-override-apn68).ant-steps .ant-steps-item-process>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-description {
+.css-dev-only-do-not-override-apn68.ant-steps .ant-steps-item-process>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-description {
   color: var(--color-success-400)
 }
 
-:where(.css-dev-only-do-not-override-apn68).ant-steps .ant-steps-item-wait .ant-steps-item-icon {
+.css-dev-only-do-not-override-apn68.ant-steps .ant-steps-item-wait .ant-steps-item-icon {
   background-color: var(--color-second-250);
   border-color: var(--color-second-250);
 }
 
-:where(.css-dev-only-do-not-override-apn68).ant-steps .ant-steps-item-wait>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title {
+.css-dev-only-do-not-override-apn68.ant-steps .ant-steps-item-wait>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title {
   color: var(--color-second-250)
 }
 
-:where(.css-dev-only-do-not-override-apn68).ant-steps .ant-steps-item-wait>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-description  {
+.css-dev-only-do-not-override-apn68.ant-steps .ant-steps-item-wait>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-description  {
   color: var(--color-second-100)
 }
 
-:where(.css-dev-only-do-not-override-apn68).ant-steps .ant-steps-item-finish .ant-steps-item-icon  {
+.css-dev-only-do-not-override-apn68.ant-steps .ant-steps-item-finish .ant-steps-item-icon  {
   background-color: var(--color-success-900);
   border-color: var(--color-success-900);
 }
 
-:where(.css-dev-only-do-not-override-apn68).ant-steps .ant-steps-item-finish>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title {
+.css-dev-only-do-not-override-apn68.ant-steps .ant-steps-item-finish>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title {
   color: var(--color-success-750)
 }
 
-:where(.css-dev-only-do-not-override-apn68).ant-steps .ant-steps-item-finish>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-description {
+.css-dev-only-do-not-override-apn68.ant-steps .ant-steps-item-finish>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-description {
   color: var(--color-success-600)
 }
 
-:where(.css-dev-only-do-not-override-apn68).ant-steps .ant-steps-item-finish>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title::after {
+.css-dev-only-do-not-override-apn68.ant-steps .ant-steps-item-finish>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title::after {
   background-color: var(--color-success-900);
 }
 
-:where(.css-dev-only-do-not-override-apn68).ant-steps .ant-steps-item-process>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title::after {
+.css-dev-only-do-not-override-apn68.ant-steps .ant-steps-item-process>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title::after {
   background-color: var(--color-success-500)
 }
 
-:where(.css-dev-only-do-not-override-apn68).ant-steps .ant-steps-item-wait>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title::after {
+.css-dev-only-do-not-override-apn68.ant-steps .ant-steps-item-wait>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title::after {
   background-color: var(--color-second-250)
 }
 
-:where(.css-dev-only-do-not-override-apn68).ant-steps .ant-steps-item-finish .ant-steps-item-icon >.ant-steps-icon {
+.css-dev-only-do-not-override-apn68.ant-steps .ant-steps-item-finish .ant-steps-item-icon >.ant-steps-icon {
   color: var(--color-main-100)
+}
+
+//for icons in steps
+.css-dev-only-do-not-override-apn68.ant-steps:not(.ant-steps-vertical) .ant-steps-item-custom .ant-steps-item-icon {
+  width: 40px;
+  height: 40px;
+}
+
+.border-gray-200{
+  border: 1px solid var(--color-second-250);
 }
