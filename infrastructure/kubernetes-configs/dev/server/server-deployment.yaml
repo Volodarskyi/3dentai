@@ -81,7 +81,7 @@ spec:
         - name: dockerhubaccess
       containers:
         - name: hackaton-server
-          image: oleksiipasichnyk/confl:hackaton-argo-8c59610-20250203
+          image: oleksiipasichnyk/confl:hackaton-argo-d1bebdc-20250204
           imagePullPolicy: Always
           ports:
             - name: http-server
