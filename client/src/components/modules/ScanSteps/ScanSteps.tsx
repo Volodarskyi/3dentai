@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { UserOutlined } from "@ant-design/icons";
 import { Steps } from "antd";
 import { observer } from "mobx-react-lite";
 
@@ -22,22 +21,19 @@ const ScanSteps = () => {
       {
         title: "Upload photo",
         // description: "Upload video (photo).",
-        // @ts-ignore
-        icon: <UiIcon name="tooth" size="24px" />,
+        icon: <UiIcon name="tooth" size={24} />,
         content: <UploadPhoto />,
       },
       {
         title: "Send to AI",
         // description: "Send to AI and receive response.",
-        // @ts-ignore
-        icon: <UiIcon name="ai" size="24px" />,
+        icon: <UiIcon name="ai" size={24} />,
         content: <AnalyzePhoto />,
       },
       {
         title: "Convert to 3D",
         // description: "Convert photo to 3D.",
-        // @ts-ignore
-        icon: <UiIcon name="tooth-3d" size="24px" />,
+        icon: <UiIcon name="tooth-3d" size={24} />,
         content: <Display3DModal />,
       },
     ];

@@ -2,6 +2,6 @@ import { ReactElement } from "react";
 
 export interface ISteps {
   title: string;
-  description: string;
+  icon: ReactElement<any, any>;
   content: ReactElement<any, any>;
 }
