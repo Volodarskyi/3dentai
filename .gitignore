@@ -30,3 +30,6 @@ package-lock.json
 terraform.tfstate
 secrets-server.yaml
 secrets-client.yaml
+
+/server/yarn.lock
+/client/yarn.lock
