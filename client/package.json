@@ -6,7 +6,9 @@
     "dev": "cross-env APP_ENV=production next dev",
     "dev:local": "cross-env APP_ENV=development next dev",
     "build": "cross-env APP_ENV=production next build",
-    "start": "next start"
+    "start": "next start",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix"
   },
   "dependencies": {
     "@heroicons/react": "2.1.5",
