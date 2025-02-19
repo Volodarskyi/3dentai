@@ -2,13 +2,16 @@ import { FC } from "react";
 import { observer } from "mobx-react-lite";
 
 import "./UiIcon.Styles.scss";
+
 interface IUiIconProps {
+  idIcon?: string;
   name: string;
   size?: number | undefined;
   className?: string;
 }
 
 const UiIconComponent: FC<IUiIconProps> = ({
+  idIcon = "",
   name,
   size = 24,
   className = "",
@@ -17,6 +20,7 @@ const UiIconComponent: FC<IUiIconProps> = ({
 
   return (
     <img
+      id={idIcon}
       src={src}
       alt={`icon-${name}`}
       width={size}
