@@ -4,7 +4,6 @@ import { observer } from "mobx-react-lite";
 import dataFetcher from "@/api/dataFetcher";
 import UiButton from "@/components/UI/UiButton/UiButton";
 import { UiInputModal } from "@/components/UI/UiModal/UiInputModal/UiInputModal";
-import { useStores } from "@/hooks/useStores";
 
 import "../UiModal.Styles.scss";
 
@@ -18,7 +17,7 @@ const SignUpWindowComponent: FC = () => {
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [firstName, setFirstName] = useState("");
   const [secondName, setSecondName] = useState("");
-  const [avatar, setAvatar] = useState("");
+  const [avatar] = useState("");
   const [birthYear, setBirthYear] = useState<string>("");
 
   const setInputValue = (
