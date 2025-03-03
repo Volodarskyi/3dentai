@@ -8,10 +8,10 @@ import { useStores } from "@/hooks/useStores";
 
 import "../UiModal.Styles.scss";
 
-interface ISignUpWindowProps {}
+// interface ISignUpWindowProps {}
 
-const SignUpWindowComponent: FC<ISignUpWindowProps> = () => {
-  const { userStore } = useStores();
+const SignUpWindowComponent: FC = () => {
+  // const { userStore } = useStores();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -20,7 +20,6 @@ const SignUpWindowComponent: FC<ISignUpWindowProps> = () => {
   const [secondName, setSecondName] = useState("");
   const [avatar, setAvatar] = useState("");
   const [birthYear, setBirthYear] = useState<string>("");
-  const [errorBirthYear, setErrorBirthYear] = useState<string | null>(null);
 
   const setInputValue = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -28,19 +27,6 @@ const SignUpWindowComponent: FC<ISignUpWindowProps> = () => {
     setValue: React.Dispatch<React.SetStateAction<string>>,
   ): void => {
     setValue(event.target.value);
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    const currentYear = new Date().getFullYear();
-    const numericYear = Number(value);
-
-    if (numericYear < 1900 || numericYear > currentYear) {
-      setErrorBirthYear(`birthYear must be between 1900 and ${currentYear}.`);
-    } else {
-      setErrorBirthYear(null);
-      setBirthYear(value);
-    }
   };
 
   const singUp = async () => {
@@ -122,9 +108,9 @@ const SignUpWindowComponent: FC<ISignUpWindowProps> = () => {
       <UiInputModal
         icon={"calendar"}
         key={"birthYear"}
-        placeholder="Birth Year"
+        placeholder="Birth Date YYYY-MM-DD"
         value={birthYear}
-        onChange={handleInputChange}
+        onChange={(event) => setInputValue(event, birthYear, setBirthYear)}
         className="mt-075"
       />
 
