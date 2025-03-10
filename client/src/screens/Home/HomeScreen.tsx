@@ -1,10 +1,12 @@
 "use client";
+import { observer } from "mobx-react-lite";
 
+import { OurSolutions } from "@/components/OurSolutions/OurSolutions";
 import { PageDecorations } from "@/components/PageDecorations/PageDecorations";
 
 import "./Home.Styles.scss";
 
-const HomeScreen = () => {
+const HomeScreenComponent = () => {
   return (
     <div className="home">
       <PageDecorations />
@@ -23,9 +25,12 @@ const HomeScreen = () => {
           src="/assets/images/3dentai-animation-main_v03.gif"
           alt="Loading Animation"
         />
+        <div className="home__content-solutions-wrapper">
+          <OurSolutions />
+        </div>
       </div>
     </div>
   );
 };
 
-export default HomeScreen;
+export const HomeScreen = observer(HomeScreenComponent);

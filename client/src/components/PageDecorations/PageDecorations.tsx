@@ -2,23 +2,16 @@ import { FC } from "react";
 
 import "./PageDecorations.Styles.scss";
 
-interface IPageDecorationsProps {
-  topLeft?: boolean;
-  topRight?: boolean;
-  bottomLeft?: boolean;
-  bottomRight?: boolean;
-  pentagonsLeft?: boolean;
-  pentagonsRight?: boolean;
-}
+// interface IPageDecorationsProps {
+//   topLeft?: boolean;
+//   topRight?: boolean;
+//   bottomLeft?: boolean;
+//   bottomRight?: boolean;
+//   pentagonsLeft?: boolean;
+//   pentagonsRight?: boolean;
+// }
 
-export const PageDecorations: FC<IPageDecorationsProps> = ({
-  topLeft = false,
-  topRight = false,
-  bottomLeft = false,
-  bottomRight = false,
-  pentagonsLeft = false,
-  pentagonsRight = false,
-}) => {
+export const PageDecorations: FC = () => {
   return (
     <div className="page-decorations">
       <div className="page-decorations__wrappers">
