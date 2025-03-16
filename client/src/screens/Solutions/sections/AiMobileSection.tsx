@@ -16,7 +16,7 @@ const AiMobileSectionComponent: FC = () => {
         </Col>
       </Row>
       <Row>
-        <Col span={12} className={"mobileSection__content"}>
+        <Col span={14} className={"mobileSection__content"}>
           <div className={"mobileSection__textWrapper"}>
             Our AI-powered technology enables primary examination and analysis
             of the oral cavity at home using a specialized camera. This helps
@@ -37,7 +37,7 @@ const AiMobileSectionComponent: FC = () => {
             </div>
           </div>
         </Col>
-        <Col span={12} className={"mobileSection__imageWrapper"}>
+        <Col span={10} className={"mobileSection__imageWrapper"}>
           <Image
             src={phoneURL}
             alt={"phone"}

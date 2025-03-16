@@ -19,7 +19,7 @@ const SmartCameraSectionComponent: FC = () => {
         </Col>
       </Row>
       <Row>
-        <Col span={12} className={"mobileSection__imageWrapper"}>
+        <Col span={10} className={"mobileSection__imageWrapper"}>
           <Image
             src={phoneURL}
             alt={"phone"}
@@ -27,7 +27,7 @@ const SmartCameraSectionComponent: FC = () => {
             className={"mobileSection__image"}
           />
         </Col>
-        <Col span={12} className={"mobileSection__content"}>
+        <Col span={14} className={"mobileSection__content"}>
           <div className={"mobileSection__textWrapper"}>
             Thanks to advanced imaging technology, our oral camera creates a
             detailed 3D model of your oral cavity, allowing dentists to perform
