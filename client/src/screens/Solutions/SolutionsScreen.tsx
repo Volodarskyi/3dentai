@@ -14,6 +14,7 @@ import "./SolutionsScreen.styles.scss";
 const SolutionsScreenComponent: FC = () => {
   return (
     <div className="solution">
+      <div className={"background"} />
       <h1 className="solution__title">Our Solution</h1>
       <AiMobileSection />
       <SmartCameraSection />
