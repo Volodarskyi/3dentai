@@ -1,4 +1,3 @@
-"use client";
 import { FC } from "react";
 import { observer } from "mobx-react-lite";
 
@@ -6,7 +5,11 @@ import { observer } from "mobx-react-lite";
 // }
 
 const DentistsHubSectionComponent: FC = () => {
-  return <div>DentistsHubSectionComponent</div>;
+  return (
+    <section className={"mobileSection"} id="dentist-hub">
+      DentistsHubSectionComponent
+    </section>
+  );
 };
 
 export const DentistsHubSection = observer(DentistsHubSectionComponent);
