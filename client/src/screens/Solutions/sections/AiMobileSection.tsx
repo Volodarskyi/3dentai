@@ -4,49 +4,68 @@ import { observer } from "mobx-react-lite";
 import Image from "next/image";
 
 import phoneURL from "@/assets/images/3dentai-mockup-iphone16_v3.png";
+import cartificateURL from "@/assets/images/CERTIFICATE_3dentai-icon-hologram 1.png";
+import diagnosesURL from "@/assets/images/DIAGNOSES_3dentai-icon-hologram 1.png";
+import unicURL from "@/assets/images/UNIC_3dentai-icon-hologram 1.png";
 
 import "../SolutionsScreen.styles.scss";
 
 const AiMobileSectionComponent: FC = () => {
   return (
-    <section className={"mobileSection"} id={"ai-mobile"}>
-      <Row>
-        <Col span={24}>
-          <h2 className={"sectionTitle"}>3D ORAL CAMERA</h2>
-        </Col>
-      </Row>
-      <Row>
-        <Col span={14} className={"mobileSection__content"}>
-          <div className={"mobileSection__textWrapper"}>
-            Our AI-powered technology enables primary examination and analysis
-            of the oral cavity at home using a specialized camera. This helps
-            detect dental, gum, and mucosal diseases, including oral cancer, at
-            an early stage. Early diagnosis prevents serious complications,
-            making treatment faster, more comfortable, and more affordable.
-          </div>
+    <div className={"mobileSection"} id={"ai-mobile"}>
+      <div className={"mobileSection__wrapper"}>
+        <Row>
+          <Col span={24}>
+            <h2 className={"sectionTitle"}>3D ORAL CAMERA</h2>
+          </Col>
+        </Row>
+        <Row>
+          <Col span={12}>
+            <div className={"mobileSection__content"}>
+              <div className={"mobileSection__textWrapper"}>
+                Our AI-powered technology enables primary examination and
+                analysis of the oral cavity at home using a specialized camera.
+                This helps detect dental, gum, and mucosal diseases, including
+                oral cancer, at an early stage. Early diagnosis prevents serious
+                complications, making treatment faster, more comfortable, and
+                more affordable.
+              </div>
 
-          <div className={"mobileSection__buttonGroup"}>
-            <div className={"mobileSection__button"}>
-              Uniqueness – No analogs on the market.
+              <div className={"mobileSection__buttonGroup"}>
+                <div className={"mobileSection__button"}>
+                  <Image src={unicURL} width={52} height={52} alt={" "} />
+                  Uniqueness – No analogs on the market.
+                </div>
+                <div className={"mobileSection__button"}>
+                  <Image src={diagnosesURL} width={52} height={52} alt={" "} />
+                  AI model Trained by certified dentists
+                </div>
+                <div className={"mobileSection__button"}>
+                  <Image
+                    src={cartificateURL}
+                    width={52}
+                    height={52}
+                    alt={" "}
+                  />
+                  Diagnoses 9 of the most common conditions
+                </div>
+              </div>
             </div>
-            <div className={"mobileSection__button"}>
-              AI model Trained by certified dentists
+          </Col>
+          <Col span={2} />
+          <Col span={10}>
+            <div className={"mobileSection__imageWrapper"}>
+              <Image
+                src={phoneURL}
+                alt={"phone"}
+                width={280}
+                className={"mobileSection__image"}
+              />
             </div>
-            <div className={"mobileSection__button"}>
-              Diagnoses 9 of the most common conditions
-            </div>
-          </div>
-        </Col>
-        <Col span={10} className={"mobileSection__imageWrapper"}>
-          <Image
-            src={phoneURL}
-            alt={"phone"}
-            width={280}
-            className={"mobileSection__image"}
-          />
-        </Col>
-      </Row>
-    </section>
+          </Col>
+        </Row>
+      </div>
+    </div>
   );
 };
 

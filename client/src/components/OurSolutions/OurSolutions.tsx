@@ -1,8 +1,7 @@
-"use client"; // Ensures this is a Client Component
+"use client";
 
 import { FC } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation"; // Correct import for Next.js 13+ App Router
 
 import { UiIcon } from "@/components/UI/UiIcon/UiIcon";
 
