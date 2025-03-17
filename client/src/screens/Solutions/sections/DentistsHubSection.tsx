@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { Col, Row } from "antd";
 import { observer } from "mobx-react-lite";
 
 // interface IDentistsHubSection {
@@ -6,9 +7,15 @@ import { observer } from "mobx-react-lite";
 
 const DentistsHubSectionComponent: FC = () => {
   return (
-    <section className={"mobileSection"} id="dentist-hub">
-      DentistsHubSectionComponent
-    </section>
+    <div className={"mobileSection"} id="dentist-hub">
+      <div className={"mobileSection__wrapper"}>
+        <Row>
+          <Col span={24}>
+            <h2 className={"sectionTitle"}>dental hub</h2>
+          </Col>
+        </Row>
+      </div>
+    </div>
   );
 };
 
