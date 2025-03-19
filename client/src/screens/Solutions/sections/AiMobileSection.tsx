@@ -5,11 +5,13 @@ import Image from "next/image";
 
 import { UiIcon } from "@/components/UI/UiIcon/UiIcon";
 
+import "../SolutionsScreen.styles.scss";
+
 // import phoneURL from "@/assets/images/3dentai-mockup-iphone16_v3.png";
 // import cartificateURL from "@/assets/images/CERTIFICATE_3dentai-icon-hologram 1.png";
 // import diagnosesURL from "@/assets/images/DIAGNOSES_3dentai-icon-hologram 1.png";
 // import unicURL from "@/assets/images/UNIC_3dentai-icon-hologram 1.png";
-import "../SolutionsScreen.styles.scss";
+
 
 const AiMobileSectionComponent: FC = () => {
   return (
