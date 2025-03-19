@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { observer } from "mobx-react-lite";
+import Image from "next/image";
 
 import "./UiIcon.Styles.scss";
 
@@ -8,6 +9,7 @@ interface IUiIconProps {
   name: string;
   size?: number | undefined;
   className?: string;
+  isActive?: boolean;
 }
 
 const UiIconComponent: FC<IUiIconProps> = ({
@@ -15,14 +17,17 @@ const UiIconComponent: FC<IUiIconProps> = ({
   name,
   size = 24,
   className = "",
+  isActive = false,
 }) => {
-  const src = `/assets/icons/${name}.png`;
+  const src = isActive
+    ? `/assets/icons/${name}-active.png`
+    : `/assets/icons/${name}.png`;
 
   return (
-    <img
+    <Image
       id={idIcon}
       src={src}
-      alt={`icon-${name}`}
+      alt={name}
       width={size}
       height={size}
       className={`ui-icon ${className}`}

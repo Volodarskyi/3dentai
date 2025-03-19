@@ -3,11 +3,12 @@ import { Col, Row } from "antd";
 import { observer } from "mobx-react-lite";
 import Image from "next/image";
 
-import phoneURL from "@/assets/images/3dentai-mockup-iphone16_v3.png";
-import cartificateURL from "@/assets/images/CERTIFICATE_3dentai-icon-hologram 1.png";
-import diagnosesURL from "@/assets/images/DIAGNOSES_3dentai-icon-hologram 1.png";
-import unicURL from "@/assets/images/UNIC_3dentai-icon-hologram 1.png";
+import { UiIcon } from "@/components/UI/UiIcon/UiIcon";
 
+// import phoneURL from "@/assets/images/3dentai-mockup-iphone16_v3.png";
+// import cartificateURL from "@/assets/images/CERTIFICATE_3dentai-icon-hologram 1.png";
+// import diagnosesURL from "@/assets/images/DIAGNOSES_3dentai-icon-hologram 1.png";
+// import unicURL from "@/assets/images/UNIC_3dentai-icon-hologram 1.png";
 import "../SolutionsScreen.styles.scss";
 
 const AiMobileSectionComponent: FC = () => {
@@ -33,19 +34,34 @@ const AiMobileSectionComponent: FC = () => {
 
               <div className={"mobileSection__buttonGroup"}>
                 <div className={"mobileSection__button"}>
-                  <Image src={unicURL} width={52} height={52} alt={" "} />
+                  {/*<Image src={unicURL} width={52} height={52} alt={" "} />*/}
+                  <UiIcon
+                    name="unic-hologram"
+                    idIcon="unic-hologram"
+                    size={52}
+                  />
                   Uniqueness – No analogs on the market.
                 </div>
                 <div className={"mobileSection__button"}>
-                  <Image src={diagnosesURL} width={52} height={52} alt={" "} />
+                  <UiIcon
+                    name="certificate-hologram"
+                    idIcon="diagnoses-hologram"
+                    size={52}
+                  />
+                  {/*<Image src={diagnosesURL} width={52} height={52} alt={" "} />*/}
                   AI model Trained by certified dentists
                 </div>
                 <div className={"mobileSection__button"}>
-                  <Image
-                    src={cartificateURL}
-                    width={52}
-                    height={52}
-                    alt={" "}
+                  {/*<Image*/}
+                  {/*  src={cartificateURL}*/}
+                  {/*  width={52}*/}
+                  {/*  height={52}*/}
+                  {/*  alt={" "}*/}
+                  {/*/>*/}
+                  <UiIcon
+                    name="diagnoses-hologram"
+                    idIcon="diagnoses-hologram"
+                    size={52}
                   />
                   Diagnoses 9 of the most common conditions
                 </div>
@@ -56,9 +72,10 @@ const AiMobileSectionComponent: FC = () => {
           <Col span={10}>
             <div className={"mobileSection__imageWrapper"}>
               <Image
-                src={phoneURL}
+                src={"/assets/images/3dentai-mockup-iphone16_v3.png"}
                 alt={"phone"}
                 width={280}
+                height={280}
                 className={"mobileSection__image"}
               />
             </div>
