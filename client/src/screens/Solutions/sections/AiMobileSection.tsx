@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { Col, Row } from "antd";
 import { observer } from "mobx-react-lite";
-import Image from "next/image";
 
+// import Image from "next/image";
 import { UiIcon } from "@/components/UI/UiIcon/UiIcon";
 
 import "../SolutionsScreen.styles.scss";
