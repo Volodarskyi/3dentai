@@ -1,13 +1,14 @@
 import { FC } from "react";
 import { Col, Row } from "antd";
 import { observer } from "mobx-react-lite";
-import Image from "next/image";
 
-import phoneURL from "@/assets/images/3DentAI_camera-brush_v1_CLEANPNG.png";
-import cloudURL from "@/assets/images/CLOUD_3dentai-icon-hologram 1.png";
-import homeURL from "@/assets/images/HOME_3dentai-icon-hologram 1.png";
-import lensURL from "@/assets/images/LENS_3dentai-icon-hologram 1.png";
+// import Image from "next/image";
+import { UiIcon } from "@/components/UI/UiIcon/UiIcon";
 
+// import phoneURL from "@/assets/images/3DentAI_camera-brush_v1_CLEANPNG.png";
+// import cloudURL from "@/assets/images/CLOUD_3dentai-icon-hologram 1.png";
+// import homeURL from "@/assets/images/HOME_3dentai-icon-hologram 1.png";
+// import lensURL from "@/assets/images/LENS_3dentai-icon-hologram 1.png";
 import "../SolutionsScreen.styles.scss";
 
 // interface ISmartCameraSection {
@@ -17,12 +18,23 @@ const SmartCameraSectionComponent: FC = () => {
   return (
     <div className={"mobileSection"} id="smart-camera">
       <div className={"mobileSection__wrapper"}>
-
+        <Row>
+          <Col span={24}>
+            <h2 className={"sectionTitle"}>3D ORAL CAMERA</h2>
+          </Col>
+        </Row>
         <Row>
           <Col span={10}>
             <div className={"mobileSection__imageWrapper"}>
-              <Image
-                src={phoneURL}
+              {/*<Image*/}
+              {/*  src={phoneURL}*/}
+              {/*  alt={"phone"}*/}
+              {/*  width={120}*/}
+              {/*  className={"mobileSection__image"}*/}
+              {/*/>*/}
+
+              <img
+                src={"/assets/images/3DentAI_camera-brush_v1.png"}
                 alt={"phone"}
                 width={120}
                 className={"mobileSection__image"}
@@ -40,15 +52,30 @@ const SmartCameraSectionComponent: FC = () => {
 
               <div className={"mobileSection__buttonGroup"}>
                 <div className={"mobileSection__button"}>
-                  <Image src={homeURL} width={52} height={52} alt={" "} />
+                  {/*<Image src={homeURL} width={52} height={52} alt={" "} />*/}
+                  <UiIcon
+                    name={"home-hologram"}
+                    idIcon={"home-hologram"}
+                    size={52}
+                  />
                   Convenient and Accessible for Home Use
                 </div>
                 <div className={"mobileSection__button"}>
-                  <Image src={lensURL} width={52} height={52} alt={" "} />
+                  <UiIcon
+                    name={"lens-hologram"}
+                    idIcon={"home-hologram"}
+                    size={52}
+                  />
+                  {/*<Image src={lensURL} width={52} height={52} alt={" "} />*/}
                   Smart and Advanced Auto-Calibration
                 </div>
                 <div className={"mobileSection__button"}>
-                  <Image src={cloudURL} width={52} height={52} alt={" "} />
+                  <UiIcon
+                    name={"cloud-hologram"}
+                    idIcon={"home-hologram"}
+                    size={52}
+                  />
+                  {/*<Image src={cloudURL} width={52} height={52} alt={" "} />*/}
                   Secure and Reliable Cloud 3D Model Storage
                 </div>
               </div>

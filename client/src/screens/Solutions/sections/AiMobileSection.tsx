@@ -12,14 +12,13 @@ import "../SolutionsScreen.styles.scss";
 // import diagnosesURL from "@/assets/images/DIAGNOSES_3dentai-icon-hologram 1.png";
 // import unicURL from "@/assets/images/UNIC_3dentai-icon-hologram 1.png";
 
-
 const AiMobileSectionComponent: FC = () => {
   return (
     <div className={"mobileSection"} id={"ai-mobile"}>
       <div className={"mobileSection__wrapper"}>
         <Row>
           <Col span={24}>
-            <h2 className={"sectionTitle"}>3D ORAL CAMERA</h2>
+            <h2 className={"sectionTitle"}>PERSONAL AI DENTIST</h2>
           </Col>
         </Row>
         <Row>
@@ -73,7 +72,7 @@ const AiMobileSectionComponent: FC = () => {
           <Col span={2} />
           <Col span={10}>
             <div className={"mobileSection__imageWrapper"}>
-              <Image
+              <img
                 src={"/assets/images/3dentai-mockup-iphone16_v3.png"}
                 alt={"phone"}
                 width={280}

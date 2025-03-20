@@ -1,6 +1,5 @@
 import { FC } from "react";
 import { observer } from "mobx-react-lite";
-import Image from "next/image";
 
 import "./UiIcon.Styles.scss";
 
@@ -24,7 +23,7 @@ const UiIconComponent: FC<IUiIconProps> = ({
     : `/assets/icons/${name}.png`;
 
   return (
-    <Image
+    <img
       id={idIcon}
       src={src}
       alt={name}
