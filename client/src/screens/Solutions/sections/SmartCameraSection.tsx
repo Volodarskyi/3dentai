@@ -19,12 +19,12 @@ const SmartCameraSectionComponent: FC = () => {
     <div className={"mobileSection"} id="smart-camera">
       <div className={"mobileSection__wrapper"}>
         <Row>
-          <Col span={24}>
+          <Col xs={24}>
             <h2 className={"sectionTitle"}>3D ORAL CAMERA</h2>
           </Col>
         </Row>
         <Row>
-          <Col span={10}>
+          <Col span={24} md={10}>
             <div className={"mobileSection__imageWrapper"}>
               {/*<Image*/}
               {/*  src={phoneURL}*/}
@@ -41,8 +41,8 @@ const SmartCameraSectionComponent: FC = () => {
               />
             </div>
           </Col>
-          <Col span={2} />
-          <Col span={12}>
+          <Col xs={0} md={2} />
+          <Col xs={24} md={12}>
             <div className={"mobileSection__content"}>
               <div className={"mobileSection__textWrapper"}>
                 Thanks to advanced imaging technology, our oral camera creates a

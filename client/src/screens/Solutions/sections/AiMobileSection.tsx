@@ -17,12 +17,12 @@ const AiMobileSectionComponent: FC = () => {
     <div className={"mobileSection"} id={"ai-mobile"}>
       <div className={"mobileSection__wrapper"}>
         <Row>
-          <Col span={24}>
+          <Col xs={24}>
             <h2 className={"sectionTitle"}>PERSONAL AI DENTIST</h2>
           </Col>
         </Row>
         <Row>
-          <Col span={12}>
+          <Col xs={24} md={12}>
             <div className={"mobileSection__content"}>
               <div className={"mobileSection__textWrapper"}>
                 Our AI-powered technology enables primary examination and
@@ -69,8 +69,8 @@ const AiMobileSectionComponent: FC = () => {
               </div>
             </div>
           </Col>
-          <Col span={2} />
-          <Col span={10}>
+          <Col xs={0} md={2} />
+          <Col span={24} md={10}>
             <div className={"mobileSection__imageWrapper"}>
               <img
                 src={"/assets/images/3dentai-mockup-iphone16_v3.png"}
