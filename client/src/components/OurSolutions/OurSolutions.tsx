@@ -18,21 +18,33 @@ export const OurSolutions: FC = () => {
           href={"/solutions#ai-mobile"}
           className="our-solutions__solution-item"
         >
-          <UiIcon name="ai-mobile" idIcon="ai-mobile" size={50} />
+          <UiIcon
+            name="ai-mobile-hologram"
+            idIcon="ai-mobile-hologram"
+            size={100}
+          />
           <div>AI Mobile</div>
         </Link>
         <Link
           href={"/solutions#smart-camera"}
           className="our-solutions__solution-item"
         >
-          <UiIcon name="smart-camera" idIcon="smart-camera" size={50} />
+          <UiIcon
+            name="smart-camera-hologram"
+            idIcon="smart-camera"
+            size={100}
+          />
           <div>Smart Camera</div>
         </Link>
         <Link
           href={"/solutions#dentist-hub"}
           className="our-solutions__solution-item"
         >
-          <UiIcon name="dentist-hub" idIcon="dentist-hub" size={50} />
+          <UiIcon
+            name="dental-hub-hologram"
+            idIcon="dental-hub-hologram"
+            size={100}
+          />
           <div>Dentist Hub</div>
         </Link>
       </div>
