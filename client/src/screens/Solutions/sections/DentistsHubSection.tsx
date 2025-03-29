@@ -2,7 +2,6 @@ import { FC } from "react";
 import { Col, Row } from "antd";
 import { observer } from "mobx-react-lite";
 
-// import Image from "next/image";
 import { UiIcon } from "@/components/UI/UiIcon/UiIcon";
 
 // interface IDentistsHubSection {
@@ -45,16 +44,16 @@ const DentistsHubSectionComponent: FC = () => {
                 <div className={"mobileSection__button"}>
                   <UiIcon
                     name="rating-hologram"
-                    idIcon="diagnoses-hologram"
+                    idIcon="rating-hologram"
                     size={52}
                   />
                   Verified Reviews and Rating System
                 </div>
                 <div className={"mobileSection__button"}>
                   <UiIcon
-                    name="diagnoses-hologram"
-                    idIcon="diagnoses-hologram"
-                    size={52}
+                    name="telemedicine-hologram"
+                    idIcon="telemedicine-hologram"
+                    size={44}
                   />
                   Seamless Telemedicine Consultations
                 </div>
