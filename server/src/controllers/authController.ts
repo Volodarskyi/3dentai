@@ -2,16 +2,15 @@ import { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { sendErrorLog } from '../utils/api';
-import User from '../models/User';
+import {User} from "../models/User";
 
 // Define the shape of the request body
 interface RegisterRequestBody {
   firstName: string;
-  secondName: string;
+  lastName: string;
   email: string;
   password: string;
-  avatar?: string;
-  birthYear: number;
+  birthDate: number;
 }
 
 // interface LoginRequestBody {
@@ -25,18 +24,8 @@ const registerController = async (
   res: Response,
 ): Promise<void> => {
   try {
-    // const errors = validationResult(req); // Uncomment if using validation
-    // if (!errors.isEmpty()) {
-    //   res.status(400).json({
-    //     result: 'ERROR',
-    //     data: null,
-    //     message: 'Register ERROR!',
-    //     details: 'Check e-mail, password, and other data'
-    //   });
-    //   return;
-    // }
 
-    const { firstName, secondName, email, password, avatar, birthYear } =
+    const { firstName, lastName, email, password, birthDate } =
       req.body;
 
     // Check if a user with this email already exists
@@ -59,13 +48,12 @@ const registerController = async (
     // Create a new user
     const newUser = new User({
       email,
-      password: hashedPass,
+      auth:{password: hashedPass},
       firstName,
-      secondName,
+      lastName,
       role: 'user',
       phone: `PHONE FOR ${email}`,
-      avatar,
-      birthYear,
+      birthDate,
     });
 
     // Save the new user to the database
@@ -77,7 +65,7 @@ const registerController = async (
       result: 'SUCCESS',
       data: saveRes,
       message: 'New user added',
-      details: `${firstName} ${secondName} saved to DB`,
+      details: `${firstName} ${lastName} saved to DB`,
     });
   } catch (e) {
     console.error('ERROR (Auth.route-register):', e);
@@ -98,16 +86,6 @@ const registerController = async (
 // 'api/auth/login'
 const loginController = async (req: Request, res: Response): Promise<void> => {
   try {
-    // const errors = validationResult(req);
-    // if (!errors.isEmpty()) {
-    //     return res.status(400).json({
-    //         result: 'ERROR',
-    //         data: null,
-    //         message: 'Auth ERROR!',
-    //         details: 'Login invalid data'
-    //     });
-    // }
-
     const { email, password } = req.body;
     console.log('Login body:', req.body);
 
@@ -126,7 +104,7 @@ const loginController = async (req: Request, res: Response): Promise<void> => {
     }
 
     // Compare provided password with stored hash
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(password, user.auth.password);
     console.log('Login pass match:', isMatch);
 
     if (!isMatch) {
@@ -144,7 +122,7 @@ const loginController = async (req: Request, res: Response): Promise<void> => {
       {
         userId: user.id,
         firstName: user.firstName,
-        secondName: user.secondName,
+        lastName: user.lastName,
         role: user.role,
       },
       process.env.JWT_SECRET as string,
@@ -158,7 +136,7 @@ const loginController = async (req: Request, res: Response): Promise<void> => {
       result: 'SUCCESS',
       data,
       message: 'Auth complete',
-      details: `${user.firstName} ${user.secondName} is logged in`,
+      details: `${user.firstName} ${user.lastName} is logged in`,
     });
   } catch (e) {
     console.error('Login error:', e);

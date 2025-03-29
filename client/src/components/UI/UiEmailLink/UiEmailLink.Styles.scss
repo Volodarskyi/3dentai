@@ -1,0 +1,10 @@
+.email-link {
+  color: var(--color-active-500);
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--color-active-100);
+    text-decoration: none;
+  }
+}

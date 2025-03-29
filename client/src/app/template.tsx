@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 
 import Header from "@/components/Header";
 import Footer from "@/components/modules/Footer";
+import { UiDialog } from "@/components/UI/UiDialog/UiDialog";
 import { UiModal } from "@/components/UI/UiModal/UiModal";
 import { StoreWrapper } from "@/store/provider";
 
@@ -26,8 +27,10 @@ function Template(props: TemplateProps) {
       <Header />
       {children}
       <UiModal />
+      <UiDialog />
       <Footer />
     </StoreWrapper>
   );
 }
+
 export default Template;

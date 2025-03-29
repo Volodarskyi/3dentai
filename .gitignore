@@ -2,10 +2,8 @@
 .vscode
 
 /node_modules
-package-lock.json
 
 /server/node_modules
-/server/package-lock.json
 
 /server/.idea
 /client/.idea

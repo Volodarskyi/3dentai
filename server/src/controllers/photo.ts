@@ -16,6 +16,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 const uploadPhoto = async (req: Request, res: Response) => {
+  console.log('uploadPhoto controller')
   upload.single('photo')(req, res, err => {
     if (err) {
       return res

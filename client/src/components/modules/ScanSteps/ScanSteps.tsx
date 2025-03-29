@@ -1,7 +1,8 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { Steps } from "antd";
 import { observer } from "mobx-react-lite";
 
+import { UiIcon } from "@/components/UI/UiIcon/UiIcon";
 import { useStores } from "@/hooks/useStores";
 import { ISteps } from "@/types/steps";
 
@@ -18,18 +19,21 @@ const ScanSteps = () => {
   useEffect(() => {
     const initSteps: ISteps[] = [
       {
-        title: "Step 1",
-        description: "Upload video (photo).",
+        title: "Upload photo",
+        // description: "Upload video (photo).",
+        icon: <UiIcon idIcon="UploadPhoto" name="tooth" size={24} />,
         content: <UploadPhoto />,
       },
       {
-        title: "Step 2",
-        description: "Send to Chat GPT API and receive response.",
+        title: "Send to AI",
+        // description: "Send to AI and receive response.",
+        icon: <UiIcon idIcon="SendAI" name="ai" size={24} />,
         content: <AnalyzePhoto />,
       },
       {
-        title: "Step 3",
-        description: "Convert photo to 3D.",
+        title: "Convert to 3D",
+        // description: "Convert photo to 3D.",
+        icon: <UiIcon idIcon="Convert3D" name="tooth-3d" size={24} />,
         content: <Display3DModal />,
       },
     ];
