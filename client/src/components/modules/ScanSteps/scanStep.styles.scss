@@ -99,16 +99,16 @@
   height: 40px;
 }
 .ant-steps .ant-steps-item-wait>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title {
-  color: var(--color-second-250)
+  color: var(--color-second-250) !important;//add 'important' after update antd version 30-03-2025
 }
 
 .ant-steps .ant-steps-item-process>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title {
-  color: var(--color-success-500)
+  color: var(--color-active-500)!important;//add 'important' after update antd version 30-03-2025
 }
 
 //done step color text
 .ant-steps .ant-steps-item-finish>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title {
-  color: var(--color-success-900);
+  color: var(--color-second-900)!important;//add 'important' after update antd version 30-03-2025
 }
 
 .ant-steps .ant-steps-item-finish>.ant-steps-item-container>.ant-steps-item-icon{
@@ -122,3 +122,16 @@
 .ant-steps .ant-steps-item-process > .ant-steps-item-container > .ant-steps-item-icon{
   background: #2be04f;
 }
+
+//NEW VERSION ANTD-30032025
+.ant-steps .ant-steps-item-custom >.ant-steps-item-container>.ant-steps-item-icon >.ant-steps-icon {
+  top: 0;
+  width: 32px;
+  height: 32px;
+  font-size: 24px;
+  line-height: 32px;
+  background: var(--color-second-250) !important;
+  display: flex
+;
+  justify-content: center;
+  border-radius: 50%;}

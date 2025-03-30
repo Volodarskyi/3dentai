@@ -8,13 +8,16 @@ import { useStores } from "@/hooks/useStores";
 import { EAuth } from "@/types/auth";
 
 import "../UiModal.Styles.scss";
+import {useRouter} from "next/navigation";
 
 interface ISignInWindowProps {}
 
 const SignInWindowComponent: FC<ISignInWindowProps> = () => {
-  const { userStore } = useStores();
+  const { userStore, modalStore } = useStores();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const router = useRouter();
 
   const setInputValue = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -31,21 +34,26 @@ const SignInWindowComponent: FC<ISignInWindowProps> = () => {
     console.log("Sign-In-EMAIL:", email);
     console.log("Sign-In-PASS:", password);
 
-    try {
-      const res = await dataFetcher.post(requestUrl, { email, password });
-      console.log("api signIn res:", res);
+    router.push("/scan");
+    modalStore.closeUiModal()
 
-      // if (res.result !== "SUCCESS") {
-      //     throw new Error(res.message || "Some thing went wrong");
-      // }
 
-      console.log("LOGIN:", res.data);
-
-      localStorage.setItem(EAuth.TOKEN_ITEM_NAME, res.data.token);
-      userStore.authorization();
-    } catch (e) {
-      console.log("ERROR! Login", e);
-    }
+    // TODO back to normal after presentation
+    // try {
+    //   const res = await dataFetcher.post(requestUrl, { email, password });
+    //   console.log("api signIn res:", res);
+    //
+    //   // if (res.result !== "SUCCESS") {
+    //   //     throw new Error(res.message || "Some thing went wrong");
+    //   // }
+    //
+    //   console.log("LOGIN:", res.data);
+    //
+    //   localStorage.setItem(EAuth.TOKEN_ITEM_NAME, res.data.token);
+    //   userStore.authorization();
+    // } catch (e) {
+    //   console.log("ERROR! Login", e);
+    // }
   };
 
   return (

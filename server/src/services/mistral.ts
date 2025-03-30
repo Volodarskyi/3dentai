@@ -5,6 +5,12 @@ const analyzeImage = async (imageUrl: string) => {
   console.log(`url - ${process.env.MISTRAL_API}/v1/chat/completions`);
   console.log(`Token: ${token}`);
 
+  const promtText = 'You are a dentist with 10 years of experience. Analyze the photo of two molar teeth. Write your professional conclusion in English.\n' +
+      '\n' +
+      'At the end, strictly follow the format for the final result:\n' +
+      '– If no dental or gum issues are found, write: "Result: HEALTHY"\n' +
+      '– If any issues are found, write: "Result: INVESTIGATION"'
+
   try {
     const response = await fetch(
       `${process.env.MISTRAL_API}/v1/chat/completions`,
@@ -22,7 +28,8 @@ const analyzeImage = async (imageUrl: string) => {
               content: [
                 {
                   type: 'text',
-                  text: 'What’s in this image? Please provide answer in Ukrainian',
+                  // text: 'What’s in this image? Please provide answer in Ukrainian',
+                  text: promtText,
                 },
                 {
                   type: 'image_url',
