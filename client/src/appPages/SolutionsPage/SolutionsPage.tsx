@@ -2,11 +2,11 @@
 import { FC } from "react";
 import { observer } from "mobx-react-lite";
 
-import { AiMobileSection } from "@/screens/Solutions/sections/AiMobileSection";
-import { DentistsHubSection } from "@/screens/Solutions/sections/DentistsHubSection";
-import { SmartCameraSection } from "@/screens/Solutions/sections/SmartCameraSection";
+import { AiMobileSection } from "@/appPages/SolutionsPage/sections/AiMobileSection";
+import { DentistsHubSection } from "@/appPages/SolutionsPage/sections/DentistsHubSection";
+import { SmartCameraSection } from "@/appPages/SolutionsPage/sections/SmartCameraSection";
 
-import "./SolutionsScreen.styles.scss";
+import "./SolutionsPage.Styles.scss";
 
 // interface ISolutionsScreenProps {
 // }
@@ -23,4 +23,4 @@ const SolutionsScreenComponent: FC = () => {
   );
 };
 
-export const SolutionsScreen = observer(SolutionsScreenComponent);
+export const SolutionsPage = observer(SolutionsScreenComponent);

@@ -5,7 +5,7 @@ import { observer } from "mobx-react-lite";
 // import Image from "next/image";
 import { UiIcon } from "@/components/UI/UiIcon/UiIcon";
 
-import "../SolutionsScreen.styles.scss";
+import "../SolutionsPage.Styles.scss";
 
 // import phoneURL from "@/assets/images/3dentai-mockup-iphone16_v3.png";
 // import cartificateURL from "@/assets/images/CERTIFICATE_3dentai-icon-hologram 1.png";

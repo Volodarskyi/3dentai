@@ -9,7 +9,7 @@ import { UiIcon } from "@/components/UI/UiIcon/UiIcon";
 // import cloudURL from "@/assets/images/CLOUD_3dentai-icon-hologram 1.png";
 // import homeURL from "@/assets/images/HOME_3dentai-icon-hologram 1.png";
 // import lensURL from "@/assets/images/LENS_3dentai-icon-hologram 1.png";
-import "../SolutionsScreen.styles.scss";
+import "../SolutionsPage.Styles.scss";
 
 // interface ISmartCameraSection {
 // }

@@ -1,11 +1,11 @@
 import { Metadata } from "next";
 
-import { SolutionsScreen } from "@/screens/Solutions/SolutionsScreen";
+import { SolutionsPage } from "@/appPages/SolutionsPage/SolutionsPage";
 
 export const metadata: Metadata = {
   title: "3DentAI | Solutions",
 };
 
 export default function Solutions() {
-  return <SolutionsScreen />;
+  return <SolutionsPage />;
 }

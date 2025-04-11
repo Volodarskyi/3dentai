@@ -5,9 +5,9 @@ import { observer } from "mobx-react-lite";
 
 import ScanSteps from "../../components/modules/ScanSteps";
 
-import "./scanScreen.styles.scss";
+import "./ScanPage.Styles.scss";
 
-const ScanScreen = () => {
+const ScanPageComponent = () => {
   return (
     <Row className={"scanScreen"}>
       <ScanSteps />
@@ -15,4 +15,4 @@ const ScanScreen = () => {
   );
 };
 
-export default observer(ScanScreen);
+export const ScanPage = observer(ScanPageComponent);
