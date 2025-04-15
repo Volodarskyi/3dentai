@@ -1,10 +1,11 @@
-import DataFetcher from "@/api/dataFetcher";
+import { apiClient } from "@/api/apiClient";
 
 const analyzeImage = async (imageUrl: string) => {
   return (
-    DataFetcher.post("/api/ai/analyze", {
-      imageUrl,
-    })
+    apiClient
+      .post("/api/ai/analyze", {
+        imageUrl,
+      })
       // TODO refactoring and handler error
       .then((res) => res.data?.choices?.[0]?.message?.content ?? "Error")
       .catch((err) => {
@@ -14,6 +15,6 @@ const analyzeImage = async (imageUrl: string) => {
   );
 };
 
-export default {
+export const aiApiServices = {
   analyzeImage,
 };

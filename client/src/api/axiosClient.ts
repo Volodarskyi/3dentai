@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const axiosFetcher = axios.create({
+export const axiosClient = axios.create({
   baseURL:
     process.env.NEXT_PUBLIC_APP_ENV === "development"
       ? process.env.NEXT_PUBLIC_APP_BASE_URL_DEVELOPMENT
@@ -9,5 +9,3 @@ export const axiosFetcher = axios.create({
     "Content-Type": "application/json",
   },
 });
-
-export default axiosFetcher;
