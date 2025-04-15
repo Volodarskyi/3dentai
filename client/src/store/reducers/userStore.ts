@@ -1,7 +1,7 @@
 import { makeAutoObservable } from "mobx";
 
-import { jwtDecode } from "@/helper/parseFunctions";
 import { EAuth } from "@/types/auth";
+import { jwtDecode } from "@/utils/authUtils";
 
 class UserStore {
   isAuth = false;
