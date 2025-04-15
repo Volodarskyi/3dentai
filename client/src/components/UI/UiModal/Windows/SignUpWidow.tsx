@@ -1,7 +1,7 @@
 import React, { FC, useState } from "react";
 import { observer } from "mobx-react-lite";
 
-import dataFetcher from "@/api/dataFetcher";
+import { apiClient } from "@/api/apiClient";
 import UiButton from "@/components/UI/UiButton/UiButton";
 import { UiInputModal } from "@/components/UI/UiModal/UiInputModal/UiInputModal";
 
@@ -10,8 +10,6 @@ import "../UiModal.Styles.scss";
 // interface ISignUpWindowProps {}
 
 const SignUpWindowComponent: FC = () => {
-  // const { userStore } = useStores();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
@@ -30,14 +28,13 @@ const SignUpWindowComponent: FC = () => {
   const singUp = async () => {
     const requestUrl = "/api/auth/register";
 
-    // TODO implement dialog window
     if (password !== passwordConfirm) {
       console.log("check pass dialog TODO");
       return;
     }
 
     try {
-      const res = await dataFetcher.post(requestUrl, {
+      const res = await apiClient.post(requestUrl, {
         email,
         password,
         firstName,

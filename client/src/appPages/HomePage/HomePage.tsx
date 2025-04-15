@@ -4,9 +4,9 @@ import { observer } from "mobx-react-lite";
 import { OurSolutions } from "@/components/OurSolutions/OurSolutions";
 import { PageDecorations } from "@/components/PageDecorations/PageDecorations";
 
-import "./Home.Styles.scss";
+import "./HomePage.Styles.scss";
 
-const HomeScreenComponent = () => {
+const HomePageComponent = () => {
   return (
     <div className="home">
       <PageDecorations />
@@ -33,4 +33,4 @@ const HomeScreenComponent = () => {
   );
 };
 
-export const HomeScreen = observer(HomeScreenComponent);
+export const HomePage = observer(HomePageComponent);

@@ -5,9 +5,9 @@ import { observer } from "mobx-react-lite";
 
 import { UiEmailLink } from "@/components/UI/UiEmailLink/UiEmailLink";
 
-import "./ComingSoonScreen.Styles.scss";
+import "./ComingSoonPage.Styles.scss";
 
-const ComingSoonScreenComponent: FC = () => {
+const ComingSoonPageComponent: FC = () => {
   return (
     <div className="coming-soon">
       <div className="coming-soon__background" />
@@ -95,4 +95,4 @@ const ComingSoonScreenComponent: FC = () => {
   );
 };
 
-export const ComingSoonScreen = observer(ComingSoonScreenComponent);
+export const ComingSoonPage = observer(ComingSoonPageComponent);
