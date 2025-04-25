@@ -1,0 +1,18 @@
+.dentist{
+  margin-top: var(--height-header);
+  background: var(--color-bg-page);
+
+  &__main{
+    &-title{
+      color: var(--color-success-500);
+      font-weight: 500;
+      font-size: 1.5rem;
+    }
+  }
+
+  &__dashboard{
+    width: 400px;
+    background: rgba(255, 172, 172, 0.5);
+    color: var(--color-secondary-100);
+  }
+}
