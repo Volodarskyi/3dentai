@@ -12,7 +12,8 @@ import "./AnnotationsPage.Styles.scss";
 const AnnotationsPageComponent: FC = () => {
   return (
     <div className="annotations">
-      <h1>Annotations Page</h1>
+      <div className="annotations__background"></div>
+      <h1 className="annotations__title">Annotations</h1>
       <AnnotationsWorkSpaceSection />
     </div>
   );
