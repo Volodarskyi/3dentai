@@ -1,0 +1,118 @@
+{
+  "doctor_id": "67c5596a88f4398b89171389",
+  "user_id": "67d34975c9ffba860a8c97e4",
+  "photos": [],
+  "status": "draft",
+  "createdTime": "2025-04-18T06:06:38.214Z",
+  "updateTime": "2025-04-18T06:06:38.214Z",
+  "questions": [
+    {
+      "type": "radio",
+      "value": "Do you have pain?",
+      "answers": [
+        { "label": "Yes", "value": true },
+        { "label": "No", "value": false }
+      ],
+      "answer": ["true"]
+    },
+    {
+      "type": "checkbox",
+      "value": "Where exactly do you feel pain?",
+      "answers": [
+        { "label": "Upper left", "value": "upper_left" },
+        { "label": "Upper back", "value": "upper_back" },
+        { "label": "Upper right", "value": "upper_right" },
+        { "label": "Upper front", "value": "upper_front" },
+        { "label": "Lower left", "value": "lower_left" },
+        { "label": "Lower right", "value": "lower_right" },
+        { "label": "Lower front", "value": "lower_front" }
+      ],
+      "answer": ["upper_left", "lower_right"]
+    },
+    {
+      "type": "radio",
+      "value": "Is the pain constant or does it occur periodically?",
+      "answers": [
+        { "label": "Constant", "value": "constant" },
+        { "label": "Periodically", "value": "periodically" }
+      ],
+      "answer": ["periodically"]
+    },
+    {
+      "type": "radio",
+      "value": "How would you describe the pain — sharp, dull, aching, or pulsating?",
+      "answers": [
+        { "label": "Sharp", "value": "sharp" },
+        { "label": "Dull", "value": "dull" },
+        { "label": "Aching", "value": "aching" },
+        { "label": "Pulsating", "value": "pulsating" }
+      ],
+      "answer": ["aching"]
+    },
+    {
+      "type": "radio",
+      "value": "When did the pain first appear?",
+      "answers": [
+        { "label": "1 day ago", "value": "1_day" },
+        { "label": "3 days ago", "value": "3_days" },
+        { "label": "5 days ago", "value": "5_days" },
+        { "label": "7 days ago", "value": "7_days" },
+        { "label": "More than 7 days ago", "value": "more_than_7_days" }
+      ],
+      "answer": ["3_days"]
+    },
+    {
+      "type": "radio",
+      "value": "Is there a reaction to hot or cold?",
+      "answers": [
+        { "label": "No", "value": "no" },
+        { "label": "Yes, to cold", "value": "cold" },
+        { "label": "Yes, to hot", "value": "hot" },
+        { "label": "Yes, to both", "value": "both" }
+      ],
+      "answer": ["cold"]
+    },
+    {
+      "type": "checkbox",
+      "value": "Does the pain increase when biting or chewing?",
+      "answers": [
+        { "label": "No increase", "value": "no_increase" },
+        { "label": "When biting", "value": "biting" },
+        { "label": "When chewing", "value": "chewing" }
+      ],
+      "answer": ["biting", "chewing"]
+    },
+    {
+      "type": "radio",
+      "value": "Have you had an injury or have you bitten something hard recently?",
+      "answers": [
+        { "label": "No", "value": "no" },
+        { "label": "Injury", "value": "injury" },
+        { "label": "Bit something hard", "value": "bit_hard" }
+      ],
+      "answer": ["bit_hard"]
+    },
+    {
+      "type": "checkbox",
+      "value": "Do neighboring teeth, gums, or jaw hurt?",
+      "answers": [
+        { "label": "No", "value": "no" },
+        { "label": "Teeth", "value": "teeth" },
+        { "label": "Gums", "value": "gums" },
+        { "label": "Jaw", "value": "jaw" }
+      ],
+      "answer": ["teeth", "gums"]
+    },
+    {
+      "type": "checkbox",
+      "value": "Is there swelling, redness, or pus in this area?",
+      "answers": [
+        { "label": "No", "value": "no" },
+        { "label": "Swelling", "value": "swelling" },
+        { "label": "Redness", "value": "redness" },
+        { "label": "Pus", "value": "pus" }
+      ],
+      "answer": ["swelling"]
+    }
+  ]
+}
