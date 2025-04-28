@@ -20,7 +20,7 @@ const AnalyzePhoto = () => {
   return (
     <div
       className={
-        "flex w-full min-h-96 border border-gray-200 rounded-b-lg p-4 text-black"
+        "flex w-full min-h-96 border border-gray-200 rounded-b-lg p-4 text-white font-medium"
       }
     >
       {isLoading ? (

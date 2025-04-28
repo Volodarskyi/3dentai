@@ -1,7 +1,8 @@
 import React, { FC, useState } from "react";
 import { observer } from "mobx-react-lite";
+import { useRouter } from "next/navigation";
 
-import dataFetcher from "@/api/dataFetcher";
+import { apiClient } from "@/api/apiClient";
 import UiButton from "@/components/UI/UiButton/UiButton";
 import { UiInputModal } from "@/components/UI/UiModal/UiInputModal/UiInputModal";
 import { useStores } from "@/hooks/useStores";
@@ -9,12 +10,14 @@ import { EAuth } from "@/types/auth";
 
 import "../UiModal.Styles.scss";
 
-interface ISignInWindowProps {}
+// interface ISignInWindowProps {}
 
-const SignInWindowComponent: FC<ISignInWindowProps> = () => {
-  const { userStore } = useStores();
+const SignInWindowComponent: FC = () => {
+  const { userStore, modalStore } = useStores();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const router = useRouter();
 
   const setInputValue = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -25,21 +28,21 @@ const SignInWindowComponent: FC<ISignInWindowProps> = () => {
   };
 
   const signIn = async () => {
-    console.log("login");
-
+    console.log("signIn");
     const requestUrl = "api/auth/login";
-    console.log("Sign-In-EMAIL:", email);
-    console.log("Sign-In-PASS:", password);
+
+    router.push("/scan");
+    modalStore.closeUiModal();
 
     try {
-      const res = await dataFetcher.post(requestUrl, { email, password });
+      const res = await apiClient.post(requestUrl, { email, password });
       console.log("api signIn res:", res);
 
       // if (res.result !== "SUCCESS") {
       //     throw new Error(res.message || "Some thing went wrong");
       // }
 
-      console.log("LOGIN:", res.data);
+      console.log("SingIn RES:", res.data);
 
       localStorage.setItem(EAuth.TOKEN_ITEM_NAME, res.data.token);
       userStore.authorization();

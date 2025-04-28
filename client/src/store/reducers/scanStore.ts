@@ -1,7 +1,7 @@
 import { makeAutoObservable, reaction } from "mobx";
 
-import fetch from "@/api";
-import DataFetcher from "@/api/dataFetcher";
+import { apiClient } from "@/api/apiClient";
+import { aiApiServices } from "@/api/services/aiApiServices";
 import { ISteps } from "@/types/steps";
 
 class ScanStore {
@@ -64,7 +64,7 @@ class ScanStore {
 
     try {
       this.isLoading = true;
-      const url = await DataFetcher.postFile("api/photo/upload", formData);
+      const url = await apiClient.postFile("api/photo/upload", formData);
       console.log("url", url);
 
       // TODO - hot fix. Some time we have answer link, but this image doesn't save
@@ -84,7 +84,7 @@ class ScanStore {
   analyzeImage = async () => {
     if (this.imgUrl === "" || this.isLoading) return;
     this.isLoading = true;
-    this.imgDescription = await fetch.ai.analyzeImage(this.imgUrl);
+    this.imgDescription = await aiApiServices.analyzeImage(this.imgUrl);
     this.isLoading = false;
   };
 }
