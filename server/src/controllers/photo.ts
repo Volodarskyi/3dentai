@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import multer from 'multer';
 import path from 'path';
-import { DEFAULT_SERVER_IMAGE_STORE } from '../constants/config';
+import { DEFAULT_SERVER_IMAGE_STORE } from '@/constants/config';
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -16,7 +16,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 const uploadPhoto = async (req: Request, res: Response) => {
-  console.log('uploadPhoto controller')
+  console.log('uploadPhoto controller');
   upload.single('photo')(req, res, err => {
     if (err) {
       return res
