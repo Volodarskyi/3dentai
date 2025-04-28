@@ -17,6 +17,12 @@ const AnalyzePhoto = () => {
     analyze();
   }, [analyze, imgUrl]);
 
+  const loading = () => (
+    <div className={"min-h-56 w-full flex justify-center items-center"}>
+      <Loading />
+    </div>
+  );
+
   return (
     <div
       className={
@@ -24,11 +30,9 @@ const AnalyzePhoto = () => {
       }
     >
       {isLoading ? (
-        <div className={"min-h-56 w-full flex justify-center items-center"}>
-          <Loading />
-        </div>
+        loading()
       ) : (
-        imgDescription
+        <div className={"ai_answer__answer"}>{imgDescription}</div>
       )}
     </div>
   );

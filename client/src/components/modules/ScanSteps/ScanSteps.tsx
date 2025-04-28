@@ -25,17 +25,23 @@ const ScanSteps = () => {
         content: <UploadPhoto />,
       },
       {
+        title: "Questions",
+        // description: "Send to AI and receive response.",
+        icon: <UiIcon idIcon="SendAI" name="ai" size={24} />,
+        content: <div>Questions</div>,
+      },
+      {
         title: "Send to AI",
         // description: "Send to AI and receive response.",
         icon: <UiIcon idIcon="SendAI" name="ai" size={24} />,
         content: <AnalyzePhoto />,
       },
-      {
-        title: "Convert to 3D",
-        // description: "Convert photo to 3D.",
-        icon: <UiIcon idIcon="Convert3D" name="tooth-3d" size={24} />,
-        content: <Display3DModal />,
-      },
+      // {
+      //   title: "Convert to 3D",
+      //   // description: "Convert photo to 3D.",
+      //   icon: <UiIcon idIcon="Convert3D" name="tooth-3d" size={24} />,
+      //   content: <Display3DModal />,
+      // },
     ];
 
     setSteps(initSteps);
