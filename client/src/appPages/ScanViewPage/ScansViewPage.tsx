@@ -1,23 +1,24 @@
 "use client";
 
-import { useEffect } from "react";
+import { FC, useEffect } from "react";
 import { observer } from "mobx-react-lite";
-import { useSearchParams } from "next/navigation";
 
 import { useStores } from "@/hooks/useStores";
 
 import "./ScansViewPage.Styles.scss";
 
-const ScansViewPageComponent = () => {
-  const searchParams = useSearchParams();
+interface Scan {
+  scanId: string;
+}
+
+const ScansViewPageComponent: FC<Scan> = ({ scanId }) => {
   const { scansViewStore } = useStores();
-  const scanID = searchParams.get("scanID");
 
   useEffect(() => {
-    if (scanID) {
-      scansViewStore.setScanID(scanID);
+    if (scanId) {
+      scansViewStore.setScanID(scanId);
     }
-  }, [scanID, scansViewStore]);
+  }, [scanId, scansViewStore]);
 
   return (
     <div className="scans-view">
@@ -29,4 +30,4 @@ const ScansViewPageComponent = () => {
   );
 };
 
-export const ScansViewPage = observer(ScansViewPageComponent);
+export default observer(ScansViewPageComponent);

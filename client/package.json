@@ -14,12 +14,12 @@
     "@ant-design/nextjs-registry": "^1.0.2",
     "@heroicons/react": "2.1.5",
     "antd": "5.24.1",
-    "axios": "1.7.9",
+    "axios": "1.8.2",
     "eslint-plugin-simple-import-sort": "12.1.1",
     "firebase": "10.14.1",
     "mobx": "6.13.5",
     "mobx-react-lite": "4.0.7",
-    "next": "14.2.15",
+    "next": "15.3.1",
     "react": "18",
     "react-bootstrap": "2.10.5",
     "react-dom": "18",
@@ -44,6 +44,5 @@
     "three": "0.169.0",
     "typescript": "5"
   },
-  "proxy": "http://localhost:80",
-  "packageManager": "pnpm@9.15.3+sha512.1f79bc245a66eb0b07c5d4d83131240774642caaa86ef7d0434ab47c0d16f66b04e21e0c086eb61e62c77efc4d7f7ec071afad3796af64892fae66509173893a"
+  "proxy": "http://localhost:80"
 }
