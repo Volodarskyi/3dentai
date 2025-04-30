@@ -38,6 +38,16 @@ class ApiClient {
     );
     return res.data.url;
   }
+
+  static async postAnnotation(file: FormData): Promise<string> {
+    const res = await axiosClient.post("/api/photo/uploads3", file, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    return res.data; // backend должен возвращать { key: string }
+  }
 }
 
 export const apiClient = ApiClient;
