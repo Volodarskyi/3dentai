@@ -2,7 +2,7 @@ import express, { Request, Response } from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import aiRout from './ai';
-import photoRout from './photo';
+import photoRoutes from './photo.routes';
 import { generateRes } from '../utils/api';
 import authRoutes from './authRoutes';
 
@@ -14,7 +14,7 @@ const __dirname = path.dirname(__filename);
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
 app.use('/ai', aiRout);
-app.use('/photo', photoRout);
+app.use('/photo', photoRoutes);
 app.use('/auth', authRoutes);
 
 // Default

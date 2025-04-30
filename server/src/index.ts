@@ -6,11 +6,12 @@ import mongoose from 'mongoose';
 import morgan from 'morgan';
 
 import dotenv from 'dotenv';
+dotenv.config();
 
 import routes from './routes';
 
 const app = express();
-dotenv.config();
+
 
 app.use(cors({ origin: '*' }));
 app.use(bodyParser.urlencoded({ extended: false }));
