@@ -4,13 +4,14 @@ import { observer } from "mobx-react-lite";
 import { UiErrorResult } from "@/components/UI/UiDialog/UiErrorResult/UiErrorResult";
 import { UiLoader } from "@/components/UI/UiDialog/UiLoader/UiLoader";
 import { UiSuccessResult } from "@/components/UI/UiDialog/UiSuccessResult/UiSuccessResult";
-import dialogStore from "@/store/reducers/dialogStore";
+import { useStores } from "@/hooks/useStores";
 import { EDialogAction } from "@/types/enums/uiDialog";
 
 import "./UiDialog.Styles.scss";
 
 const UiDialogComponent: FC = () => {
   const [isAnimating, setIsAnimating] = useState(false);
+  const { dialogStore } = useStores();
 
   useEffect(() => {
     if (dialogStore.isShowUiDialog) {
@@ -20,8 +21,8 @@ const UiDialogComponent: FC = () => {
     }
   }, [dialogStore.isShowUiDialog]);
 
-  return (
-    isAnimating && (
+  if (isAnimating) {
+    return (
       <div
         className={`ui-dialog ${dialogStore.isShowUiDialog ? "ui-dialog-show" : "ui-dialog-hide"}`}
       >
@@ -33,8 +34,9 @@ const UiDialogComponent: FC = () => {
         {dialogStore.currentDialogAction ===
           EDialogAction.SHOW_ERROR_RESULT && <UiErrorResult />}
       </div>
-    )
-  );
+    );
+  }
+  return null;
 };
 
 export const UiDialog = observer(UiDialogComponent);

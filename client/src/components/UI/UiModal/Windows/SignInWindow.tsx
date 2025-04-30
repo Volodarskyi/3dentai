@@ -31,21 +31,21 @@ const SignInWindowComponent: FC = () => {
     console.log("signIn");
     const requestUrl = "api/auth/login";
 
-    router.push("/scan");
-    modalStore.closeUiModal();
-
     try {
       const res = await apiClient.post(requestUrl, { email, password });
       console.log("api signIn res:", res);
 
-      // if (res.result !== "SUCCESS") {
-      //     throw new Error(res.message || "Some thing went wrong");
-      // }
+      if (res.result !== "SUCCESS") {
+        throw new Error(res.message || "Some thing went wrong");
+      }
 
       console.log("SingIn RES:", res.data);
 
       localStorage.setItem(EAuth.TOKEN_ITEM_NAME, res.data.token);
       userStore.authorization();
+
+      router.push("/scan");
+      modalStore.closeUiModal();
     } catch (e) {
       console.log("ERROR! Login", e);
     }

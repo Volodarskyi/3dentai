@@ -8,7 +8,24 @@ import "./scanNavigation.styles.scss";
 
 const ScanNavigation: FC = () => {
   const { scanStore } = useStores();
-  const { nextStep, previousStep, disabledPrevious, disabledNext } = scanStore;
+  const {
+    nextStep,
+    previousStep,
+    disabledPrevious,
+    disabledNext,
+    step,
+    steps,
+  } = scanStore;
+  const isSaveStep = steps.length - 1 === step;
+  const isNextDisabled = disabledNext && !isSaveStep;
+
+  const handleNextBtn = () => {
+    if (isSaveStep) {
+      console.log("dave");
+      return;
+    }
+    nextStep();
+  };
 
   return (
     <div className={"scanNavigation"}>
@@ -17,7 +34,11 @@ const ScanNavigation: FC = () => {
         onClick={previousStep}
         text={"Previous"}
       />
-      <Button disabled={disabledNext} onClick={nextStep} text={"Next"} />
+      <Button
+        disabled={isNextDisabled}
+        onClick={handleNextBtn}
+        text={isSaveStep ? "Save" : "Next"}
+      />
     </div>
   );
 };

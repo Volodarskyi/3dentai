@@ -5,12 +5,14 @@ import { jwtDecode } from "@/utils/authUtils";
 
 class UserStore {
   isAuth = false;
+  id = "";
   firstName = "";
   secondName = "";
   role = "";
 
   constructor() {
     makeAutoObservable(this);
+    this.authorization();
   }
 
   setAuth = (isAuth: boolean) => {
@@ -29,16 +31,25 @@ class UserStore {
     this.role = role;
   };
 
+  setUser = (user: {
+    lastName: string;
+    firstName: string;
+    role: string;
+    userId: string;
+  }) => {
+    this.id = user.userId;
+    this.firstName = user.firstName;
+    this.secondName = user.lastName;
+    this.role = user.role;
+    this.isAuth = true;
+  };
+
   authorization = () => {
     const localToken = localStorage.getItem(EAuth.TOKEN_ITEM_NAME);
 
     if (localToken) {
       const tokenData = jwtDecode(localToken);
-
-      this.setFirstName(tokenData.payload.first);
-      this.setSecondName(tokenData.payload.second);
-      this.setRole(tokenData.payload.role);
-      this.setAuth(true);
+      this.setUser(tokenData.payload);
     }
   };
 

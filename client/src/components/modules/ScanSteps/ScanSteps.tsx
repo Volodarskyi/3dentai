@@ -7,7 +7,6 @@ import { useStores } from "@/hooks/useStores";
 import { ISteps } from "@/types/steps";
 
 import AnalyzePhoto from "./steps/AnalyzePhoto";
-import Display3DModal from "./steps/Display3DModal";
 import UploadPhoto from "./steps/UploadPhoto";
 
 import "./scanStep.styles.scss";
@@ -20,28 +19,19 @@ const ScanSteps = () => {
     const initSteps: ISteps[] = [
       {
         title: "Upload photo",
-        // description: "Upload video (photo).",
         icon: <UiIcon idIcon="UploadPhoto" name="tooth" size={24} />,
         content: <UploadPhoto />,
       },
       {
         title: "Questions",
-        // description: "Send to AI and receive response.",
         icon: <UiIcon idIcon="SendAI" name="ai" size={24} />,
         content: <div>Questions</div>,
       },
       {
         title: "Send to AI",
-        // description: "Send to AI and receive response.",
         icon: <UiIcon idIcon="SendAI" name="ai" size={24} />,
         content: <AnalyzePhoto />,
       },
-      // {
-      //   title: "Convert to 3D",
-      //   // description: "Convert photo to 3D.",
-      //   icon: <UiIcon idIcon="Convert3D" name="tooth-3d" size={24} />,
-      //   content: <Display3DModal />,
-      // },
     ];
 
     setSteps(initSteps);
