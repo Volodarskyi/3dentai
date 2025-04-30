@@ -1,7 +1,7 @@
 import ScansPage from "@/appPages/ScansPage/ScansPage";
 
-const Scans = () => {
+function Scans() {
   return <ScansPage />;
-};
+}
 
 export default Scans;
