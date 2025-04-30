@@ -45,11 +45,13 @@ class UserStore {
   };
 
   authorization = () => {
-    const localToken = localStorage.getItem(EAuth.TOKEN_ITEM_NAME);
+    if (typeof window !== "undefined" && window?.localStorage) {
+      const localToken = localStorage.getItem(EAuth.TOKEN_ITEM_NAME);
 
-    if (localToken) {
-      const tokenData = jwtDecode(localToken);
-      this.setUser(tokenData.payload);
+      if (localToken) {
+        const tokenData = jwtDecode(localToken);
+        this.setUser(tokenData.payload);
+      }
     }
   };
 
