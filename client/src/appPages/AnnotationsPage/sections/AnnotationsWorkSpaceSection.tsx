@@ -2,16 +2,10 @@
 
 import { FC, useEffect, useRef, useState } from "react";
 import { observer } from "mobx-react-lite";
+import "../AnnotationsPage.Styles.scss";
 import {apiClient} from "@/api/apiClient";
 
-import "../AnnotationsPage.Styles.scss";
-
-const imageFolder = "case";
-const imageFiles = [
-  "3DentAI_case-id445.png",
-  "id123654.png",
-  "id444_test_2.png"
-];
+const imageFolderDefault = "case";
 
 const AnnotationsWorkSpaceSectionComponent: FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -21,9 +15,51 @@ const AnnotationsWorkSpaceSectionComponent: FC = () => {
   const [brushSize, setBrushSize] = useState(3);
   const [isUploading, setIsUploading] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [imageFiles, setImageFiles] = useState<string[]>([]);
+  const [folderName, setFolderName] = useState<string>(imageFolderDefault);
 
   const selectedImage = imageFiles[currentIndex];
-  const imageUrl = `https://external-storage-bucket-3dentai-28ff4fdb.s3.us-east-2.amazonaws.com/${imageFolder}/${selectedImage}`;
+  const imageUrl = selectedImage
+      ? `https://external-storage-bucket-3dentai-28ff4fdb.s3.us-east-2.amazonaws.com/${folderName}/${selectedImage}`
+      : "";
+
+  const fetchFiles = async (folder: string): Promise<string[]> => {
+    try {
+      const data = await apiClient.get(`/api/photo/files?folder=${folder}`);
+      console.log('DATA FILES:',data.files)
+      return data.files || [];
+    } catch (error) {
+      console.error(`Failed to fetch files from ${folder}:`, error);
+      return [];
+    }
+  };
+
+  const filterImagesWithoutAnnotations = (images: string[], annotations: string[]): string[] => {
+    const annotationSet = new Set(
+        annotations.map((filename) => filename.replace("_annotation.png", "").replace(".png", ""))
+    );
+
+    return images.filter((image) => {
+      const baseName = image.replace(".png", "");
+      return !annotationSet.has(baseName);
+    });
+  };
+
+  useEffect(() => {
+    const loadFiles = async () => {
+      const [images, annotations] = await Promise.all([
+        fetchFiles(folderName),
+        fetchFiles("annotations"),
+      ]);
+
+      const filteredImages = filterImagesWithoutAnnotations(images, annotations);
+
+      setImageFiles(filteredImages);
+      setCurrentIndex(0);
+    };
+
+    loadFiles();
+  }, [folderName]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -79,16 +115,27 @@ const AnnotationsWorkSpaceSectionComponent: FC = () => {
     canvas.toBlob(async (blob) => {
       if (!blob) return;
 
-      const annotationFileName = selectedImage.replace(/\.(png|jpg|jpeg)$/, "_annotation.png");
+      const cleanName = selectedImage.split("/").pop() || "";
+      const annotationFileName = cleanName.replace(/\.(png|jpg|jpeg)$/, "_annotation.png");
+
       const file = new File([blob], annotationFileName, { type: "image/png" });
       const formData = new FormData();
       formData.append("file", file);
-      formData.append("folder", "annotation");
+      formData.append("folder", "annotations");
 
       try {
         setIsUploading(true);
         const key = await apiClient.postAnnotation(formData);
         console.log("✅ Annotation uploaded to S3:", key);
+
+        // ⬇️ Очистить слой аннотаций после успешной отправки
+        const ctx = canvas.getContext("2d");
+        if (ctx) {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        // ⬇️ Перейти к следующему изображению
+        goToNextImage();
       } catch (err: any) {
         console.error("❌ Upload failed:", err);
       } finally {
@@ -116,16 +163,28 @@ const AnnotationsWorkSpaceSectionComponent: FC = () => {
   return (
       <div className="annotations__workspace__section">
         <div className="annotations__workspace__container">
-          <div className="annotations__workspace__display">
+          <div className="annotations__workspace__controls">
+            <button onClick={() => setFolderName("case")}>Load Case Folder</button>
+            <button onClick={() => setFolderName("control")}>Load Control Folder</button>
+          </div>
 
-            <img
-                ref={baseImageRef}
-                src={imageUrl}
-                alt="Tooth"
-                width={512}
-                height={512}
-                className="annotations__workspace__image"
-            />
+          <div className="annotations__workspace__controls">
+            <button onClick={goToPreviousImage} disabled={imageFiles.length === 0}>⟨ Previous</button>
+            <span style={{ margin: "0 10px" }}>{selectedImage}</span>
+            <button onClick={goToNextImage} disabled={imageFiles.length === 0}>Next ⟩</button>
+          </div>
+
+          <div className="annotations__workspace__display">
+            {imageUrl && (
+                <img
+                    ref={baseImageRef}
+                    src={imageUrl}
+                    alt="Tooth"
+                    width={512}
+                    height={512}
+                    className="annotations__workspace__image"
+                />
+            )}
             <canvas
                 ref={canvasRef}
                 width={512}
@@ -142,14 +201,9 @@ const AnnotationsWorkSpaceSectionComponent: FC = () => {
             <button onClick={decreaseBrush}>-</button>
             <span>Brush: {brushSize}px</span>
             <button onClick={increaseBrush}>+</button>
-            <button onClick={handleExport} disabled={isUploading}>
+            <button onClick={handleExport} disabled={isUploading || !selectedImage}>
               {isUploading ? "Uploading..." : "Export to S3"}
             </button>
-          </div>
-          <div className="annotations__workspace__controls">
-            <button onClick={goToPreviousImage}>⟨ Previous</button>
-            <span style={{ margin: "0 10px" }}>{selectedImage}</span>
-            <button onClick={goToNextImage}>Next ⟩</button>
           </div>
         </div>
       </div>

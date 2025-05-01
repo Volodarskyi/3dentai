@@ -65,20 +65,24 @@ export const getListFoldersS3 = async (): Promise<string[]> => {
 // List files in a specific folder
 export const getFilesInFolderS3 = async (folder: string): Promise<string[]> => {
     try {
+        const prefix = folder.endsWith("/") ? folder : `${folder}/`;
+
         const command = new ListObjectsV2Command({
             Bucket: appConfig.AWS.BUCKET,
-            Prefix: folder.endsWith('/') ? folder : `${folder}/`,
+            Prefix: prefix,
         });
 
         const response = await s3.send(command);
 
-        const files = response.Contents?.map(obj => obj.Key!).filter(
-            key => key !== `${folder}/` // exclude folder marker itself
-        ) || [];
+        const files = response.Contents?.map(obj => {
+            const key = obj.Key!;
+            // Убираем саму папку из пути
+            return key.startsWith(prefix) ? key.slice(prefix.length) : key;
+        }).filter(name => name && name !== '') || [];
 
         return files;
     } catch (error: any) {
-        console.error("Error listing files in S3 folder:", error);
+        console.error("❌ Error listing files in S3 folder:", error);
         throw new Error(error.message || "S3 file list failed");
     }
 };
