@@ -80,6 +80,12 @@
       align-items: center;
       gap: 10px;
       z-index: 100;
+
+      button.active-folder {
+        font-weight: bold;
+        color: var(--color-success-250);
+        background-color: var(--color-bg-light);
+      }
     }
 
   }

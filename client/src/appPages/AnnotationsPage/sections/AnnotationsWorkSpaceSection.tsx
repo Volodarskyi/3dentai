@@ -17,6 +17,7 @@ const AnnotationsWorkSpaceSectionComponent: FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [imageFiles, setImageFiles] = useState<string[]>([]);
   const [folderName, setFolderName] = useState<string>(imageFolderDefault);
+  const [previousImage, setPreviousImage] = useState<ImageData | null>(null);
 
   const selectedImage = imageFiles[currentIndex];
   const imageUrl = selectedImage
@@ -80,11 +81,17 @@ const AnnotationsWorkSpaceSectionComponent: FC = () => {
   };
 
   const handleMouseDown = (e: React.MouseEvent<HTMLCanvasElement>) => {
-    setIsDrawing(true);
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
+
+    // Сохраняем текущее состояние канваса перед началом рисования
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    setPreviousImage(imageData);
+
+    setIsDrawing(true);
+
     const { x, y } = getMousePos(e);
     ctx.beginPath();
     ctx.moveTo(x, y);
@@ -160,18 +167,33 @@ const AnnotationsWorkSpaceSectionComponent: FC = () => {
     setCurrentIndex((prev) => (prev - 1 + imageFiles.length) % imageFiles.length);
   };
 
+  const handleUndo = () => {
+    const canvas = canvasRef.current;
+    if (!canvas || !previousImage) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    ctx.putImageData(previousImage, 0, 0);
+    setPreviousImage(null); // Очистим previousImage, чтобы не делать много откатов подряд
+  };
+
   return (
       <div className="annotations__workspace__section">
         <div className="annotations__workspace__container">
           <div className="annotations__workspace__controls">
-            <button onClick={() => setFolderName("case")}>Load Case Folder</button>
-            <button onClick={() => setFolderName("control")}>Load Control Folder</button>
-          </div>
-
-          <div className="annotations__workspace__controls">
-            <button onClick={goToPreviousImage} disabled={imageFiles.length === 0}>⟨ Previous</button>
-            <span style={{ margin: "0 10px" }}>{selectedImage}</span>
-            <button onClick={goToNextImage} disabled={imageFiles.length === 0}>Next ⟩</button>
+            <button
+                onClick={() => setFolderName("case")}
+                className={folderName === "case" ? "active-folder" : ""}
+            >
+              CASE
+            </button>
+            <button
+                onClick={() => setFolderName("control")}
+                className={folderName === "control" ? "active-folder" : ""}
+            >
+              CONTROL
+            </button>
           </div>
 
           <div className="annotations__workspace__display">
@@ -198,11 +220,20 @@ const AnnotationsWorkSpaceSectionComponent: FC = () => {
           </div>
 
           <div className="annotations__workspace__controls">
+            <button onClick={goToPreviousImage} disabled={imageFiles.length === 0}>⟨ Previous</button>
+            <span style={{ margin: "0 10px" }}>{selectedImage}</span>
+            <button onClick={goToNextImage} disabled={imageFiles.length === 0}>Next ⟩</button>
+          </div>
+
+          <div className="annotations__workspace__controls">
             <button onClick={decreaseBrush}>-</button>
             <span>Brush: {brushSize}px</span>
             <button onClick={increaseBrush}>+</button>
             <button onClick={handleExport} disabled={isUploading || !selectedImage}>
               {isUploading ? "Uploading..." : "Export to S3"}
+            </button>
+            <button onClick={handleUndo} disabled={!previousImage}>
+              Undo
             </button>
           </div>
         </div>
