@@ -1,8 +1,8 @@
 @import "reset";
-@import "variables";
 @import "mixins";
 @import "helpers";
 
 body {
   background-color: var(--color-bg-page);
+  color: var(--color-text-white);
 }

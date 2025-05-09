@@ -16,7 +16,7 @@ const HomePageComponent = () => {
         </div>
         <div className="home__content-description">
           <h2>
-            Primary diagnosis of tooth and gum diseases at home using a compact
+            Primary diagnosis of teeth and gum diseases at home using a compact
             camera and AI
           </h2>
         </div>

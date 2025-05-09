@@ -69,4 +69,7 @@
 
     --color-bg-page:#000d3a;
 
+    --color-bg-work-space: rgba(83, 255, 255, 0.15);
+
+    --height-header: 70px;
 }
