@@ -40,7 +40,7 @@
     }
 
     &__container{
-      width: 600px;
+      width: 564px;
       display: flex;
       padding: 1rem;
       flex-direction: column;
@@ -76,17 +76,88 @@
     }
 
     &__controls {
+      width: 512px;
+      //background: red;
       display: flex;
-      align-items: center;
-      gap: 10px;
-      z-index: 100;
+      flex-direction: column;
 
-      button.active-folder {
-        font-weight: bold;
-        color: var(--color-success-250);
-        background-color: var(--color-bg-light);
+      &__folders{
+        width: 512px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        z-index: 100;
+
+        &-switch{
+          width: 24%;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          z-index: 100;
+        }
+
+        &__unannotated{
+          color: var(--color-second-500);
+        }
+      }
+
+
+      &__section{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        z-index: 100;
+      }
+
+      &__filename{
+        width: 290px;
+        height: 30px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        font-size: .9rem;
+        font-weight: 500;
+        background: var(--color-second-600);
+        color: var(--color-bg-page);
+        border-radius: 50px;
+      }
+
+      &__filehandler{
+        font-size: .9rem!important;
+        font-weight: 600!important;
+      }
+
+      &__brush{
+        width: 260px;
+        height: 30px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        font-size: 1rem;
+        font-weight: 400;
+        color: var(--color-second-600);
+        border: 2px solid var(--color-second-600);
+        border-radius: 50px;
+
+        &-btn{
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-content: center;
+        }
       }
     }
 
+
   }
+}
+
+.active-folder {
+  font-weight: bold;
+  color: var(--color-success-250);
+  background-color: var(--color-bg-light);
 }
