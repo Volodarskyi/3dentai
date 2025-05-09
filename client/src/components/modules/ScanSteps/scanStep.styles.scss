@@ -21,6 +21,14 @@
   }
 }
 
+.ai_answer {
+  &__answer {
+    font-size: 20px;
+    text-align: justify;
+    font-weight: 400;
+  }
+}
+
 .css-dev-only-do-not-override-apn68.ant-steps .ant-steps-item-process .ant-steps-item-icon {
   background-color: var(--color-success-500);
   border-color: var(--color-success-500);

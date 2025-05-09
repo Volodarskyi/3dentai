@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { generateRes, sendErrorLog } from '../utils/api';
+import { generateRes, sendErrorLog } from '@/utils/api';
 import aiService from '../services/ai';
 
 async function analyzeImages(
