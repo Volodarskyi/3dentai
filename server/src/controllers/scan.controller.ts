@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { sendErrorLog } from '@/utils/api';
+import { sendErrorLog } from '@/utils/apiUtils';
 import { Scan } from '@/models/Scan';
 import { Message } from '@/models/Message';
 import { EScanStatus } from '@/types/enums/ScanEnums';

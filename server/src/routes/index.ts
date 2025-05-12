@@ -1,12 +1,13 @@
 import express, { Request, Response } from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import aiRout from './ai';
+import aiRout from './ai.routes';
 import photoRoutes from './photo.routes';
-import { generateRes } from '../utils/api';
-import authRoutes from './authRoutes';
-import questionRoutes from './questionRoutes';
-import scanRoutes from './scanRoutes';
+import { generateRes } from '../utils/apiUtils';
+import authRoutes from './auth.routes';
+import questionRoutes from './questions.routes';
+import scanRoutes from './scan.routes';
+import systemRoutes from "@/routes/system.routes";
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use('/photo', photoRoutes);
 app.use('/auth', authRoutes);
 app.use('/questions', questionRoutes);
 app.use('/scans', scanRoutes);
+app.use('/system', systemRoutes);
 
 app.use((req: Request, res: Response) => {
   res.status(404);

@@ -1,4 +1,4 @@
-import mistralService from './mistral';
+import mistralService from './mistral.service';
 
 async function analyzeImages(imageUrl: string) {
   return mistralService.analyzeImage(imageUrl);

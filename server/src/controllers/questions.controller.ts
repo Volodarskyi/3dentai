@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { sendErrorLog } from '@/utils/api';
+import { sendErrorLog } from '@/utils/apiUtils';
 import { Question } from '@/models/Question';
 
 const getAllQuestionsController = async (
