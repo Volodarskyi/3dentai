@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { sendErrorLog } from '../utils/api';
+import { sendErrorLog } from '../utils/apiUtils';
 import {User} from "../models/User";
 
 // Define the shape of the request body

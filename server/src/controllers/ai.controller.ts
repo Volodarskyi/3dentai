@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { generateRes, sendErrorLog } from '@/utils/api';
-import aiService from '../services/ai';
+import { generateRes, sendErrorLog } from '@/utils/apiUtils';
+import aiService from '../services/ai.service';
 
 async function analyzeImages(
   req: Request<{ imageUrl: string }>,

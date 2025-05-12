@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import scanController from '../controllers/scanController';
+import scanController from '../controllers/scan.controller';
 
 const router = Router();
 
