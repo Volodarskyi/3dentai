@@ -1,5 +1,5 @@
-import { Document } from 'mongoose';
-import {EUserRole} from "../enums/UserEnums";
+import { Document, Types } from 'mongoose';
+import { EUserRole } from '../enums/UserEnums';
 
 export interface IAuth {
     password: string;
@@ -14,7 +14,18 @@ export interface IUser extends Document {
     lastName: string;
     birthDate: Date;
     role: EUserRole;
+
+    // 🔹 Self-reference to another user (doctor)
+    doctorId?: Types.ObjectId;
+
     auth: IAuth;
     createdTime: Date;
     updateTime: Date;
+}
+
+export interface IUserTokenData {
+    userId: string,
+    firstName: string,
+    lastName: string,
+    role: string,
 }

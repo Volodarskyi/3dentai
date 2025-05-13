@@ -10,8 +10,8 @@ const BUCKET = appConfig.AWS.BUCKET!;
 
 console.log('AWS_REGION',appConfig.AWS.REGION)
 console.log('AWS_S3_BUCKET_NAME',appConfig.AWS.BUCKET)
-console.log('AWS_ACCESS_KEY_ID',appConfig.AWS.ACCESS_KEY_ID)
-console.log('AWS_SECRET_ACCESS_KEY',appConfig.AWS.SECRET_ACCESS_KEY)
+// console.log('AWS_ACCESS_KEY_ID',appConfig.AWS.ACCESS_KEY_ID)
+// console.log('AWS_SECRET_ACCESS_KEY',appConfig.AWS.SECRET_ACCESS_KEY)
 
 const s3 = new S3Client({
     region: REGION,

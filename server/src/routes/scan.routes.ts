@@ -5,15 +5,6 @@ import scanController from '../controllers/scan.controller';
 const router = Router();
 
 // Get scan by ID
-router.get('/:id', scanController.getScanByIdController);
-
-// Get scans by doctor_id
-router.get('/doctor/:doctorId', scanController.getScansByDoctorIdController);
-
-// Get scans by user_id
-router.get('/user/:userId', scanController.getScansByUserIdController);
-
-// Create a new scan
-router.post('/', scanController.createScanController);
+router.post('/save', scanController.saveScan);
 
 export default router;
