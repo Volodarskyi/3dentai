@@ -9,18 +9,42 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import routes from './routes';
+import {AppError, errorHandler} from "@/utils/errorUtils";
+import rateLimit from "express-rate-limit";
 
 const app = express();
-
 
 app.use(cors({ origin: '*' }));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(helmet());
+// app.use(helmet());
 app.set('trust proxy', 1);
 app.use(morgan('tiny'));
 
+// Security
+app.use(helmet());
+app.use(helmet.hsts()); // HTTP Strict Transport Security
+app.use(helmet.noSniff()); // Prevent browsers from sniffing MIME types
+app.use(helmet.xssFilter()); // Prevent XSS attacks
+app.use(helmet.frameguard()); // Prevent clickjacking
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit to 100 requests per window
+});
+
+app.use(limiter);
+
+// API Routes
 app.use('/api', routes);
+
+// Handle unknown routes
+app.use((req, res, next) => {
+  next(new AppError('Route not found', 404));
+});
+
+// Global error handler
+app.use(errorHandler);
 
 // MONGO DB CONNECTION
 async function useMongoDB(mongoUri: string): Promise<void> {
@@ -47,16 +71,6 @@ async function useMongoDB(mongoUri: string): Promise<void> {
     console.warn('🟡 MongoDB disconnected.');
   });
 }
-//
-// async function start() {
-//   if (typeof process.env.MONGO_URI === 'string') {
-//     await connect(process.env.MONGO_URI);
-//   }
-//
-//   app.listen(process.env.SERVER_PORT, () => {
-//     console.log(`Server is running on port: ${process.env.SERVER_PORT}`);
-//   });
-// }
 
 async function start() {
   try {
