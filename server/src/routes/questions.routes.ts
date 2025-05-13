@@ -4,8 +4,6 @@ import questionController from '../controllers/questions.controller';
 
 const router = Router();
 
-router.get('/', questionController.getAllQuestionsController);
-router.get('/active', questionController.getActiveQuestionsController);
-router.post('/', questionController.addQuestionController);
+router.post('/', questionController.addQuestion);
 
 export default router;

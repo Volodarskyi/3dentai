@@ -1,4 +1,6 @@
 // TODO refactoring
+import {AppError} from "@/utils/errorUtils";
+
 const analyzeImage = async (imageUrl: string) => {
   // TODO create dataFetcher for it.
   const token = process.env.MISTRAL_TOKEN;
@@ -47,7 +49,7 @@ const analyzeImage = async (imageUrl: string) => {
       return await response.json();
     }
     console.log('response', response);
-    throw new Error(`API request failed with status ${response.status}`);
+    throw new AppError(`API request failed with status ${response.status}`, 400);
   } catch (error) {
     console.log('error', error);
     return `Error occurred. ${error?.toString()}`;

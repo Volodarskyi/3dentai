@@ -38,7 +38,11 @@ const UserSchema: Schema = new Schema<IUser>(
     // 🔹 Authentication Fields as a Sub-document
     auth: { type: AuthSchema, required: true },
 
-    // 🔹 Timestamps
+      // 🔹 Reference to doctor (another user)
+      doctorId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null },
+
+
+      // 🔹 Timestamps
     createdTime: { type: Date, default: Date.now },
     updateTime: { type: Date, default: Date.now },
   },

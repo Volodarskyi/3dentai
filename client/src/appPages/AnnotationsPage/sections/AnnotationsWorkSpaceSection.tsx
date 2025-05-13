@@ -28,9 +28,9 @@ const AnnotationsWorkSpaceSectionComponent: FC = () => {
 
     const fetchFiles = async (folder: string): Promise<string[]> => {
         try {
-            const data = await apiClient.get(`/api/photo/files?folder=${folder}`);
-            console.log('DATA FILES:', data.files)
-            return data.files || [];
+            const res = await apiClient.get(`/api/photo/files?folder=${folder}`);
+            console.log('DATA FILES:', res.data.files)
+            return res.data.files || [];
         } catch (error) {
             console.error(`Failed to fetch files from ${folder}:`, error);
             return [];
@@ -134,14 +134,14 @@ const AnnotationsWorkSpaceSectionComponent: FC = () => {
 
             try {
                 setIsUploading(true);
-                const key = await apiClient.postAnnotation(formData);
-                console.log("✅ Annotation uploaded to S3:", key);
+                const res = await apiClient.postAnnotation(formData);
+                console.log("✅ Annotation uploaded to S3:", res.data.key);
 
-                // Очистка канваса
+                // clear canvas
                 const ctx = canvas.getContext("2d");
                 if (ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-                // ✅ Удаляем изображение локально
+                // ✅ delete image local
                 setImageFiles((prev) => {
                     const updated = [...prev];
                     updated.splice(currentIndex, 1);

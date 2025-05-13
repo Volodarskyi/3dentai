@@ -1,26 +1,25 @@
-import { Request, Response } from 'express';
-import { generateRes, sendErrorLog } from '@/utils/apiUtils';
+import {NextFunction, Request, Response} from 'express';
 import aiService from '../services/ai.service';
+import {sendResSuccess} from "@/utils/responseUtils";
+import {AppError} from "@/utils/errorUtils";
 
 async function analyzeImages(
   req: Request<{ imageUrl: string }>,
   res: Response,
+  next: NextFunction
 ) {
   try {
     const { body } = req;
     const { imageUrl } = body;
 
     if (!imageUrl) {
-      throw new Error(`Params imageUrl is required.`);
+      throw new AppError('Params imageUrl is required.', 404);
     }
     const analyze = await aiService.analyzeImages(imageUrl);
-    res.json(generateRes({ data: analyze }));
-  } catch (error) {
-    sendErrorLog({
-      url: 'GET api/ai/analyze',
-      error: error?.toString(),
-      res,
-    });
+    sendResSuccess(res, 'Image has been analyzed', { data: analyze });
+  } catch (e) {
+    console.error('Error in analyzeImages!',e)
+    next(e);
   }
 }
 

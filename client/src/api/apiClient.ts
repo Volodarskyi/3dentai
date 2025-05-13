@@ -39,14 +39,14 @@ class ApiClient {
     return res.data.url;
   }
 
-  static async postAnnotation(file: FormData): Promise<string> {
+  static async postAnnotation(file: FormData) {
     const res = await axiosClient.post("/api/photo/uploads3", file, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     });
 
-    return res.data; // backend должен возвращать { key: string }
+    return res.data; // backend should return { key: string }
   }
 }
 
