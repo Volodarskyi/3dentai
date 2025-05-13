@@ -18,11 +18,11 @@ const __dirname = path.dirname(__filename);
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
 app.use('/auth', authRoutes);
-app.use('/ai', authMiddleware, aiRout);
-app.use('/photo', authMiddleware, photoRoutes);
-app.use('/questions', authMiddleware, questionRoutes);
-app.use('/scans', authMiddleware, scanRoutes);
-app.use('/system', authMiddleware, systemRoutes);
+app.use('/ai',  aiRout);
+app.use('/photo', photoRoutes);
+app.use('/questions', questionRoutes);
+app.use('/scans', scanRoutes);
+app.use('/system', systemRoutes);
 
 app.use((req: Request, res: Response) => {
     res.status(404);
