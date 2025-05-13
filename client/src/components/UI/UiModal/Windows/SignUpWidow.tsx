@@ -26,7 +26,7 @@ const SignUpWindowComponent: FC = () => {
   };
 
   const singUp = async () => {
-    const requestUrl = "/api/auth/register";
+    const requestUrl = "/api/auth/signup";
 
     if (password !== passwordConfirm) {
       console.log("check pass dialog TODO");

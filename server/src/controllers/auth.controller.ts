@@ -16,8 +16,8 @@ interface RegisterRequestBody {
   birthDate: number;
 }
 
-// 'api/auth/register'
-const register = async (
+// 'api/auth/signup'
+const signup = async (
   req: Request<object, object, RegisterRequestBody>,
   res: Response,
   next: NextFunction,
@@ -59,8 +59,8 @@ const register = async (
   }
 };
 
-// 'api/auth/login'
-const login = async (req: Request, res: Response, next: NextFunction,): Promise<void> => {
+// 'api/auth/signin'
+const signin = async (req: Request, res: Response, next: NextFunction,): Promise<void> => {
   try {
     const { email, password } = req.body;
     console.log('Login body:', req.body);
@@ -123,6 +123,6 @@ const login = async (req: Request, res: Response, next: NextFunction,): Promise<
 };
 
 export default {
-  register,
-  login,
+  signup,
+  signin,
 };

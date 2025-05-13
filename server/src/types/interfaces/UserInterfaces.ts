@@ -22,3 +22,10 @@ export interface IUser extends Document {
     createdTime: Date;
     updateTime: Date;
 }
+
+export interface IUserTokenData {
+    userId: string,
+    firstName: string,
+    lastName: string,
+    role: string,
+}
