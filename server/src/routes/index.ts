@@ -21,7 +21,7 @@ app.use('/auth', authRoutes);
 app.use('/ai',  aiRout);
 app.use('/photo', photoRoutes);
 app.use('/questions', questionRoutes);
-app.use('/scans', scanRoutes);
+app.use('/scans', authMiddleware, scanRoutes);
 app.use('/system', systemRoutes);
 
 app.use((req: Request, res: Response) => {
