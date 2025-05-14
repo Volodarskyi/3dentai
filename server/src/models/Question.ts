@@ -1,31 +1,31 @@
-import mongoose, { Model, Schema } from 'mongoose';
-import { EQuestionType } from '@/types/enums/QuestionEnums';
-import { IAnswer, IQuestion } from '@/types/interfaces/QuestionInterfaces';
+import mongoose from "mongoose";
 
-const AnswerSchema = new Schema<IAnswer>(
-  {
-    id: { type: String },
+const AnswerSchema = new mongoose.Schema({
     label: { type: String, required: true },
-    value: { type: Schema.Types.Mixed, required: true },
-  },
-  { _id: false },
-);
+    value: { type: Boolean, default: false },
+});
 
-const QuestionSchema: Schema = new Schema<IQuestion>(
-  {
-    type: { type: String, enum: Object.values(EQuestionType), required: true },
-    value: { type: String, required: true },
-    answers: { type: [AnswerSchema], required: true },
-    active: { type: Boolean, default: true },
+const QuestionSchema = new mongoose.Schema({
+    type: {
+        type: String,
+        enum: ["checkbox", "radio"],
+        required: true,
+    },
+    question: {
+        type: String,
+        required: true,
+    },
+    answers: {
+        type: [AnswerSchema],
+        required: true,
+        validate: [(arr: { label: string; value: boolean }[]) => arr.length > 0, "At least one answer is required"],
+    },
+    active: {
+        type: Boolean,
+        default: true,
+    },
+}, {
+    timestamps: true
+});
 
-    // Timestamps
-    createdTime: { type: Date, default: Date.now },
-    updateTime: { type: Date, default: Date.now },
-  },
-  { timestamps: { createdAt: 'createdTime', updatedAt: 'updateTime' } },
-);
-
-export const Question: Model<IQuestion> = mongoose.model<IQuestion>(
-  'Question',
-  QuestionSchema,
-);
+export const Question = mongoose.model("Question", QuestionSchema);
