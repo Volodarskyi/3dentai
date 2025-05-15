@@ -16,7 +16,7 @@ async function analyzeImages(
       throw new AppError('Params imageUrl is required.', 404);
     }
     const analyze = await aiService.analyzeImages(imageUrl);
-    sendResSuccess(res, 'Image has been analyzed', { data: analyze });
+    sendResSuccess(res, 'Image has been analyzed', { analyze });
   } catch (e) {
     console.error('Error in analyzeImages!',e)
     next(e);

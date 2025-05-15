@@ -9,6 +9,9 @@ import questionRoutes from './questions.routes';
 import scanRoutes from './scan.routes';
 import systemRoutes from "@/routes/system.routes";
 import authMiddleware from "@/middlewares/auth.middleware";
+import messageRoutes from "@/routes/message.routes";
+import {AppError} from "@/utils/errorUtils";
+import conversationRoutes from "@/routes/conversation.routes";
 
 const app = express();
 
@@ -18,17 +21,16 @@ const __dirname = path.dirname(__filename);
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
 app.use('/auth', authRoutes);
+app.use('/system', systemRoutes);
+app.use('/questions', questionRoutes);
 app.use('/ai', authMiddleware, aiRout);
 app.use('/photo', authMiddleware, photoRoutes);
-app.use('/questions', questionRoutes);
 app.use('/scans', authMiddleware, scanRoutes);
-app.use('/system', systemRoutes);
+app.use('/messages', authMiddleware, messageRoutes);
+app.use('/conversations', authMiddleware, conversationRoutes);
 
 app.use((req: Request, res: Response) => {
-    res.status(404);
-    res.json(
-        generateRes({data: {}, message: 'Use not registered API', status: 404}),
-    );
+    throw new AppError("Route not found", 404);
 });
 
 export default app;

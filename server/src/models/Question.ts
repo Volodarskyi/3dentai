@@ -5,7 +5,7 @@ const AnswerSchema = new mongoose.Schema({
     value: { type: Boolean, default: false },
 });
 
-const QuestionSchema = new mongoose.Schema({
+export const QuestionSchema = new mongoose.Schema({
     type: {
         type: String,
         enum: ["checkbox", "radio"],

@@ -1,57 +1,91 @@
-import mongoose, { Model, Schema } from 'mongoose';
-import { IScan, IScanQuestion } from '@/types/interfaces/ScanInterfaces';
-import { EScanStatus } from '@/types/enums/ScanEnums';
-import { EQuestionType } from '@/types/enums/QuestionEnums';
+import mongoose, { Schema, Document } from "mongoose";
+import {EScanStatus} from "@/types/enums/ScanEnums";
+import {QuestionSchema} from "@/models/Question";
 
-const AnswerSchema = new Schema(
-  {
-    label: { type: String, required: true },
-    value: { type: Schema.Types.Mixed, required: true },
-  },
-  { _id: false },
+export interface IScan extends Document {
+    teeth: Record<string, string>;
+    userId: mongoose.Types.ObjectId;
+    doctorId: mongoose.Types.ObjectId;
+    createdAt: Date;
+    status: EScanStatus;
+    questions: typeof QuestionSchema[];
+    resultAI?: string;
+}
+
+// 🦷 default: "no image url"
+const TeethSchema = new Schema(
+    {
+        "11": { type: String, required: false, default: "no image url" },
+        "12": { type: String, required: false, default: "no image url" },
+        "13": { type: String, required: false, default: "no image url" },
+        "14": { type: String, required: false, default: "no image url" },
+        "15": { type: String, required: false, default: "no image url" },
+        "16": { type: String, required: false, default: "no image url" },
+        "17": { type: String, required: false, default: "no image url" },
+        "18": { type: String, required: false, default: "no image url" },
+
+        "21": { type: String, required: false, default: "no image url" },
+        "22": { type: String, required: false, default: "no image url" },
+        "23": { type: String, required: false, default: "no image url" },
+        "24": { type: String, required: false, default: "no image url" },
+        "25": { type: String, required: false, default: "no image url" },
+        "26": { type: String, required: false, default: "no image url" },
+        "27": { type: String, required: false, default: "no image url" },
+        "28": { type: String, required: false, default: "no image url" },
+
+        "31": { type: String, required: false, default: "no image url" },
+        "32": { type: String, required: false, default: "no image url" },
+        "33": { type: String, required: false, default: "no image url" },
+        "34": { type: String, required: false, default: "no image url" },
+        "35": { type: String, required: false, default: "no image url" },
+        "36": { type: String, required: false, default: "no image url" },
+        "37": { type: String, required: false, default: "no image url" },
+        "38": { type: String, required: false, default: "no image url" },
+
+        "41": { type: String, required: false, default: "no image url" },
+        "42": { type: String, required: false, default: "no image url" },
+        "43": { type: String, required: false, default: "no image url" },
+        "44": { type: String, required: false, default: "no image url" },
+        "45": { type: String, required: false, default: "no image url" },
+        "46": { type: String, required: false, default: "no image url" },
+        "47": { type: String, required: false, default: "no image url" },
+        "48": { type: String, required: false, default: "no image url" }
+    },
+    { _id: false }
 );
 
-const ScanQuestionSchema = new Schema<IScanQuestion>(
-  {
-    type: { type: String, enum: Object.values(EQuestionType), required: true },
-    value: { type: String, required: true },
-    options: { type: [AnswerSchema], required: true },
-    answer: { type: [String], required: true },
-  },
-  { _id: false },
-);
-
-const ScanSchema: Schema = new Schema<IScan>(
-  {
-    doctor_id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-      required: true,
+// Scan
+const ScanSchema = new Schema<IScan>({
+    teeth: {
+        type: TeethSchema,
+        required: true,
     },
-    user_id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-      required: true,
+    userId: {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: "User",
     },
-    photos: { type: [String], default: [] },
-    ai_answer: { type: String, required: false },
+    doctorId: {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: "User",
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
     status: {
-      type: String,
-      enum: Object.values(EScanStatus),
-      default: EScanStatus.DRAFT,
-      required: true,
+        type: String,
+        enum: Object.values(EScanStatus),
+        default: EScanStatus.IN_REVIEW,
     },
-    message_id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Message',
-      required: true,
+    questions: {
+        type: [QuestionSchema],
+        required: true,
     },
-    questions: { type: [ScanQuestionSchema], default: [] },
+    resultAI: {
+        type: String,
+    },
+});
 
-    createdTime: { type: Date, default: Date.now },
-    updateTime: { type: Date, default: Date.now },
-  },
-  { timestamps: { createdAt: 'createdTime', updatedAt: 'updateTime' } },
-);
-
-export const Scan: Model<IScan> = mongoose.model<IScan>('Scan', ScanSchema);
+export const Scan = mongoose.model<IScan>("Scan", ScanSchema);
