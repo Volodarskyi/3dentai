@@ -1,18 +1,11 @@
-import { Document } from 'mongoose';
-import { EQuestionType } from '../enums/QuestionEnums';
-
 export interface IAnswer {
-  id?: string;
   label: string;
-  value: boolean | string | number;
+  value: boolean;
 }
 
-export interface IQuestion extends Document {
-  id?: string;
-  type: EQuestionType;
-  value: string;
+export interface IQuestion {
+  type: "checkbox" | "radio";
+  question: string;
   answers: IAnswer[];
-  active: boolean;
-  createdTime: Date;
-  updateTime: Date;
+  active?: boolean;
 }

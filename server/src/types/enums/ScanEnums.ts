@@ -1,6 +1,7 @@
 export enum EScanStatus {
-  DRAFT = 'draft',
-  IN_REVIEW = 'in_review',
-  CHECKED = 'checked',
-  COMPLETED = 'completed',
+  IN_REVIEW = "in_review",
+  WAITING_USER = "waiting_user",
+  WAITING_DOCTOR = "waiting_doctor",
+  IN_PERSON = "in_person",
+  HISTORY = "history"
 }
