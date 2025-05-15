@@ -1,11 +1,11 @@
 import { Metadata } from "next";
 
-import ScanScreen from "@/screens/Scan";
+import { ScanPage } from "@/appPages/ScanPage/ScanPage";
 
 export const metadata: Metadata = {
   title: "3DentAI - Scan",
 };
 
 export default function Scan() {
-  return <ScanScreen />;
+  return <ScanPage />;
 }

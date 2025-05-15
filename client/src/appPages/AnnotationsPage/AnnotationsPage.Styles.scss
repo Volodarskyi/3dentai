@@ -1,0 +1,163 @@
+.annotations {
+  margin-top: var(--height-header);
+  background: var(--color-bg-page);
+  width: 100%;
+  min-height: calc(100vh - 70px);
+  display: flex;
+  flex-direction: column;
+
+  &__title {
+    font-weight: 500;
+    font-size: 3rem;
+    line-height: 150%;
+    text-align: center;
+    color: var(--color-success-250)
+  }
+
+  &__background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/assets/images/3dentai_BACKGROUND_PAGE_COMING.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+
+    opacity: 0.15;
+
+  }
+
+  &__workspace {
+    &__section{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    &__container{
+      width: 564px;
+      display: flex;
+      padding: 1rem;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: var(--color-bg-work-space);
+      border-radius: .5rem;
+    }
+
+    &__display {
+      position: relative;
+      width: 512px;
+      height: 512px;
+      border: 2px solid var(--color-second-750);
+    }
+
+    &__image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      object-fit: contain;
+    }
+
+    &__canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 2;
+      width: 512px;
+      height: 512px;
+      cursor: crosshair;
+    }
+
+    &__controls {
+      width: 512px;
+      //background: red;
+      display: flex;
+      flex-direction: column;
+
+      &__folders{
+        width: 512px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        z-index: 100;
+
+        &-switch{
+          width: 24%;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          z-index: 100;
+        }
+
+        &__unannotated{
+          color: var(--color-second-500);
+        }
+      }
+
+
+      &__section{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        z-index: 100;
+      }
+
+      &__filename{
+        width: 290px;
+        height: 30px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        font-size: .9rem;
+        font-weight: 500;
+        background: var(--color-second-600);
+        color: var(--color-bg-page);
+        border-radius: 50px;
+      }
+
+      &__filehandler{
+        font-size: .9rem!important;
+        font-weight: 600!important;
+      }
+
+      &__brush{
+        width: 260px;
+        height: 30px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        font-size: 1rem;
+        font-weight: 400;
+        color: var(--color-second-600);
+        border: 2px solid var(--color-second-600);
+        border-radius: 50px;
+
+        &-btn{
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-content: center;
+        }
+      }
+    }
+
+
+  }
+}
+
+.active-folder {
+  font-weight: bold;
+  color: var(--color-success-250);
+  background-color: var(--color-bg-light);
+}

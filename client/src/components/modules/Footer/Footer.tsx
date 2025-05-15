@@ -11,6 +11,7 @@ import "./footer.styles.scss";
 const getFooter: Record<string, ReactNode> = {
   "/": <AuthNavigation />,
   "/scan": <ScanNavigation />,
+  "/scans/view": <ScanNavigation />,
   "/solutions": <SolutionNavigation />,
 };
 

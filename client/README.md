@@ -26,14 +26,14 @@ When creating a new component, follow these steps:
       /ComponentName
         ├── ComponentName.tsx
         ├── componentName.module.scss
-        └── index.ts
+        
       ```
 
 3. **Props Management**
     - If a component does not have any props, do not define an empty interface or add unused props.
 
 4. **Index File Usage**
-    - Use `index.ts` to simplify imports and avoid duplicating component names in the import paths.
+    - Use  to simplify imports and avoid duplicating component names in the import paths.
         - Instead of:
           ```typescript
           import Button from '@/components/Button/Button';
@@ -47,7 +47,7 @@ When creating a new component, follow these steps:
 
 Each component folder should include the following files:
 
-1. **`index.ts`**
+1. **`INDEX`**
     - Use this file for importing and exporting the component to enable shorter imports.
       ```typescript
       import ComponentName from './ComponentName';
@@ -87,21 +87,21 @@ Each component folder should include the following files:
   /Button
     ├── Button.tsx
     ├── button.module.scss
-    └── index.ts
+    └── 
   /Header
     ├── Header.tsx
     ├── header.module.scss
-    └── index.ts
+    
 /src/containers
   /Dashboard
     ├── Dashboard.tsx
     ├── dashboard.module.scss
-    └── index.ts
+    └── 
 /src/screen
   /Home
     ├── Home.tsx
     ├── home.module.scss
-    └── index.ts
+    └── 
 ```
 
 By adhering to these guidelines, you ensure a consistent, maintainable, and scalable codebase for the project.

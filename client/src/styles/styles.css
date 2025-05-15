@@ -25,7 +25,7 @@
 
     --color-second-750:#00B5B5;
 
-    --color-second-900:#004C4C;
+    --color-second-900: #009c9c;
 
     --color-success-100:#79FFCE;
 
@@ -69,4 +69,7 @@
 
     --color-bg-page:#000d3a;
 
+    --color-bg-work-space: rgba(83, 255, 255, 0.15);
+
+    --height-header: 70px;
 }

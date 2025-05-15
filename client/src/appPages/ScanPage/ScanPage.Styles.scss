@@ -1,0 +1,20 @@
+.scanScreen {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+}
+
+.scanScreen::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  //background: url('../../assets/images/3dental-back-scan.jpg') center/cover no-repeat;
+  background: url('/assets/images/3dentai_BACKGROUND_PAGE_SCAN.jpg') center/cover no-repeat;
+  opacity: 0.05; /* Set opacity here */
+  z-index: -1;
+}
