@@ -27,14 +27,20 @@ const ScanSteps = () => {
       {
         title: "Questions",
         // description: "Send to AI and receive response.",
-        icon: <UiIcon idIcon="SendAI" name="ai" size={24} />,
+        icon: <UiIcon idIcon="Questions" name="questions" size={24} />,
         content: <div>Questions</div>,
       },
       {
-        title: "Send to AI",
+        title: "AI Analyze",
         // description: "Send to AI and receive response.",
         icon: <UiIcon idIcon="SendAI" name="ai" size={24} />,
         content: <AnalyzePhoto />,
+      },
+      {
+        title: "Complete",
+        // description: "Send to AI and receive response.",
+        icon: <UiIcon idIcon="Approval" name="approval" size={24} />,
+        content: <div>Send Result</div>,
       },
       // {
       //   title: "Convert to 3D",

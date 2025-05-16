@@ -64,13 +64,14 @@ class ScanStore {
 
     try {
       this.isLoading = true;
-      const url = await apiClient.postFile("api/photo/upload", formData);
-      console.log("url", url);
+      const res = await apiClient.postFile("api/photo/upload", formData);
+      console.log("RES", res);
+      console.log("url", res.data.url);
 
       // TODO - hot fix. Some time we have answer link, but this image doesn't save
       setTimeout(
         (context) => {
-          context.setImgUrl(url);
+          context.setImgUrl(res.data.url);
           context.isLoading = false;
         },
         2000,
