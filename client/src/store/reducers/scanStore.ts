@@ -1,138 +1,230 @@
-import { makeAutoObservable, reaction } from "mobx";
+import {makeAutoObservable, reaction} from "mobx";
 
-import { apiClient } from "@/api/apiClient";
-import { aiApiServices } from "@/api/services/aiApiServices";
-import { ISteps } from "@/types/steps";
+import {apiClient} from "@/api/apiClient";
+import {aiApiServices} from "@/api/services/aiApiServices";
+import {ISteps} from "@/types/steps";
+import {IDentistData} from "@/types/dentistTypes";
 
 class ScanStore {
-  steps: ISteps[] = [];
-  step: number = 0;
-  disabledPrevious: boolean = true;
-  disabledNext: boolean = false;
+    steps: ISteps[] = [];
+    step: number = 0;
+    disabledPrevious: boolean = true;
+    disabledNext: boolean = false;
 
-  imgFile: File | undefined = undefined;
-  isLoading: boolean = false;
-  imgUrl: string = "";
-  imgDescription: string = "";
+    imgFile: File | undefined = undefined;
+    isLoading: boolean = false;
+    imgUrl: string = "";
+    imgDescription: string = "";
 
-  // SCAN_DATA
-  scanData = {
-    doctorId: "", // устанавливается при логине или получении сессии
-    teeth: {} as Record<string, string>,
-    resultAI: "",
-    questions: [] as {
-      type: "radio" | "checkbox";
-      question: string;
-      answers: { label: string; value: boolean }[];
-      active: boolean;
-    }[],
-  };
-
-  activeTooth: number = 48;
-
-  constructor() {
-    makeAutoObservable(this);
-
-    reaction(
-      () => this.step,
-      () => this.validationButton(),
-    );
-  }
-
-  setSteps = (newSteps: ISteps[]) => {
-    this.steps = newSteps;
-    this.step = 0;
-    this.validationButton();
-  };
-
-  nextStep = () => {
-    this.step = this.step + 1;
-  };
-
-  previousStep = () => {
-    this.step = this.step - 1;
-  };
-
-  validationButton = () => {
-    this.disabledPrevious = this.step <= 0;
-    this.disabledNext = this.steps.length
-      ? this.step >= this.steps.length - 1
-      : true;
-  };
-
-  setImgFile = (file: File): void => {
-    this.imgFile = file;
-  };
-
-  setImgUrl = (value: string) => {
-    this.imgUrl = value;
-  };
-
-  handleUpload = async (): Promise<void> => {
-    if (!this.imgFile) {
-      console.error("No file selected.");
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append("photo", this.imgFile);
-
-    try {
-      this.isLoading = true;
-      const res = await apiClient.postFile("api/photo/upload", formData);
-      console.log("RES", res);
-      console.log("url", res.data.url);
-
-      // TODO - hot fix. Some time we have answer link, but this image doesn't save
-      setTimeout(
-        (context) => {
-          context.setImgUrl(res.data.url);
-          // context.scanData.teeth[this.activeTooth] = res.data.url;
-          this.addToothPhotoUrl(res.data.url)
-          context.isLoading = false;
-        },
-        2000,
-        this,
-      );
-    } catch (error) {
-      console.error("Error uploading file:", error);
-    }
-  };
-
-  analyzeImage = async () => {
-    if (this.imgUrl === "" || this.isLoading) return;
-    // this.isLoading = true;
-    this.scanData.resultAI = await aiApiServices.analyzeImage(this.imgUrl);
-    // this.isLoading = false;
-    return this.scanData.resultAI;
-  };
-
-
-  // SET_SCAN_DATA
-  setActiveTooth = (activeTooth:number) => {
-    console.log("set-activeTooth", activeTooth);
-    this.activeTooth =activeTooth;
-  }
-
-  addToothPhotoUrl = (toothPhotoUrl:string)=>{
-    const tootNumber = this.activeTooth;
-    console.log("addToothPhotoUrl-tootNumber", tootNumber);
-    console.log("addToothPhotoUrl-toothPhotoUrl", toothPhotoUrl);
-    const updateTeethObj = {[tootNumber]:toothPhotoUrl};
-    console.log("addToothPhotoUrl-toothPhotoUrl", updateTeethObj);
-    this.scanData.teeth = updateTeethObj;
-  }
-
-  submitScan = () => {
-    const dataToSubmit = {
-      doctorId: this.scanData.doctorId,
-      teeth: this.scanData.teeth,
-      resultAI: this.scanData.resultAI,
-      questions: this.scanData.questions,
+    // SCAN_DATA
+    scanData = {
+        doctorId: "", // use init function on first step
+        teeth: {} as Record<string, string>,
+        resultAI: "",
+        questions: [] as {
+            type: "radio" | "checkbox";
+            question: string;
+            answers: { label: string; value: boolean }[];
+            active: boolean;
+        }[],
     };
 
-    console.log("SCAN DATA TO SUBMIT:", JSON.stringify(dataToSubmit, null, 2));
-  };
+    dentistData: IDentistData | null = null;
+
+    activeTooth: number = 48;
+
+    isHealthy: boolean | null = null;
+
+    constructor() {
+        makeAutoObservable(this);
+
+        reaction(
+            () => this.step,
+            () => this.validationButton(),
+        );
+    }
+
+    setSteps = (newSteps: ISteps[]) => {
+        this.steps = newSteps;
+        this.step = 0;
+        this.validationButton();
+    };
+
+    nextStep = () => {
+        console.log("nextStep")
+        this.step = this.step + 1;
+    };
+
+    previousStep = () => {
+        console.log("previousStep")
+        this.step = this.step - 1;
+    };
+
+    validationButton = () => {
+        this.disabledPrevious = this.step <= 0;
+        this.disabledNext = this.steps.length
+            ? this.step >= this.steps.length - 1
+            : true;
+        console.log("this.disabledNext")
+    };
+
+    setImgFile = (file: File): void => {
+        this.imgFile = file;
+    };
+
+    setImgUrl = (value: string) => {
+        this.imgUrl = value;
+    };
+
+    handleUpload = async (): Promise<void> => {
+        if (!this.imgFile) {
+            console.error("No file selected.");
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("photo", this.imgFile);
+
+        try {
+            this.isLoading = true;
+            const res = await apiClient.postFile("api/photo/upload", formData);
+            console.log("RES", res);
+            console.log("url", res.data.url);
+
+            // TODO - hot fix. Some time we have answer link, but this image doesn't save
+            setTimeout(
+                (context) => {
+                    context.setImgUrl(res.data.url);
+                    // context.scanData.teeth[this.activeTooth] = res.data.url;
+                    this.addToothPhotoUrl(res.data.url)
+                    context.isLoading = false;
+                },
+                2000,
+                this,
+            );
+        } catch (error) {
+            console.error("Error uploading file:", error);
+        }
+    };
+
+    checkerIsHealthy = (resultAi: string) => {
+        const resultMatch = resultAi.match(/Result:\s*(INVESTIGATION|HEALTHY)/i);
+        if (!resultMatch) return null;
+        return resultMatch[1].toUpperCase() === "HEALTHY";
+    }
+
+    setAiResult = (resultAi: string) => {
+        console.log('setAiResult-resultAi:', resultAi);
+        const isHealthy = this.checkerIsHealthy(resultAi);
+        this.isHealthy = isHealthy;
+        console.log('setAiResult-isHealthy:', isHealthy);
+        this.scanData.resultAI = resultAi;
+    }
+
+    analyzeImage = async () => {
+        // this.isLoading = true;
+        // this.isLoading = false;
+        if (this.imgUrl === "" || this.isLoading) return;
+
+        const aiResult = await aiApiServices.analyzeImage(this.imgUrl);
+        this.setAiResult(aiResult);  // <-- use setter with parsing logic
+
+        return aiResult;
+    };
+
+
+    // SET_SCAN_DATA
+    setActiveTooth = (activeTooth: number) => {
+        console.log("set-activeTooth", activeTooth);
+        this.activeTooth = activeTooth;
+    }
+
+    addToothPhotoUrl = (toothPhotoUrl: string) => {
+        const tootNumber = this.activeTooth;
+        console.log("addToothPhotoUrl-tootNumber", tootNumber);
+        console.log("addToothPhotoUrl-toothPhotoUrl", toothPhotoUrl);
+        const updateTeethObj = {[tootNumber]: toothPhotoUrl};
+        console.log("addToothPhotoUrl-toothPhotoUrl", updateTeethObj);
+        this.scanData.teeth = updateTeethObj;
+        // this.scanData.teeth = { ...this.scanData.teeth, [tootNumber]: toothPhotoUrl }; /// need to finish for all teeth
+    }
+
+    setScanDoctorId = async (doctorId: string) => {
+        console.log("setScanDoctorId", doctorId);
+        this.scanData.doctorId = doctorId;
+    }
+
+    getDentistDataByUserId = async (): Promise<void> => {
+        try {
+            const res = await apiClient.get("/api/patient/doctor");
+            console.log("Doctor data:", res.data);
+
+            if (res.data?.dentistData.dentistId) {
+                this.dentistData = {
+                    dentistId: res.data.dentistData.dentistId,
+                    email: res.data.dentistData.email,
+                    firstName: res.data.dentistData.firstName,
+                    lastName: res.data.dentistData.lastName,
+                    phone: res.data.dentistData.phone,
+                };
+
+                // Optionally, keep storing only the ID in scanData
+                this.scanData.doctorId = res.data.dentistData.dentistId;
+            }
+        } catch (error) {
+            console.error("Failed to get doctor data:", error);
+        }
+    };
+
+    getActiveQuestions = async (): Promise<void> => {
+        try {
+            const response = await apiClient.get("/api/questions/active");
+            console.log("Active questions response:", response.data);
+
+            if (Array.isArray(response.data)) {
+                this.scanData.questions = response.data.map((question: any) => ({
+                    type: question.type,
+                    question: question.text,
+                    answers: question.answers.map((a: any) => ({
+                        label: a.label,
+                        value: false, // Default value; can be adjusted
+                    })),
+                    active: true,
+                }));
+            }
+        } catch (error) {
+            console.error("Failed to fetch active questions:", error);
+        }
+    };
+
+    init = async (): Promise<void> => {
+        try {
+            this.isLoading = true;
+
+            await Promise.all([
+                this.getDentistDataByUserId(),
+                this.getActiveQuestions()
+            ]);
+
+            console.log("ScanStore initialized.");
+        } catch (error) {
+            console.error("ScanStore init error:", error);
+        } finally {
+            this.isLoading = false;
+        }
+    };
+
+
+    submitScan = () => {
+        const dataToSubmit = {
+            doctorId: this.scanData.doctorId,
+            teeth: this.scanData.teeth,
+            resultAI: this.scanData.resultAI,
+            questions: this.scanData.questions,
+        };
+
+        console.log("SCAN DATA TO SUBMIT:", JSON.stringify(dataToSubmit, null, 2));
+    };
 }
 
 export default new ScanStore();

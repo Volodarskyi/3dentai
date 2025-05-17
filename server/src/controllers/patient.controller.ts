@@ -43,7 +43,8 @@ const getDoctorDataByUserId = async (
             phone: myDoctorData.phone,
         }
 
-        sendResSuccess(res, `Doctor belong to patient with ID:${patient.userId}`, {dentistData});
+        sendResSuccess(res, `Doctor belong to patient with ID:${patient.userId}`, {dentistData
+        });
     } catch (error) {
         console.error("[Message GetByScanId Error]:", error);
         next(error);

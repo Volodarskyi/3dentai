@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, useRef } from "react";
+import {ChangeEvent, useEffect, useRef} from "react";
 import { observer } from "mobx-react-lite";
 import Image from "next/image";
 import { useStores } from "@/hooks/useStores";
@@ -15,6 +15,13 @@ const UploadPhoto = () => {
   const { imgUrl, isLoading } = scanStore;
   const fileRef = useRef<HTMLInputElement>(null);
 
+    // ✅ INIT on mount
+    useEffect(() => {
+        (async () => {
+            await scanStore.init();
+        })();
+    }, []);
+
   const handlerLoading = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       scanStore.setImgFile(e.target.files[0]);
@@ -25,10 +32,6 @@ const UploadPhoto = () => {
   };
 
   const handlerClick = () => fileRef.current?.click();
-
-  const testCB= (activeTooth:number)=>   {
-      console.log("testCB", activeTooth);
-  }
 
   return (
     <>
