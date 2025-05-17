@@ -4,10 +4,11 @@
     justify-content: center;
     align-items: center;
     width: 100%;
+    height: 100%;
     min-height: 24rem;
     overflow: hidden;
-    padding: 0.5rem;
-    margin-top: .5rem;
+    //padding: 0.5rem;
+    //margin-top: .5rem;
     //background-color: rgba(83, 255, 255, 0.05);
     border-radius: 16px;
     border: 2px solid rgba(83, 255, 255, 0.08);
@@ -35,16 +36,23 @@
   }
 
   &__btnAgain {
-    color: var(--color-second-600);
+    width: 100%;
+    font-weight: 500;
     display: flex;
-    align-content: center;
+    flex-direction: row;
+    align-items: center;
     justify-content: center;
     border-radius: 0.5rem;
     border: none;
     cursor: pointer;
     outline: none;
-    font-size: 1rem;
     height: 2.5rem;
+    background: rgba(83, 255, 255, 0.05);
+    color: var(--color-success-500);
+    font-size: 1.2rem;
+    &:hover{
+      background: rgba(36, 238, 164, 0.15);
+    }
   }
 
   &__dropZone {
@@ -77,6 +85,7 @@
 
 .uploadPhoto-input{
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -85,5 +94,6 @@
 
   &__workspace{
     width: 90%;
+    height: 100%;
   }
 }

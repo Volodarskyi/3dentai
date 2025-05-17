@@ -29,8 +29,8 @@ const UploadPhoto = () => {
 
   return (
     <>
-        <Row style={{width:"100%"}}>
-            <Col xs={24} md={12}>
+        <Row style={{width:"100%" , display:'flex', alignItems: "stretch"}}>
+            <Col xs={24} md={12} style={{marginTop:".5rem"}}>
                 <div className='uploadPhoto-jaw'>
                     <div className='uploadPhoto-jaw__workspace'>
                         <DisplayTeethSchema/>
@@ -38,7 +38,7 @@ const UploadPhoto = () => {
                 </div>
             </Col>
 
-            <Col xs={24} md={12}>
+            <Col xs={24} md={12} style={{marginTop:".5rem"}}>
                 <div className='uploadPhoto-input'>
                     <div className='uploadPhoto-input__workspace'>
                         <input
@@ -72,9 +72,9 @@ const UploadPhoto = () => {
                                     >
                                         <Image src={imgUrl} alt="upload" fill={true} unoptimized />
                                     </div>
-                                    <Button onClick={handlerClick} className={"uploadPhoto__btnAgain"}>
+                                    <button onClick={handlerClick} className="uploadPhoto__btnAgain">
                                         Upload Photo Again
-                                    </Button>
+                                    </button>
                                 </div>
                             ) : (
                                 <button
