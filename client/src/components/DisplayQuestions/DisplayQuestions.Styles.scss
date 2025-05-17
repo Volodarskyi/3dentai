@@ -23,6 +23,7 @@
     width:90%;
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
     margin: 1rem auto;
 
     &-top{
@@ -41,6 +42,7 @@
       width: 100%;
       display: flex;
       flex-direction: row;
+      flex-wrap: wrap;
       padding: .5rem;
       font-size: 1.2rem;
       font-weight: 400;
@@ -51,20 +53,33 @@
   }
 
   &__answer-true{
-    //min-width: 100px;
+    min-width: 100px;
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    align-items: center;
     background-color: rgba(35, 253, 144, 0.24);
     padding: .5rem;
     border-radius: 2.5rem;
     margin: .5rem ;
+    font-size: 1rem;
+    cursor: pointer;
   }
 
   &__answer-false{
+    min-width: 100px;
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: .5rem;
     //background-color: rgba(35, 253, 144, 0.24);
-    border: 1px solid rgba(35, 253, 144, 0.24);
+    border: 1px solid rgba(35, 253, 144, 0.95);
+    color: rgba(35, 253, 144, 0.95);
+    border-radius: 2.5rem;
+    margin: .5rem ;
+    font-size: 1rem;
+    cursor: pointer;
   }
 
 }

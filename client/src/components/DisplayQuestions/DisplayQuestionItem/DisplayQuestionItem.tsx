@@ -4,7 +4,7 @@ import {observer} from "mobx-react-lite";
 import {IQuestionDataItem} from "@/types/scanTypes";
 
 import '../DisplayQuestions.Styles.scss';
-import {DisplayAnswerTrue} from "@/components/DisplayQuestions/DisplayAnswerTrue/DisplayAnswerTrue";
+import {DisplayAnswer} from "@/components/DisplayQuestions/DisplayAnswer/DisplayAnswer";
 
 interface IDisplayQuestionItem {
     questionItemData: IQuestionDataItem ;
@@ -17,7 +17,7 @@ const DisplayQuestionItemComponent : FC<IDisplayQuestionItem> = ({questionItemDa
             className="display-questions__item">
             <div className="display-questions__item-top">{questionItemData.question}</div>
             <div className="display-questions__item-bottom">
-                {questionItemData.answers.map((answer, i) => <DisplayAnswerTrue answerLabel={answer.label}/>)}
+                {questionItemData.answers.map((answer, i) => <DisplayAnswer answerItem={answer}/>)}
             </div>
         </div>
     );
