@@ -188,7 +188,9 @@ class ScanStore {
             return [];
         }
 
-        const preparedQuestions = questions.map((questionObj: any) => ({
+        const questionsReverse = questions.reverse();
+
+        const preparedQuestions = questionsReverse.map((questionObj: any) => ({
             type: questionObj.type,
             question: questionObj.question,
             answers: questionObj.answers.map((a: any) => ({
