@@ -1,6 +1,6 @@
 {
   "name": "client_new",
-  "version": "0.3.1",
+  "version": "0.3.12",
   "private": true,
   "scripts": {
     "dev": "cross-env APP_ENV=production next dev",

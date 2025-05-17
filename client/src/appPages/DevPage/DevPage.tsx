@@ -32,7 +32,7 @@ const DevPageComponent: FC = () => {
     return (
         <div className="dev">
             <h1 className="dev__title">Dev</h1>
-            <div>client: 0.3.11</div>
+            <div>client: 0.3.12</div>
             <div>server: {currentServer}</div>
             <div>AI: {currentAI}</div>
         </div>
