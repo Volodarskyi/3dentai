@@ -1,15 +1,14 @@
 "use client";
 
 import { ChangeEvent, useRef } from "react";
-import { Button } from "antd";
 import { observer } from "mobx-react-lite";
 import Image from "next/image";
-import { Col, Row } from "antd";
-
 import { useStores } from "@/hooks/useStores";
+import { Col, Row } from "antd";
+import {DisplayTeethSchema} from "@/components/DisplayTeethSchema/DisplayTeethSchema";
 
 import "./uploadPhoto.styles.scss";
-import {DisplayTeethSchema} from "@/components/DisplayTeehSchema/DisplayTeethSchema";
+
 
 const UploadPhoto = () => {
   const { scanStore } = useStores();
@@ -27,13 +26,17 @@ const UploadPhoto = () => {
 
   const handlerClick = () => fileRef.current?.click();
 
+  const testCB= (activeTooth:number)=>   {
+      console.log("testCB", activeTooth);
+  }
+
   return (
     <>
         <Row style={{width:"100%" , display:'flex', alignItems: "stretch"}}>
             <Col xs={24} md={12} style={{marginTop:".5rem"}}>
                 <div className='uploadPhoto-jaw'>
                     <div className='uploadPhoto-jaw__workspace'>
-                        <DisplayTeethSchema/>
+                        <DisplayTeethSchema setActiveToothCB={(activeTooth)=>scanStore.setActiveTooth(activeTooth)} />
                     </div>
                 </div>
             </Col>

@@ -1,0 +1,72 @@
+.display-ai-response {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  &__intro{
+    width: 95%;
+    margin: .8rem auto 0 auto;
+    display: flex;
+    flex-direction: row;
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var(--color-text-white);
+    background: rgba(83, 255, 255, 0.25);
+    border-radius: .5rem;
+    padding: 0.5rem;
+  }
+
+  &__point{
+    width: 95%;
+    margin: .8rem auto 0 auto;
+    display: flex;
+    flex-direction: row;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--color-text-white);
+    background: rgba(83, 255, 255, 0.1);
+    border-radius: .5rem;
+    padding: 0.5rem;
+  }
+
+  &__outro {
+    width: 95%;
+    margin: 0.8rem auto 0 auto;
+    display: flex;
+    flex-direction: row;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--color-text-white);
+    background: rgba(250, 170, 5, 0.25);
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+  }
+
+  &__investigation{
+    width: 95%;
+    margin: .8rem auto 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-text-white);
+    background: rgba(243,40,11, .38);
+    border-radius: .5rem;
+    padding: 0.5rem;
+  }
+
+  &__healthy{
+    width: 95%;
+    margin: .8rem auto 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-success-500);
+    background: rgba(36, 238, 164, 0.25);
+    border-radius: .5rem;
+    padding: 0.5rem;
+  }
+}

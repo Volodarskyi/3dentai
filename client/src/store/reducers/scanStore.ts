@@ -15,6 +15,21 @@ class ScanStore {
   imgUrl: string = "";
   imgDescription: string = "";
 
+  // SCAN_DATA
+  scanData = {
+    doctorId: "", // устанавливается при логине или получении сессии
+    teeth: {} as Record<string, string>,
+    resultAI: "",
+    questions: [] as {
+      type: "radio" | "checkbox";
+      question: string;
+      answers: { label: string; value: boolean }[];
+      active: boolean;
+    }[],
+  };
+
+  activeTooth: number = 48;
+
   constructor() {
     makeAutoObservable(this);
 
@@ -72,6 +87,8 @@ class ScanStore {
       setTimeout(
         (context) => {
           context.setImgUrl(res.data.url);
+          // context.scanData.teeth[this.activeTooth] = res.data.url;
+          this.addToothPhotoUrl(res.data.url)
           context.isLoading = false;
         },
         2000,
@@ -87,6 +104,33 @@ class ScanStore {
     this.isLoading = true;
     this.imgDescription = await aiApiServices.analyzeImage(this.imgUrl);
     this.isLoading = false;
+  };
+
+
+  // SET_SCAN_DATA
+  setActiveTooth = (activeTooth:number) => {
+    console.log("set-activeTooth", activeTooth);
+    this.activeTooth =activeTooth;
+  }
+
+  addToothPhotoUrl = (toothPhotoUrl:string)=>{
+    const tootNumber = this.activeTooth;
+    console.log("addToothPhotoUrl-tootNumber", tootNumber);
+    console.log("addToothPhotoUrl-toothPhotoUrl", toothPhotoUrl);
+    const updateTeethObj = {[tootNumber]:toothPhotoUrl};
+    console.log("addToothPhotoUrl-toothPhotoUrl", updateTeethObj);
+    this.scanData.teeth = updateTeethObj;
+  }
+
+  submitScan = () => {
+    const dataToSubmit = {
+      doctorId: this.scanData.doctorId,
+      teeth: this.scanData.teeth,
+      resultAI: this.scanData.resultAI,
+      questions: this.scanData.questions,
+    };
+
+    console.log("SCAN DATA TO SUBMIT:", JSON.stringify(dataToSubmit, null, 2));
   };
 }
 

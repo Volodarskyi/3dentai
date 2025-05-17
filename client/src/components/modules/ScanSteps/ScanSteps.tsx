@@ -11,6 +11,7 @@ import Display3DModal from "./steps/Display3DModal";
 import UploadPhoto from "./steps/UploadPhoto";
 
 import "./scanStep.styles.scss";
+import {ScanStepComplete} from "@/components/modules/ScanSteps/steps/ScanStepComplete/ScanStepComplete";
 
 const ScanSteps = () => {
   const { scanStore } = useStores();
@@ -40,7 +41,7 @@ const ScanSteps = () => {
         title: "Complete",
         // description: "Send to AI and receive response.",
         icon: <UiIcon idIcon="Approval" name="approval" size={24} />,
-        content: <div>Send Result</div>,
+        content: <ScanStepComplete/>,
       },
       // {
       //   title: "Convert to 3D",

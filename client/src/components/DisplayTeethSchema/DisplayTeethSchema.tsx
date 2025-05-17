@@ -5,8 +5,14 @@ import Image from "next/image";
 
 import './DisplayTeethSchema.Styles.scss';
 
-const DisplayTeethSchemaComponent = () => {
+interface IDisplayTeethSchema {
+    setActiveToothCB: (activeTooth:number) => void;
+}
+
+const DisplayTeethSchemaComponent : FC<IDisplayTeethSchema> = ({setActiveToothCB}) => {
     const [activeTooth, setActiveTooth] = useState<number>(48);
+
+    // console.log("setActiveToothCB is", typeof setActiveToothCB);
 
     const lowerTeeth = [46, 47, 48];
     const upperTeeth = [16, 17, 18];
@@ -41,12 +47,14 @@ const DisplayTeethSchemaComponent = () => {
     const handlePrev = () => {
         const index = allTeeth.indexOf(activeTooth);
         const prevIndex = (index - 1 + allTeeth.length) % allTeeth.length;
+        setActiveToothCB(allTeeth[prevIndex]);
         setActiveTooth(allTeeth[prevIndex]);
     };
 
     const handleNext = () => {
         const index = allTeeth.indexOf(activeTooth);
         const nextIndex = (index + 1) % allTeeth.length;
+        setActiveToothCB(allTeeth[nextIndex]);
         setActiveTooth(allTeeth[nextIndex]);
     };
 
