@@ -19,6 +19,7 @@ class UiDialogStore {
   };
 
   showLoader = () => {
+    console.log('showLoader');
     this.isShowUiDialog = true;
     this.startLoading();
   };

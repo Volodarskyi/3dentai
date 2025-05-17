@@ -12,6 +12,8 @@ import authMiddleware from "@/middlewares/auth.middleware";
 import messageRoutes from "@/routes/message.routes";
 import {AppError} from "@/utils/errorUtils";
 import conversationRoutes from "@/routes/conversation.routes";
+import patientController from "@/controllers/patient.controller";
+import patientRoutes from "@/routes/patient.routes";
 
 const app = express();
 
@@ -28,6 +30,7 @@ app.use('/photo', authMiddleware, photoRoutes);
 app.use('/scans', authMiddleware, scanRoutes);
 app.use('/messages', authMiddleware, messageRoutes);
 app.use('/conversations', authMiddleware, conversationRoutes);
+app.use('/patient', authMiddleware, patientRoutes);
 
 app.use((req: Request, res: Response) => {
     throw new AppError("Route not found", 404);

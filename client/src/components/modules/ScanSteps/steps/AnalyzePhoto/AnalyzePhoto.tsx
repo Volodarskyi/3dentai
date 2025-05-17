@@ -6,7 +6,7 @@ import { useStores } from "@/hooks/useStores";
 import {DisplayAiResponse} from "@/components/DisplayAiRespoanse/DisplayAiResponse";
 
 const AnalyzePhoto = () => {
-  const { scanStore } = useStores();
+  const { scanStore, dialogStore } = useStores();
   const {
     imgUrl,
     imgDescription,
@@ -14,7 +14,8 @@ const AnalyzePhoto = () => {
     analyzeImage: analyze,
   } = scanStore;
 
-  useEffect(() => {
+  useEffect( () => {
+    // dialogStore.showLoader()
     analyze();
   }, [analyze, imgUrl]);
 
@@ -34,7 +35,7 @@ const AnalyzePhoto = () => {
         loading()
       ) : (
         <div className={"ai_answer__answer"}>
-          <DisplayAiResponse aiResponse={imgDescription}/>
+          <DisplayAiResponse aiResponse={scanStore.scanData.resultAI}/>
           {/*{imgDescription}*/}
         </div>
       )}

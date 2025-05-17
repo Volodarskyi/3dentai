@@ -101,9 +101,10 @@ class ScanStore {
 
   analyzeImage = async () => {
     if (this.imgUrl === "" || this.isLoading) return;
-    this.isLoading = true;
-    this.imgDescription = await aiApiServices.analyzeImage(this.imgUrl);
-    this.isLoading = false;
+    // this.isLoading = true;
+    this.scanData.resultAI = await aiApiServices.analyzeImage(this.imgUrl);
+    // this.isLoading = false;
+    return this.scanData.resultAI;
   };
 
 
