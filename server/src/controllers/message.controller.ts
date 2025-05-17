@@ -68,7 +68,7 @@ const send = async (
 };
 
 // GET /messages/:scanId
-export const getMessagesByScanId = async (
+const getMessagesByScanId = async (
     req: Request,
     res: Response,
     next: NextFunction

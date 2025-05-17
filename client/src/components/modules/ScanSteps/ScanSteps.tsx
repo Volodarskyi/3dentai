@@ -11,6 +11,8 @@ import Display3DModal from "./steps/Display3DModal";
 import UploadPhoto from "./steps/UploadPhoto";
 
 import "./scanStep.styles.scss";
+import {ScanStepComplete} from "@/components/modules/ScanSteps/steps/ScanStepComplete/ScanStepComplete";
+import {DisplayQuestions} from "@/components/DisplayQuestions/DisplayQuestions";
 
 const ScanSteps = () => {
   const { scanStore } = useStores();
@@ -27,14 +29,20 @@ const ScanSteps = () => {
       {
         title: "Questions",
         // description: "Send to AI and receive response.",
-        icon: <UiIcon idIcon="SendAI" name="ai" size={24} />,
-        content: <div>Questions</div>,
+        icon: <UiIcon idIcon="Questions" name="questions" size={24} />,
+        content: <DisplayQuestions/>,
       },
       {
-        title: "Send to AI",
+        title: "AI Analyze",
         // description: "Send to AI and receive response.",
         icon: <UiIcon idIcon="SendAI" name="ai" size={24} />,
         content: <AnalyzePhoto />,
+      },
+      {
+        title: "Complete",
+        // description: "Send to AI and receive response.",
+        icon: <UiIcon idIcon="Approval" name="approval" size={24} />,
+        content: <ScanStepComplete/>,
       },
       // {
       //   title: "Convert to 3D",

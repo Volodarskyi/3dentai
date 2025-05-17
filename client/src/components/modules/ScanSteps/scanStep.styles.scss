@@ -18,11 +18,14 @@
     text-align: center;
     border-radius: 16px;
     margin-top: 16px;
+    padding: 0.5rem;
+    background-color: rgba(83, 255, 255, 0.15);
   }
 }
 
 .ai_answer {
   &__answer {
+    width: 100%;
     font-size: 20px;
     text-align: justify;
     font-weight: 400;

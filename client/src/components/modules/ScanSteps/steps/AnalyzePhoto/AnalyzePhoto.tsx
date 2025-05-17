@@ -3,9 +3,10 @@ import { observer } from "mobx-react-lite";
 
 import Loading from "@/components/UI/Loading";
 import { useStores } from "@/hooks/useStores";
+import {DisplayAiResponse} from "@/components/DisplayAiRespoanse/DisplayAiResponse";
 
 const AnalyzePhoto = () => {
-  const { scanStore } = useStores();
+  const { scanStore, dialogStore } = useStores();
   const {
     imgUrl,
     imgDescription,
@@ -13,7 +14,8 @@ const AnalyzePhoto = () => {
     analyzeImage: analyze,
   } = scanStore;
 
-  useEffect(() => {
+  useEffect( () => {
+    // dialogStore.showLoader()
     analyze();
   }, [analyze, imgUrl]);
 
@@ -32,7 +34,10 @@ const AnalyzePhoto = () => {
       {isLoading ? (
         loading()
       ) : (
-        <div className={"ai_answer__answer"}>{imgDescription}</div>
+        <div className={"ai_answer__answer"}>
+          <DisplayAiResponse aiResponse={scanStore.scanData.resultAI}/>
+          {/*{imgDescription}*/}
+        </div>
       )}
     </div>
   );

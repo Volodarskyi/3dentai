@@ -36,7 +36,8 @@ class ApiClient {
         },
       },
     );
-    return res.data.url;
+    console.log('postFile-RES', res);
+    return res.data;
   }
 
   static async postAnnotation(file: FormData) {
