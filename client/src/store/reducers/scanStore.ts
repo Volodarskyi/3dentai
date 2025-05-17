@@ -176,22 +176,50 @@ class ScanStore {
         }
     };
 
+    setQuestions = (questions: {
+        type: "radio" | "checkbox";
+        question: string;
+        answers: { label: string; value: boolean }[];
+        active: boolean;
+    }[]) => {
+        console.log("setQuestions");
+
+        if (!Array.isArray(questions)) {
+            return [];
+        }
+
+        const preparedQuestions = questions.map((questionObj: any) => ({
+            type: questionObj.type,
+            question: questionObj.question,
+            answers: questionObj.answers.map((a: any) => ({
+                label: a.label,
+                value: false, // Default value; can be adjusted
+            })),
+            active: true,
+        }));
+
+        this.scanData.questions = preparedQuestions;
+    }
+
     getActiveQuestions = async (): Promise<void> => {
         try {
             const response = await apiClient.get("/api/questions/active");
-            console.log("Active questions response:", response.data);
+            console.log("Active questions response:", response.data.questions);
 
-            if (Array.isArray(response.data)) {
-                this.scanData.questions = response.data.map((question: any) => ({
-                    type: question.type,
-                    question: question.text,
-                    answers: question.answers.map((a: any) => ({
-                        label: a.label,
-                        value: false, // Default value; can be adjusted
-                    })),
-                    active: true,
-                }));
-            }
+            this.setQuestions(response.data.questions)
+
+            // if (Array.isArray(response.data)) {
+            //     this.scanData.questions = response.data.questions.map((question: any) => ({
+            //         _id: question._id,
+            //         type: question.type,
+            //         question: question.text,
+            //         answers: question.answers.map((a: any) => ({
+            //             label: a.label,
+            //             value: false, // Default value; can be adjusted
+            //         })),
+            //         active: true,
+            //     }));
+            // }
         } catch (error) {
             console.error("Failed to fetch active questions:", error);
         }
@@ -215,7 +243,7 @@ class ScanStore {
     };
 
 
-    submitScan = () => {
+    submitScan = async () => {
         const dataToSubmit = {
             doctorId: this.scanData.doctorId,
             teeth: this.scanData.teeth,
@@ -224,6 +252,26 @@ class ScanStore {
         };
 
         console.log("SCAN DATA TO SUBMIT:", JSON.stringify(dataToSubmit, null, 2));
+
+        const requestUrl = "api/scans/add";
+
+        try {
+            const res = await apiClient.post(requestUrl,{
+                doctorId: this.scanData.doctorId,
+                teeth: this.scanData.teeth,
+                resultAI: this.scanData.resultAI,
+                questions: this.scanData.questions,
+            });
+            console.log("Add Scan Response 1:", res.data);
+
+            if (res.result !== "SUCCESS") {
+                throw new Error(res.message || "Some thing went wrong");
+            }
+
+            console.log("Add Scan Response2:", res.data);
+        } catch (e) {
+            console.log("ERROR! Login", e);
+        }
     };
 }
 
