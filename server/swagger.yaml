@@ -1,0 +1,2643 @@
+openapi: 3.0.3
+info:
+  title: 3DentAI | Dev
+  description: ''
+  version: 1.0.0
+  contact: {}
+servers:
+  - url: '{{BASE_URL}}'
+paths:
+  /api/photo/folders:
+    get:
+      tags:
+        - photo
+      summary: s3_folder_list
+      description: >-
+        This is a GET request and it is used to "get" data from an endpoint.
+        There is no request body for a GET request, but you can use query
+        parameters to help specify the resource you want data on (e.g., in this
+        request, we have `id=1`).
+
+
+        A successful GET response will have a `200 OK` status, and should
+        include some kind of response body - for example, HTML web content or
+        JSON data.
+      operationId: s3FolderList
+      responses:
+        '200':
+          description: ''
+  /api/photo/uploads3:
+    post:
+      tags:
+        - photo
+      summary: s3_upload_photo
+      description: >-
+        This is a GET request and it is used to "get" data from an endpoint.
+        There is no request body for a GET request, but you can use query
+        parameters to help specify the resource you want data on (e.g., in this
+        request, we have `id=1`).
+
+
+        A successful GET response will have a `200 OK` status, and should
+        include some kind of response body - for example, HTML web content or
+        JSON data.
+      operationId: s3UploadPhoto
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                folder:
+                  type: string
+                  example: case
+      responses:
+        '200':
+          description: ''
+  /api/photo/files:
+    get:
+      tags:
+        - photo
+      summary: s3_files_list
+      description: >-
+        This is a GET request and it is used to "get" data from an endpoint.
+        There is no request body for a GET request, but you can use query
+        parameters to help specify the resource you want data on (e.g., in this
+        request, we have `id=1`).
+
+
+        A successful GET response will have a `200 OK` status, and should
+        include some kind of response body - for example, HTML web content or
+        JSON data.
+      operationId: s3FilesList
+      parameters:
+        - name: folder
+          in: query
+          schema:
+            type: string
+            example: annotation
+      responses:
+        '200':
+          description: ''
+  /api/questions/active:
+    get:
+      tags:
+        - questions
+      summary: create
+      description: create
+      operationId: create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                active:
+                  type: boolean
+                  example: true
+                answers:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      label:
+                        type: string
+                        example: Constant
+                      value:
+                        type: boolean
+                        example: false
+                  example:
+                    - label: Constant
+                      value: false
+                    - label: Intermittent
+                      value: false
+                    - label: No pain at all
+                      value: false
+                question:
+                  type: string
+                  example: Is the pain constant or does it come and go?
+                type:
+                  type: string
+                  example: multi
+            examples:
+              create:
+                value:
+                  active: true
+                  answers:
+                    - label: Constant
+                      value: false
+                    - label: Intermittent
+                      value: false
+                    - label: No pain at all
+                      value: false
+                  question: Is the pain constant or does it come and go?
+                  type: multi
+      responses:
+        '200':
+          description: crearet-RES / allActive-RES
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '8503'
+            Content-Security-Policy:
+              schema:
+                type: string
+                example: >-
+                  default-src 'self';base-uri 'self';font-src 'self' https:
+                  data:;form-action 'self';frame-ancestors 'self';img-src 'self'
+                  data:;object-src 'none';script-src 'self';script-src-attr
+                  'none';style-src 'self' https:
+                  'unsafe-inline';upgrade-insecure-requests
+            Cross-Origin-Opener-Policy:
+              schema:
+                type: string
+                example: same-origin
+            Cross-Origin-Resource-Policy:
+              schema:
+                type: string
+                example: same-origin
+            Date:
+              schema:
+                type: string
+                example: Wed, 14 May 2025 02:48:16 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"2137-GyXNV1nQ8CW4WCpAAJxS7eCXMe4"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            Origin-Agent-Cluster:
+              schema:
+                type: string
+                example: '?1'
+            Referrer-Policy:
+              schema:
+                type: string
+                example: no-referrer
+            Strict-Transport-Security:
+              schema:
+                type: string
+                example: max-age=31536000; includeSubDomains
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            X-DNS-Prefetch-Control:
+              schema:
+                type: string
+                example: 'off'
+            X-Download-Options:
+              schema:
+                type: string
+                example: noopen
+            X-Frame-Options:
+              schema:
+                type: string
+                example: SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+              schema:
+                type: string
+                example: none
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            X-RateLimit-Limit:
+              schema:
+                type: string
+                example: '100'
+            X-RateLimit-Remaining:
+              schema:
+                type: string
+                example: '89'
+            X-RateLimit-Reset:
+              schema:
+                type: string
+                example: '1747190975'
+            X-XSS-Protection:
+              schema:
+                type: string
+                example: '0'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      newQuestion:
+                        type: object
+                        properties:
+                          __v:
+                            type: number
+                            example: 0
+                          _id:
+                            type: string
+                            example: 6823fda3d3c56f9676898cc8
+                          active:
+                            type: boolean
+                            example: true
+                          answers:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                _id:
+                                  type: string
+                                  example: 6823fda3d3c56f9676898cc9
+                                label:
+                                  type: string
+                                  example: Upper jaw | front | right
+                                value:
+                                  type: boolean
+                                  example: false
+                            example:
+                              - _id: 6823fda3d3c56f9676898cc9
+                                label: Upper jaw | front | right
+                                value: false
+                              - _id: 6823fda3d3c56f9676898cca
+                                label: Upper jaw | front | left
+                                value: false
+                              - _id: 6823fda3d3c56f9676898ccb
+                                label: Upper jaw | back | right
+                                value: false
+                              - _id: 6823fda3d3c56f9676898ccc
+                                label: Upper jaw | back | left
+                                value: false
+                              - _id: 6823fda3d3c56f9676898ccd
+                                label: Lower jaw | front | right
+                                value: false
+                              - _id: 6823fda3d3c56f9676898cce
+                                label: Lower jaw | front | left
+                                value: false
+                              - _id: 6823fda3d3c56f9676898ccf
+                                label: Lower jaw | back | right
+                                value: false
+                              - _id: 6823fda3d3c56f9676898cd0
+                                label: Lower jaw | back | left
+                                value: false
+                              - _id: 6823fda3d3c56f9676898cd1
+                                label: Not sure
+                                value: false
+                              - _id: 6823fda3d3c56f9676898cd2
+                                label: No pain at all
+                                value: false
+                          createdAt:
+                            type: string
+                            example: '2025-05-14T02:19:15.493Z'
+                          question:
+                            type: string
+                            example: >-
+                              Where exactly does it hurt? Can you point to a
+                              specific tooth or area?
+                          type:
+                            type: string
+                            example: radio
+                          updatedAt:
+                            type: string
+                            example: '2025-05-14T02:19:15.493Z'
+                      questions:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            __v:
+                              type: number
+                              example: 0
+                            _id:
+                              type: string
+                              example: 682403bad3c56f9676898d2e
+                            active:
+                              type: boolean
+                              example: true
+                            answers:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  _id:
+                                    type: string
+                                    example: 682403bad3c56f9676898d2f
+                                  label:
+                                    type: string
+                                    example: First time
+                                  value:
+                                    type: boolean
+                                    example: false
+                              example:
+                                - _id: 682403bad3c56f9676898d2f
+                                  label: First time
+                                  value: false
+                                - _id: 682403bad3c56f9676898d30
+                                  label: It has happened before
+                                  value: false
+                                - _id: 682403bad3c56f9676898d31
+                                  label: No pain at all
+                                  value: false
+                            createdAt:
+                              type: string
+                              example: '2025-05-14T02:45:14.857Z'
+                            question:
+                              type: string
+                              example: >-
+                                Is this the first time you've experienced this
+                                kind of pain, or has it happened before?
+                            type:
+                              type: string
+                              example: radio
+                            updatedAt:
+                              type: string
+                              example: '2025-05-14T02:45:14.857Z'
+                        example:
+                          - __v: 0
+                            _id: 682403bad3c56f9676898d2e
+                            active: true
+                            answers:
+                              - _id: 682403bad3c56f9676898d2f
+                                label: First time
+                                value: false
+                              - _id: 682403bad3c56f9676898d30
+                                label: It has happened before
+                                value: false
+                              - _id: 682403bad3c56f9676898d31
+                                label: No pain at all
+                                value: false
+                            createdAt: '2025-05-14T02:45:14.857Z'
+                            question: >-
+                              Is this the first time you've experienced this
+                              kind of pain, or has it happened before?
+                            type: radio
+                            updatedAt: '2025-05-14T02:45:14.857Z'
+                          - __v: 0
+                            _id: 68240382d3c56f9676898d28
+                            active: true
+                            answers:
+                              - _id: 68240382d3c56f9676898d29
+                                label: Bad smell
+                                value: false
+                              - _id: 68240382d3c56f9676898d2a
+                                label: Bad taste
+                                value: false
+                              - _id: 68240382d3c56f9676898d2b
+                                label: 'No'
+                                value: false
+                              - _id: 68240382d3c56f9676898d2c
+                                label: No pain at all
+                                value: false
+                            createdAt: '2025-05-14T02:44:18.304Z'
+                            question: >-
+                              Have you noticed any bad smell or taste from your
+                              mouth?
+                            type: checkbox
+                            updatedAt: '2025-05-14T02:44:18.304Z'
+                          - __v: 0
+                            _id: 68240347d3c56f9676898d21
+                            active: true
+                            answers:
+                              - _id: 68240347d3c56f9676898d22
+                                label: Darker
+                                value: false
+                              - _id: 68240347d3c56f9676898d23
+                                label: Lighter
+                                value: false
+                              - _id: 68240347d3c56f9676898d24
+                                label: 'No'
+                                value: false
+                              - _id: 68240347d3c56f9676898d25
+                                label: Not sure
+                                value: false
+                              - _id: 68240347d3c56f9676898d26
+                                label: No pain at all
+                                value: false
+                            createdAt: '2025-05-14T02:43:19.683Z'
+                            question: Has the color of the painful tooth changed?
+                            type: radio
+                            updatedAt: '2025-05-14T02:43:19.683Z'
+                          - __v: 0
+                            _id: 682402ccd3c56f9676898d1a
+                            active: true
+                            answers:
+                              - _id: 682402ccd3c56f9676898d1b
+                                label: Swelling
+                                value: false
+                              - _id: 682402ccd3c56f9676898d1c
+                                label: Redness
+                                value: false
+                              - _id: 682402ccd3c56f9676898d1d
+                                label: Pus
+                                value: false
+                              - _id: 682402ccd3c56f9676898d1e
+                                label: 'No'
+                                value: false
+                              - _id: 682402ccd3c56f9676898d1f
+                                label: No pain at all
+                                value: false
+                            createdAt: '2025-05-14T02:41:16.065Z'
+                            question: >-
+                              Is there any swelling, redness, or pus in the
+                              area?
+                            type: checkbox
+                            updatedAt: '2025-05-14T02:41:16.065Z'
+                          - __v: 0
+                            _id: 68240295d3c56f9676898d13
+                            active: true
+                            answers:
+                              - _id: 68240295d3c56f9676898d14
+                                label: Adjacent teeth
+                                value: false
+                              - _id: 68240295d3c56f9676898d15
+                                label: Gums
+                                value: false
+                              - _id: 68240295d3c56f9676898d16
+                                label: Jaw
+                                value: false
+                              - _id: 68240295d3c56f9676898d17
+                                label: 'No'
+                                value: false
+                              - _id: 68240295d3c56f9676898d18
+                                label: No pain at all
+                                value: false
+                            createdAt: '2025-05-14T02:40:21.118Z'
+                            question: Do adjacent teeth, gums, or jaw also hurt?
+                            type: checkbox
+                            updatedAt: '2025-05-14T02:40:21.118Z'
+                          - __v: 0
+                            _id: 6824020dd3c56f9676898d0c
+                            active: true
+                            answers:
+                              - _id: 6824020dd3c56f9676898d0d
+                                label: Pressure
+                                value: false
+                              - _id: 6824020dd3c56f9676898d0e
+                                label: Swelling
+                                value: false
+                              - _id: 6824020dd3c56f9676898d0f
+                                label: Numbness
+                                value: false
+                              - _id: 6824020dd3c56f9676898d10
+                                label: 'No'
+                                value: false
+                              - _id: 6824020dd3c56f9676898d11
+                                label: No pain at all
+                                value: false
+                            createdAt: '2025-05-14T02:38:05.189Z'
+                            question: >-
+                              Do you feel pressure, swelling, or numbness in the
+                              painful area?
+                            type: radio
+                            updatedAt: '2025-05-14T02:38:05.189Z'
+                          - __v: 0
+                            _id: 682401a1d3c56f9676898d06
+                            active: true
+                            answers:
+                              - _id: 682401a1d3c56f9676898d07
+                                label: 'Yes'
+                                value: false
+                              - _id: 682401a1d3c56f9676898d08
+                                label: 'No'
+                                value: false
+                              - _id: 682401a1d3c56f9676898d09
+                                label: Not sure
+                                value: false
+                              - _id: 682401a1d3c56f9676898d0a
+                                label: No pain at all
+                                value: false
+                            createdAt: '2025-05-14T02:36:17.341Z'
+                            question: >-
+                              Have you had any trauma or bitten into something
+                              hard recently?
+                            type: radio
+                            updatedAt: '2025-05-14T02:36:17.341Z'
+                          - __v: 0
+                            _id: 6824017ad3c56f9676898d00
+                            active: true
+                            answers:
+                              - _id: 6824017ad3c56f9676898d01
+                                label: Yes, it helped
+                                value: false
+                              - _id: 6824017ad3c56f9676898d02
+                                label: Yes, but it didn't help
+                                value: false
+                              - _id: 6824017ad3c56f9676898d03
+                                label: 'No'
+                                value: false
+                              - _id: 6824017ad3c56f9676898d04
+                                label: No pain at all
+                                value: false
+                            createdAt: '2025-05-14T02:35:38.726Z'
+                            question: >-
+                              Have you taken any medication for the pain? Did it
+                              help?
+                            type: checkbox
+                            updatedAt: '2025-05-14T02:35:38.726Z'
+                          - __v: 0
+                            _id: 6824014bd3c56f9676898cfb
+                            active: true
+                            answers:
+                              - _id: 6824014bd3c56f9676898cfc
+                                label: Goes away on its own
+                                value: false
+                              - _id: 6824014bd3c56f9676898cfd
+                                label: I take painkillers
+                                value: false
+                              - _id: 6824014bd3c56f9676898cfe
+                                label: No pain at all
+                                value: false
+                            createdAt: '2025-05-14T02:34:51.245Z'
+                            question: >-
+                              Does the pain go away on its own or do you take
+                              painkillers?
+                            type: checkbox
+                            updatedAt: '2025-05-14T02:34:51.245Z'
+                          - __v: 0
+                            _id: 682400fed3c56f9676898cf1
+                            active: true
+                            answers:
+                              - _id: 682400fed3c56f9676898cf2
+                                label: To hot
+                                value: false
+                              - _id: 682400fed3c56f9676898cf3
+                                label: To cold
+                                value: false
+                              - _id: 682400fed3c56f9676898cf4
+                                label: 'No'
+                                value: false
+                              - _id: 682400fed3c56f9676898cf5
+                                label: No pain at all
+                                value: false
+                            createdAt: '2025-05-14T02:33:34.435Z'
+                            question: Is there sensitivity to hot or cold?
+                            type: checkbox
+                            updatedAt: '2025-05-14T02:33:34.435Z'
+                          - __v: 0
+                            _id: 6824003dd3c56f9676898cea
+                            active: true
+                            answers:
+                              - _id: 6824003dd3c56f9676898ceb
+                                label: Sharp
+                                value: false
+                              - _id: 6824003dd3c56f9676898cec
+                                label: Dull
+                                value: false
+                              - _id: 6824003dd3c56f9676898ced
+                                label: Aching
+                                value: false
+                              - _id: 6824003dd3c56f9676898cee
+                                label: Throbbing
+                                value: false
+                              - _id: 6824003dd3c56f9676898cef
+                                label: No pain at all
+                                value: false
+                            createdAt: '2025-05-14T02:30:21.083Z'
+                            question: >-
+                              How would you describe the pain — sharp, dull,
+                              aching, throbbing?
+                            type: checkbox
+                            updatedAt: '2025-05-14T02:30:21.083Z'
+                          - __v: 0
+                            _id: 6823ffd7d3c56f9676898ce4
+                            active: true
+                            answers:
+                              - _id: 6823ffd7d3c56f9676898ce5
+                                label: When biting
+                                value: false
+                              - _id: 6823ffd7d3c56f9676898ce6
+                                label: When chewing
+                                value: false
+                              - _id: 6823ffd7d3c56f9676898ce7
+                                label: 'No'
+                                value: false
+                              - _id: 6823ffd7d3c56f9676898ce8
+                                label: No pain at all
+                                value: false
+                            createdAt: '2025-05-14T02:28:39.225Z'
+                            question: Does the pain increase when biting or chewing?
+                            type: checkbox
+                            updatedAt: '2025-05-14T02:28:39.225Z'
+                          - __v: 0
+                            _id: 6823ff51d3c56f9676898cdd
+                            active: true
+                            answers:
+                              - _id: 6823ff51d3c56f9676898cde
+                                label: Today
+                                value: false
+                              - _id: 6823ff51d3c56f9676898cdf
+                                label: This week
+                                value: false
+                              - _id: 6823ff51d3c56f9676898ce0
+                                label: More than a week ago
+                                value: false
+                              - _id: 6823ff51d3c56f9676898ce1
+                                label: A while ago, but got worse
+                                value: false
+                              - _id: 6823ff51d3c56f9676898ce2
+                                label: No pain at all
+                                value: false
+                            createdAt: '2025-05-14T02:26:25.006Z'
+                            question: When did the pain first start?
+                            type: radio
+                            updatedAt: '2025-05-14T02:26:25.006Z'
+                          - __v: 0
+                            _id: 6823fef5d3c56f9676898cd8
+                            active: true
+                            answers:
+                              - _id: 6823fef5d3c56f9676898cd9
+                                label: Constant
+                                value: false
+                              - _id: 6823fef5d3c56f9676898cda
+                                label: Intermittent
+                                value: false
+                              - _id: 6823fef5d3c56f9676898cdb
+                                label: No pain at all
+                                value: false
+                            createdAt: '2025-05-14T02:24:53.102Z'
+                            question: Is the pain constant or does it come and go?
+                            type: checkbox
+                            updatedAt: '2025-05-14T02:24:53.102Z'
+                          - __v: 0
+                            _id: 6823fda3d3c56f9676898cc8
+                            active: true
+                            answers:
+                              - _id: 6823fda3d3c56f9676898cc9
+                                label: Upper jaw | front | right
+                                value: false
+                              - _id: 6823fda3d3c56f9676898cca
+                                label: Upper jaw | front | left
+                                value: false
+                              - _id: 6823fda3d3c56f9676898ccb
+                                label: Upper jaw | back | right
+                                value: false
+                              - _id: 6823fda3d3c56f9676898ccc
+                                label: Upper jaw | back | left
+                                value: false
+                              - _id: 6823fda3d3c56f9676898ccd
+                                label: Lower jaw | front | right
+                                value: false
+                              - _id: 6823fda3d3c56f9676898cce
+                                label: Lower jaw | front | left
+                                value: false
+                              - _id: 6823fda3d3c56f9676898ccf
+                                label: Lower jaw | back | right
+                                value: false
+                              - _id: 6823fda3d3c56f9676898cd0
+                                label: Lower jaw | back | left
+                                value: false
+                              - _id: 6823fda3d3c56f9676898cd1
+                                label: Not sure
+                                value: false
+                              - _id: 6823fda3d3c56f9676898cd2
+                                label: No pain at all
+                                value: false
+                            createdAt: '2025-05-14T02:19:15.493Z'
+                            question: >-
+                              Where exactly does it hurt? Can you point to a
+                              specific tooth or area?
+                            type: radio
+                            updatedAt: '2025-05-14T02:19:15.493Z'
+                  error:
+                    nullable: true
+                    example: null
+                  message:
+                    type: string
+                    example: New question has been added
+                  result:
+                    type: string
+                    example: SUCCESS
+              examples:
+                allActive-RES:
+                  value:
+                    data:
+                      questions:
+                        - __v: 0
+                          _id: 682403bad3c56f9676898d2e
+                          active: true
+                          answers:
+                            - _id: 682403bad3c56f9676898d2f
+                              label: First time
+                              value: false
+                            - _id: 682403bad3c56f9676898d30
+                              label: It has happened before
+                              value: false
+                            - _id: 682403bad3c56f9676898d31
+                              label: No pain at all
+                              value: false
+                          createdAt: '2025-05-14T02:45:14.857Z'
+                          question: >-
+                            Is this the first time you've experienced this kind
+                            of pain, or has it happened before?
+                          type: radio
+                          updatedAt: '2025-05-14T02:45:14.857Z'
+                        - __v: 0
+                          _id: 68240382d3c56f9676898d28
+                          active: true
+                          answers:
+                            - _id: 68240382d3c56f9676898d29
+                              label: Bad smell
+                              value: false
+                            - _id: 68240382d3c56f9676898d2a
+                              label: Bad taste
+                              value: false
+                            - _id: 68240382d3c56f9676898d2b
+                              label: 'No'
+                              value: false
+                            - _id: 68240382d3c56f9676898d2c
+                              label: No pain at all
+                              value: false
+                          createdAt: '2025-05-14T02:44:18.304Z'
+                          question: >-
+                            Have you noticed any bad smell or taste from your
+                            mouth?
+                          type: checkbox
+                          updatedAt: '2025-05-14T02:44:18.304Z'
+                        - __v: 0
+                          _id: 68240347d3c56f9676898d21
+                          active: true
+                          answers:
+                            - _id: 68240347d3c56f9676898d22
+                              label: Darker
+                              value: false
+                            - _id: 68240347d3c56f9676898d23
+                              label: Lighter
+                              value: false
+                            - _id: 68240347d3c56f9676898d24
+                              label: 'No'
+                              value: false
+                            - _id: 68240347d3c56f9676898d25
+                              label: Not sure
+                              value: false
+                            - _id: 68240347d3c56f9676898d26
+                              label: No pain at all
+                              value: false
+                          createdAt: '2025-05-14T02:43:19.683Z'
+                          question: Has the color of the painful tooth changed?
+                          type: radio
+                          updatedAt: '2025-05-14T02:43:19.683Z'
+                        - __v: 0
+                          _id: 682402ccd3c56f9676898d1a
+                          active: true
+                          answers:
+                            - _id: 682402ccd3c56f9676898d1b
+                              label: Swelling
+                              value: false
+                            - _id: 682402ccd3c56f9676898d1c
+                              label: Redness
+                              value: false
+                            - _id: 682402ccd3c56f9676898d1d
+                              label: Pus
+                              value: false
+                            - _id: 682402ccd3c56f9676898d1e
+                              label: 'No'
+                              value: false
+                            - _id: 682402ccd3c56f9676898d1f
+                              label: No pain at all
+                              value: false
+                          createdAt: '2025-05-14T02:41:16.065Z'
+                          question: Is there any swelling, redness, or pus in the area?
+                          type: checkbox
+                          updatedAt: '2025-05-14T02:41:16.065Z'
+                        - __v: 0
+                          _id: 68240295d3c56f9676898d13
+                          active: true
+                          answers:
+                            - _id: 68240295d3c56f9676898d14
+                              label: Adjacent teeth
+                              value: false
+                            - _id: 68240295d3c56f9676898d15
+                              label: Gums
+                              value: false
+                            - _id: 68240295d3c56f9676898d16
+                              label: Jaw
+                              value: false
+                            - _id: 68240295d3c56f9676898d17
+                              label: 'No'
+                              value: false
+                            - _id: 68240295d3c56f9676898d18
+                              label: No pain at all
+                              value: false
+                          createdAt: '2025-05-14T02:40:21.118Z'
+                          question: Do adjacent teeth, gums, or jaw also hurt?
+                          type: checkbox
+                          updatedAt: '2025-05-14T02:40:21.118Z'
+                        - __v: 0
+                          _id: 6824020dd3c56f9676898d0c
+                          active: true
+                          answers:
+                            - _id: 6824020dd3c56f9676898d0d
+                              label: Pressure
+                              value: false
+                            - _id: 6824020dd3c56f9676898d0e
+                              label: Swelling
+                              value: false
+                            - _id: 6824020dd3c56f9676898d0f
+                              label: Numbness
+                              value: false
+                            - _id: 6824020dd3c56f9676898d10
+                              label: 'No'
+                              value: false
+                            - _id: 6824020dd3c56f9676898d11
+                              label: No pain at all
+                              value: false
+                          createdAt: '2025-05-14T02:38:05.189Z'
+                          question: >-
+                            Do you feel pressure, swelling, or numbness in the
+                            painful area?
+                          type: radio
+                          updatedAt: '2025-05-14T02:38:05.189Z'
+                        - __v: 0
+                          _id: 682401a1d3c56f9676898d06
+                          active: true
+                          answers:
+                            - _id: 682401a1d3c56f9676898d07
+                              label: 'Yes'
+                              value: false
+                            - _id: 682401a1d3c56f9676898d08
+                              label: 'No'
+                              value: false
+                            - _id: 682401a1d3c56f9676898d09
+                              label: Not sure
+                              value: false
+                            - _id: 682401a1d3c56f9676898d0a
+                              label: No pain at all
+                              value: false
+                          createdAt: '2025-05-14T02:36:17.341Z'
+                          question: >-
+                            Have you had any trauma or bitten into something
+                            hard recently?
+                          type: radio
+                          updatedAt: '2025-05-14T02:36:17.341Z'
+                        - __v: 0
+                          _id: 6824017ad3c56f9676898d00
+                          active: true
+                          answers:
+                            - _id: 6824017ad3c56f9676898d01
+                              label: Yes, it helped
+                              value: false
+                            - _id: 6824017ad3c56f9676898d02
+                              label: Yes, but it didn't help
+                              value: false
+                            - _id: 6824017ad3c56f9676898d03
+                              label: 'No'
+                              value: false
+                            - _id: 6824017ad3c56f9676898d04
+                              label: No pain at all
+                              value: false
+                          createdAt: '2025-05-14T02:35:38.726Z'
+                          question: >-
+                            Have you taken any medication for the pain? Did it
+                            help?
+                          type: checkbox
+                          updatedAt: '2025-05-14T02:35:38.726Z'
+                        - __v: 0
+                          _id: 6824014bd3c56f9676898cfb
+                          active: true
+                          answers:
+                            - _id: 6824014bd3c56f9676898cfc
+                              label: Goes away on its own
+                              value: false
+                            - _id: 6824014bd3c56f9676898cfd
+                              label: I take painkillers
+                              value: false
+                            - _id: 6824014bd3c56f9676898cfe
+                              label: No pain at all
+                              value: false
+                          createdAt: '2025-05-14T02:34:51.245Z'
+                          question: >-
+                            Does the pain go away on its own or do you take
+                            painkillers?
+                          type: checkbox
+                          updatedAt: '2025-05-14T02:34:51.245Z'
+                        - __v: 0
+                          _id: 682400fed3c56f9676898cf1
+                          active: true
+                          answers:
+                            - _id: 682400fed3c56f9676898cf2
+                              label: To hot
+                              value: false
+                            - _id: 682400fed3c56f9676898cf3
+                              label: To cold
+                              value: false
+                            - _id: 682400fed3c56f9676898cf4
+                              label: 'No'
+                              value: false
+                            - _id: 682400fed3c56f9676898cf5
+                              label: No pain at all
+                              value: false
+                          createdAt: '2025-05-14T02:33:34.435Z'
+                          question: Is there sensitivity to hot or cold?
+                          type: checkbox
+                          updatedAt: '2025-05-14T02:33:34.435Z'
+                        - __v: 0
+                          _id: 6824003dd3c56f9676898cea
+                          active: true
+                          answers:
+                            - _id: 6824003dd3c56f9676898ceb
+                              label: Sharp
+                              value: false
+                            - _id: 6824003dd3c56f9676898cec
+                              label: Dull
+                              value: false
+                            - _id: 6824003dd3c56f9676898ced
+                              label: Aching
+                              value: false
+                            - _id: 6824003dd3c56f9676898cee
+                              label: Throbbing
+                              value: false
+                            - _id: 6824003dd3c56f9676898cef
+                              label: No pain at all
+                              value: false
+                          createdAt: '2025-05-14T02:30:21.083Z'
+                          question: >-
+                            How would you describe the pain — sharp, dull,
+                            aching, throbbing?
+                          type: checkbox
+                          updatedAt: '2025-05-14T02:30:21.083Z'
+                        - __v: 0
+                          _id: 6823ffd7d3c56f9676898ce4
+                          active: true
+                          answers:
+                            - _id: 6823ffd7d3c56f9676898ce5
+                              label: When biting
+                              value: false
+                            - _id: 6823ffd7d3c56f9676898ce6
+                              label: When chewing
+                              value: false
+                            - _id: 6823ffd7d3c56f9676898ce7
+                              label: 'No'
+                              value: false
+                            - _id: 6823ffd7d3c56f9676898ce8
+                              label: No pain at all
+                              value: false
+                          createdAt: '2025-05-14T02:28:39.225Z'
+                          question: Does the pain increase when biting or chewing?
+                          type: checkbox
+                          updatedAt: '2025-05-14T02:28:39.225Z'
+                        - __v: 0
+                          _id: 6823ff51d3c56f9676898cdd
+                          active: true
+                          answers:
+                            - _id: 6823ff51d3c56f9676898cde
+                              label: Today
+                              value: false
+                            - _id: 6823ff51d3c56f9676898cdf
+                              label: This week
+                              value: false
+                            - _id: 6823ff51d3c56f9676898ce0
+                              label: More than a week ago
+                              value: false
+                            - _id: 6823ff51d3c56f9676898ce1
+                              label: A while ago, but got worse
+                              value: false
+                            - _id: 6823ff51d3c56f9676898ce2
+                              label: No pain at all
+                              value: false
+                          createdAt: '2025-05-14T02:26:25.006Z'
+                          question: When did the pain first start?
+                          type: radio
+                          updatedAt: '2025-05-14T02:26:25.006Z'
+                        - __v: 0
+                          _id: 6823fef5d3c56f9676898cd8
+                          active: true
+                          answers:
+                            - _id: 6823fef5d3c56f9676898cd9
+                              label: Constant
+                              value: false
+                            - _id: 6823fef5d3c56f9676898cda
+                              label: Intermittent
+                              value: false
+                            - _id: 6823fef5d3c56f9676898cdb
+                              label: No pain at all
+                              value: false
+                          createdAt: '2025-05-14T02:24:53.102Z'
+                          question: Is the pain constant or does it come and go?
+                          type: checkbox
+                          updatedAt: '2025-05-14T02:24:53.102Z'
+                        - __v: 0
+                          _id: 6823fda3d3c56f9676898cc8
+                          active: true
+                          answers:
+                            - _id: 6823fda3d3c56f9676898cc9
+                              label: Upper jaw | front | right
+                              value: false
+                            - _id: 6823fda3d3c56f9676898cca
+                              label: Upper jaw | front | left
+                              value: false
+                            - _id: 6823fda3d3c56f9676898ccb
+                              label: Upper jaw | back | right
+                              value: false
+                            - _id: 6823fda3d3c56f9676898ccc
+                              label: Upper jaw | back | left
+                              value: false
+                            - _id: 6823fda3d3c56f9676898ccd
+                              label: Lower jaw | front | right
+                              value: false
+                            - _id: 6823fda3d3c56f9676898cce
+                              label: Lower jaw | front | left
+                              value: false
+                            - _id: 6823fda3d3c56f9676898ccf
+                              label: Lower jaw | back | right
+                              value: false
+                            - _id: 6823fda3d3c56f9676898cd0
+                              label: Lower jaw | back | left
+                              value: false
+                            - _id: 6823fda3d3c56f9676898cd1
+                              label: Not sure
+                              value: false
+                            - _id: 6823fda3d3c56f9676898cd2
+                              label: No pain at all
+                              value: false
+                          createdAt: '2025-05-14T02:19:15.493Z'
+                          question: >-
+                            Where exactly does it hurt? Can you point to a
+                            specific tooth or area?
+                          type: radio
+                          updatedAt: '2025-05-14T02:19:15.493Z'
+                    error: null
+                    message: List of active questions
+                    result: SUCCESS
+                crearet-RES:
+                  value:
+                    data:
+                      newQuestion:
+                        __v: 0
+                        _id: 6823fda3d3c56f9676898cc8
+                        active: true
+                        answers:
+                          - _id: 6823fda3d3c56f9676898cc9
+                            label: Upper jaw | front | right
+                            value: false
+                          - _id: 6823fda3d3c56f9676898cca
+                            label: Upper jaw | front | left
+                            value: false
+                          - _id: 6823fda3d3c56f9676898ccb
+                            label: Upper jaw | back | right
+                            value: false
+                          - _id: 6823fda3d3c56f9676898ccc
+                            label: Upper jaw | back | left
+                            value: false
+                          - _id: 6823fda3d3c56f9676898ccd
+                            label: Lower jaw | front | right
+                            value: false
+                          - _id: 6823fda3d3c56f9676898cce
+                            label: Lower jaw | front | left
+                            value: false
+                          - _id: 6823fda3d3c56f9676898ccf
+                            label: Lower jaw | back | right
+                            value: false
+                          - _id: 6823fda3d3c56f9676898cd0
+                            label: Lower jaw | back | left
+                            value: false
+                          - _id: 6823fda3d3c56f9676898cd1
+                            label: Not sure
+                            value: false
+                          - _id: 6823fda3d3c56f9676898cd2
+                            label: No pain at all
+                            value: false
+                        createdAt: '2025-05-14T02:19:15.493Z'
+                        question: >-
+                          Where exactly does it hurt? Can you point to a
+                          specific tooth or area?
+                        type: radio
+                        updatedAt: '2025-05-14T02:19:15.493Z'
+                    error: null
+                    message: New question has been added
+                    result: SUCCESS
+  /api/scans/add:
+    post:
+      tags:
+        - scans
+      summary: add
+      description: add
+      operationId: add
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                doctorId:
+                  type: string
+                  example: 68254dd9517f3bada9d1d043
+                questions:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      active:
+                        type: boolean
+                        example: true
+                      answers:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            label:
+                              type: string
+                              example: First time
+                            value:
+                              type: boolean
+                              example: true
+                        example:
+                          - label: First time
+                            value: true
+                          - label: It has happened before
+                            value: false
+                          - label: No pain at all
+                            value: false
+                      question:
+                        type: string
+                        example: >-
+                          Is this the first time you've experienced this kind of
+                          pain, or has it happened before?
+                      type:
+                        type: string
+                        example: radio
+                  example:
+                    - active: true
+                      answers:
+                        - label: First time
+                          value: true
+                        - label: It has happened before
+                          value: false
+                        - label: No pain at all
+                          value: false
+                      question: >-
+                        Is this the first time you've experienced this kind of
+                        pain, or has it happened before?
+                      type: radio
+                    - active: true
+                      answers:
+                        - label: Bad smell
+                          value: true
+                        - label: Bad taste
+                          value: false
+                        - label: 'No'
+                          value: false
+                        - label: No pain at all
+                          value: false
+                      question: Have you noticed any bad smell or taste from your mouth?
+                      type: checkbox
+                    - active: true
+                      answers:
+                        - label: Darker
+                          value: false
+                        - label: Lighter
+                          value: false
+                        - label: 'No'
+                          value: true
+                        - label: Not sure
+                          value: false
+                        - label: No pain at all
+                          value: false
+                      question: Has the color of the painful tooth changed?
+                      type: radio
+                    - active: true
+                      answers:
+                        - label: Swelling
+                          value: true
+                        - label: Redness
+                          value: true
+                        - label: Pus
+                          value: false
+                        - label: 'No'
+                          value: false
+                        - label: No pain at all
+                          value: false
+                      question: Is there any swelling, redness, or pus in the area?
+                      type: checkbox
+                    - active: true
+                      answers:
+                        - label: Adjacent teeth
+                          value: false
+                        - label: Gums
+                          value: true
+                        - label: Jaw
+                          value: false
+                        - label: 'No'
+                          value: false
+                        - label: No pain at all
+                          value: false
+                      question: Do adjacent teeth, gums, or jaw also hurt?
+                      type: checkbox
+                    - active: true
+                      answers:
+                        - label: Pressure
+                          value: true
+                        - label: Swelling
+                          value: false
+                        - label: Numbness
+                          value: false
+                        - label: 'No'
+                          value: false
+                        - label: No pain at all
+                          value: false
+                      question: >-
+                        Do you feel pressure, swelling, or numbness in the
+                        painful area?
+                      type: radio
+                    - active: true
+                      answers:
+                        - label: 'Yes'
+                          value: false
+                        - label: 'No'
+                          value: true
+                        - label: Not sure
+                          value: false
+                        - label: No pain at all
+                          value: false
+                      question: >-
+                        Have you had any trauma or bitten into something hard
+                        recently?
+                      type: radio
+                    - active: true
+                      answers:
+                        - label: Yes, it helped
+                          value: true
+                        - label: Yes, but it didn't help
+                          value: false
+                        - label: 'No'
+                          value: false
+                        - label: No pain at all
+                          value: false
+                      question: Have you taken any medication for the pain? Did it help?
+                      type: checkbox
+                    - active: true
+                      answers:
+                        - label: Goes away on its own
+                          value: false
+                        - label: I take painkillers
+                          value: true
+                        - label: No pain at all
+                          value: false
+                      question: >-
+                        Does the pain go away on its own or do you take
+                        painkillers?
+                      type: checkbox
+                    - active: true
+                      answers:
+                        - label: To hot
+                          value: true
+                        - label: To cold
+                          value: false
+                        - label: 'No'
+                          value: false
+                        - label: No pain at all
+                          value: false
+                      question: Is there sensitivity to hot or cold?
+                      type: checkbox
+                    - active: true
+                      answers:
+                        - label: Sharp
+                          value: true
+                        - label: Dull
+                          value: true
+                        - label: Aching
+                          value: false
+                        - label: Throbbing
+                          value: false
+                        - label: No pain at all
+                          value: false
+                      question: >-
+                        How would you describe the pain — sharp, dull, aching,
+                        throbbing?
+                      type: checkbox
+                    - active: true
+                      answers:
+                        - label: When biting
+                          value: true
+                        - label: When chewing
+                          value: false
+                        - label: 'No'
+                          value: false
+                        - label: No pain at all
+                          value: false
+                      question: Does the pain increase when biting or chewing?
+                      type: checkbox
+                    - active: true
+                      answers:
+                        - label: Today
+                          value: false
+                        - label: This week
+                          value: true
+                        - label: More than a week ago
+                          value: false
+                        - label: A while ago, but got worse
+                          value: false
+                        - label: No pain at all
+                          value: false
+                      question: When did the pain first start?
+                      type: radio
+                    - active: true
+                      answers:
+                        - label: Constant
+                          value: true
+                        - label: Intermittent
+                          value: false
+                        - label: No pain at all
+                          value: false
+                      question: Is the pain constant or does it come and go?
+                      type: checkbox
+                    - active: true
+                      answers:
+                        - label: Upper jaw | front | right
+                          value: false
+                        - label: Upper jaw | front | left
+                          value: false
+                        - label: Upper jaw | back | right
+                          value: true
+                        - label: Upper jaw | back | left
+                          value: false
+                        - label: Lower jaw | front | right
+                          value: false
+                        - label: Lower jaw | front | left
+                          value: false
+                        - label: Lower jaw | back | right
+                          value: false
+                        - label: Lower jaw | back | left
+                          value: false
+                        - label: Not sure
+                          value: false
+                        - label: No pain at all
+                          value: false
+                      question: >-
+                        Where exactly does it hurt? Can you point to a specific
+                        tooth or area?
+                      type: radio
+                resultAI:
+                  type: string
+                  example: Signs of early-stage inflammation detected on tooth 47.
+                teeth:
+                  type: object
+                  properties:
+                    '47':
+                      type: string
+                      example: >-
+                        https://nginx-files.paxel.ca/files/1747277279114-742514243.jpg
+                    '48':
+                      type: string
+                      example: >-
+                        https://nginx-files.paxel.ca/files/1747277279114-742514243.jpg
+            examples:
+              add:
+                value:
+                  doctorId: 68254dd9517f3bada9d1d043
+                  questions:
+                    - active: true
+                      answers:
+                        - label: First time
+                          value: true
+                        - label: It has happened before
+                          value: false
+                        - label: No pain at all
+                          value: false
+                      question: >-
+                        Is this the first time you've experienced this kind of
+                        pain, or has it happened before?
+                      type: radio
+                    - active: true
+                      answers:
+                        - label: Bad smell
+                          value: true
+                        - label: Bad taste
+                          value: false
+                        - label: 'No'
+                          value: false
+                        - label: No pain at all
+                          value: false
+                      question: Have you noticed any bad smell or taste from your mouth?
+                      type: checkbox
+                    - active: true
+                      answers:
+                        - label: Darker
+                          value: false
+                        - label: Lighter
+                          value: false
+                        - label: 'No'
+                          value: true
+                        - label: Not sure
+                          value: false
+                        - label: No pain at all
+                          value: false
+                      question: Has the color of the painful tooth changed?
+                      type: radio
+                    - active: true
+                      answers:
+                        - label: Swelling
+                          value: true
+                        - label: Redness
+                          value: true
+                        - label: Pus
+                          value: false
+                        - label: 'No'
+                          value: false
+                        - label: No pain at all
+                          value: false
+                      question: Is there any swelling, redness, or pus in the area?
+                      type: checkbox
+                    - active: true
+                      answers:
+                        - label: Adjacent teeth
+                          value: false
+                        - label: Gums
+                          value: true
+                        - label: Jaw
+                          value: false
+                        - label: 'No'
+                          value: false
+                        - label: No pain at all
+                          value: false
+                      question: Do adjacent teeth, gums, or jaw also hurt?
+                      type: checkbox
+                    - active: true
+                      answers:
+                        - label: Pressure
+                          value: true
+                        - label: Swelling
+                          value: false
+                        - label: Numbness
+                          value: false
+                        - label: 'No'
+                          value: false
+                        - label: No pain at all
+                          value: false
+                      question: >-
+                        Do you feel pressure, swelling, or numbness in the
+                        painful area?
+                      type: radio
+                    - active: true
+                      answers:
+                        - label: 'Yes'
+                          value: false
+                        - label: 'No'
+                          value: true
+                        - label: Not sure
+                          value: false
+                        - label: No pain at all
+                          value: false
+                      question: >-
+                        Have you had any trauma or bitten into something hard
+                        recently?
+                      type: radio
+                    - active: true
+                      answers:
+                        - label: Yes, it helped
+                          value: true
+                        - label: Yes, but it didn't help
+                          value: false
+                        - label: 'No'
+                          value: false
+                        - label: No pain at all
+                          value: false
+                      question: Have you taken any medication for the pain? Did it help?
+                      type: checkbox
+                    - active: true
+                      answers:
+                        - label: Goes away on its own
+                          value: false
+                        - label: I take painkillers
+                          value: true
+                        - label: No pain at all
+                          value: false
+                      question: >-
+                        Does the pain go away on its own or do you take
+                        painkillers?
+                      type: checkbox
+                    - active: true
+                      answers:
+                        - label: To hot
+                          value: true
+                        - label: To cold
+                          value: false
+                        - label: 'No'
+                          value: false
+                        - label: No pain at all
+                          value: false
+                      question: Is there sensitivity to hot or cold?
+                      type: checkbox
+                    - active: true
+                      answers:
+                        - label: Sharp
+                          value: true
+                        - label: Dull
+                          value: true
+                        - label: Aching
+                          value: false
+                        - label: Throbbing
+                          value: false
+                        - label: No pain at all
+                          value: false
+                      question: >-
+                        How would you describe the pain — sharp, dull, aching,
+                        throbbing?
+                      type: checkbox
+                    - active: true
+                      answers:
+                        - label: When biting
+                          value: true
+                        - label: When chewing
+                          value: false
+                        - label: 'No'
+                          value: false
+                        - label: No pain at all
+                          value: false
+                      question: Does the pain increase when biting or chewing?
+                      type: checkbox
+                    - active: true
+                      answers:
+                        - label: Today
+                          value: false
+                        - label: This week
+                          value: true
+                        - label: More than a week ago
+                          value: false
+                        - label: A while ago, but got worse
+                          value: false
+                        - label: No pain at all
+                          value: false
+                      question: When did the pain first start?
+                      type: radio
+                    - active: true
+                      answers:
+                        - label: Constant
+                          value: true
+                        - label: Intermittent
+                          value: false
+                        - label: No pain at all
+                          value: false
+                      question: Is the pain constant or does it come and go?
+                      type: checkbox
+                    - active: true
+                      answers:
+                        - label: Upper jaw | front | right
+                          value: false
+                        - label: Upper jaw | front | left
+                          value: false
+                        - label: Upper jaw | back | right
+                          value: true
+                        - label: Upper jaw | back | left
+                          value: false
+                        - label: Lower jaw | front | right
+                          value: false
+                        - label: Lower jaw | front | left
+                          value: false
+                        - label: Lower jaw | back | right
+                          value: false
+                        - label: Lower jaw | back | left
+                          value: false
+                        - label: Not sure
+                          value: false
+                        - label: No pain at all
+                          value: false
+                      question: >-
+                        Where exactly does it hurt? Can you point to a specific
+                        tooth or area?
+                      type: radio
+                  resultAI: Signs of early-stage inflammation detected on tooth 47.
+                  teeth:
+                    '47': >-
+                      https://nginx-files.paxel.ca/files/1747277279114-742514243.jpg
+                    '48': >-
+                      https://nginx-files.paxel.ca/files/1747277279114-742514243.jpg
+      responses:
+        '200':
+          description: ''
+      security:
+        - bearerAuth: []
+  /api/scans/user:
+    get:
+      tags:
+        - scans
+      summary: userScans
+      description: userScans
+      operationId: userscans
+      responses:
+        '200':
+          description: ''
+      security:
+        - bearerAuth: []
+  /api/scans/doctor:
+    get:
+      tags:
+        - scans
+      summary: doctorScans
+      description: doctorScans
+      operationId: doctorscans
+      responses:
+        '200':
+          description: ''
+      security:
+        - bearerAuth: []
+  /api/scans/{scanID}:
+    get:
+      tags:
+        - scans
+      summary: scanById
+      description: scanById
+      operationId: scanbyid
+      responses:
+        '200':
+          description: ''
+      security:
+        - bearerAuth: []
+    parameters:
+      - name: scanID
+        in: path
+        required: true
+        schema:
+          type: string
+  /api/auth/signup:
+    post:
+      tags:
+        - auth
+      summary: signup
+      description: signup
+      operationId: signup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                birthDate:
+                  type: string
+                  example: '1988'
+                email:
+                  type: string
+                  example: aibolit@3dent.ca
+                firstName:
+                  type: string
+                  example: Dr. Ai
+                lastName:
+                  type: string
+                  example: Bolit
+                password:
+                  type: string
+                  example: '!QAZxsw2'
+            examples:
+              signup:
+                value:
+                  birthDate: '1988'
+                  email: aibolit@3dent.ca
+                  firstName: Dr. Ai
+                  lastName: Bolit
+                  password: '!QAZxsw2'
+      responses:
+        '200':
+          description: signup-RES
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '115'
+            Content-Security-Policy:
+              schema:
+                type: string
+                example: >-
+                  default-src 'self';base-uri 'self';font-src 'self' https:
+                  data:;form-action 'self';frame-ancestors 'self';img-src 'self'
+                  data:;object-src 'none';script-src 'self';script-src-attr
+                  'none';style-src 'self' https:
+                  'unsafe-inline';upgrade-insecure-requests
+            Cross-Origin-Opener-Policy:
+              schema:
+                type: string
+                example: same-origin
+            Cross-Origin-Resource-Policy:
+              schema:
+                type: string
+                example: same-origin
+            Date:
+              schema:
+                type: string
+                example: Thu, 15 May 2025 02:13:45 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"73-iR7XNI7hyEJf66wNy+IcN47GbwY"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            Origin-Agent-Cluster:
+              schema:
+                type: string
+                example: '?1'
+            Referrer-Policy:
+              schema:
+                type: string
+                example: no-referrer
+            Strict-Transport-Security:
+              schema:
+                type: string
+                example: max-age=31536000; includeSubDomains
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            X-DNS-Prefetch-Control:
+              schema:
+                type: string
+                example: 'off'
+            X-Download-Options:
+              schema:
+                type: string
+                example: noopen
+            X-Frame-Options:
+              schema:
+                type: string
+                example: SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+              schema:
+                type: string
+                example: none
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            X-RateLimit-Limit:
+              schema:
+                type: string
+                example: '100'
+            X-RateLimit-Remaining:
+              schema:
+                type: string
+                example: '99'
+            X-RateLimit-Reset:
+              schema:
+                type: string
+                example: '1747276126'
+            X-XSS-Protection:
+              schema:
+                type: string
+                example: '0'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      userID:
+                        type: string
+                        example: 68254dd9517f3bada9d1d043
+                  error:
+                    nullable: true
+                    example: null
+                  message:
+                    type: string
+                    example: Dr. Ai Bolit saved to DB
+                  result:
+                    type: string
+                    example: SUCCESS
+              examples:
+                signup-RES:
+                  value:
+                    data:
+                      userID: 68254dd9517f3bada9d1d043
+                    error: null
+                    message: Dr. Ai Bolit saved to DB
+                    result: SUCCESS
+  /api/auth/signin:
+    post:
+      tags:
+        - auth
+      summary: signin
+      description: signin
+      operationId: signin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: xmen@mail.ca
+                password:
+                  type: string
+                  example: '!QAZxsw2'
+            examples:
+              signin:
+                value:
+                  email: xmen@mail.ca
+                  password: '!QAZxsw2'
+      responses:
+        '200':
+          description: ''
+  /api/messages/send:
+    post:
+      tags:
+        - messages
+      summary: send
+      description: send
+      operationId: send
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  example: Doctor, can you please clarify the result?
+                scanId:
+                  type: string
+                  example: 68255814517f3bada9d1d09f
+            examples:
+              send:
+                value:
+                  message: Doctor, can you please clarify the result?
+                  scanId: 68255814517f3bada9d1d09f
+      responses:
+        '200':
+          description: send-RES
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '340'
+            Content-Security-Policy:
+              schema:
+                type: string
+                example: >-
+                  default-src 'self';base-uri 'self';font-src 'self' https:
+                  data:;form-action 'self';frame-ancestors 'self';img-src 'self'
+                  data:;object-src 'none';script-src 'self';script-src-attr
+                  'none';style-src 'self' https:
+                  'unsafe-inline';upgrade-insecure-requests
+            Cross-Origin-Opener-Policy:
+              schema:
+                type: string
+                example: same-origin
+            Cross-Origin-Resource-Policy:
+              schema:
+                type: string
+                example: same-origin
+            Date:
+              schema:
+                type: string
+                example: Thu, 15 May 2025 07:19:01 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"154-XGwDbTnvPHGwWaiF0ZE4w8X8wIY"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            Origin-Agent-Cluster:
+              schema:
+                type: string
+                example: '?1'
+            Referrer-Policy:
+              schema:
+                type: string
+                example: no-referrer
+            Strict-Transport-Security:
+              schema:
+                type: string
+                example: max-age=31536000; includeSubDomains
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            X-DNS-Prefetch-Control:
+              schema:
+                type: string
+                example: 'off'
+            X-Download-Options:
+              schema:
+                type: string
+                example: noopen
+            X-Frame-Options:
+              schema:
+                type: string
+                example: SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+              schema:
+                type: string
+                example: none
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            X-RateLimit-Limit:
+              schema:
+                type: string
+                example: '100'
+            X-RateLimit-Remaining:
+              schema:
+                type: string
+                example: '96'
+            X-RateLimit-Reset:
+              schema:
+                type: string
+                example: '1747294341'
+            X-XSS-Protection:
+              schema:
+                type: string
+                example: '0'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      newMessage:
+                        type: object
+                        properties:
+                          __v:
+                            type: number
+                            example: 0
+                          _id:
+                            type: string
+                            example: 682595653170fa8d450185ec
+                          createdAt:
+                            type: string
+                            example: '2025-05-15T07:19:01.110Z'
+                          message:
+                            type: string
+                            example: Doctor, can you please clarify the result?
+                          read:
+                            type: boolean
+                            example: false
+                          scanId:
+                            type: string
+                            example: 68255814517f3bada9d1d09f
+                          senderId:
+                            type: string
+                            example: 68254dd9517f3bada9d1d043
+                          senderRole:
+                            type: string
+                            example: dentist
+                  error:
+                    nullable: true
+                    example: null
+                  message:
+                    type: string
+                    example: Message sent successfully
+                  result:
+                    type: string
+                    example: SUCCESS
+              examples:
+                send-RES:
+                  value:
+                    data:
+                      newMessage:
+                        __v: 0
+                        _id: 682595653170fa8d450185ec
+                        createdAt: '2025-05-15T07:19:01.110Z'
+                        message: Doctor, can you please clarify the result?
+                        read: false
+                        scanId: 68255814517f3bada9d1d09f
+                        senderId: 68254dd9517f3bada9d1d043
+                        senderRole: dentist
+                    error: null
+                    message: Message sent successfully
+                    result: SUCCESS
+      security:
+        - bearerAuth: []
+  /api/messages/{scanID}:
+    get:
+      tags:
+        - messages
+      summary: scanMessages
+      description: scanMessages
+      operationId: scanmessages
+      responses:
+        '200':
+          description: scanMessages-RES
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '372'
+            Content-Security-Policy:
+              schema:
+                type: string
+                example: >-
+                  default-src 'self';base-uri 'self';font-src 'self' https:
+                  data:;form-action 'self';frame-ancestors 'self';img-src 'self'
+                  data:;object-src 'none';script-src 'self';script-src-attr
+                  'none';style-src 'self' https:
+                  'unsafe-inline';upgrade-insecure-requests
+            Cross-Origin-Opener-Policy:
+              schema:
+                type: string
+                example: same-origin
+            Cross-Origin-Resource-Policy:
+              schema:
+                type: string
+                example: same-origin
+            Date:
+              schema:
+                type: string
+                example: Thu, 15 May 2025 07:35:50 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"174-H8qcR8zYt8Wzd4xZqjCkxgqZDtk"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            Origin-Agent-Cluster:
+              schema:
+                type: string
+                example: '?1'
+            Referrer-Policy:
+              schema:
+                type: string
+                example: no-referrer
+            Strict-Transport-Security:
+              schema:
+                type: string
+                example: max-age=31536000; includeSubDomains
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            X-DNS-Prefetch-Control:
+              schema:
+                type: string
+                example: 'off'
+            X-Download-Options:
+              schema:
+                type: string
+                example: noopen
+            X-Frame-Options:
+              schema:
+                type: string
+                example: SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+              schema:
+                type: string
+                example: none
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            X-RateLimit-Limit:
+              schema:
+                type: string
+                example: '100'
+            X-RateLimit-Remaining:
+              schema:
+                type: string
+                example: '99'
+            X-RateLimit-Reset:
+              schema:
+                type: string
+                example: '1747295451'
+            X-XSS-Protection:
+              schema:
+                type: string
+                example: '0'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      scanMessages:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            __v:
+                              type: number
+                              example: 0
+                            _id:
+                              type: string
+                              example: 682595653170fa8d450185ec
+                            createdAt:
+                              type: string
+                              example: '2025-05-15T07:19:01.110Z'
+                            message:
+                              type: string
+                              example: Doctor, can you please clarify the result?
+                            read:
+                              type: boolean
+                              example: false
+                            scanId:
+                              type: string
+                              example: 68255814517f3bada9d1d09f
+                            senderId:
+                              type: string
+                              example: 68254dd9517f3bada9d1d043
+                            senderRole:
+                              type: string
+                              example: dentist
+                        example:
+                          - __v: 0
+                            _id: 682595653170fa8d450185ec
+                            createdAt: '2025-05-15T07:19:01.110Z'
+                            message: Doctor, can you please clarify the result?
+                            read: false
+                            scanId: 68255814517f3bada9d1d09f
+                            senderId: 68254dd9517f3bada9d1d043
+                            senderRole: dentist
+                  error:
+                    nullable: true
+                    example: null
+                  message:
+                    type: string
+                    example: Messages belong scan with ID:68255814517f3bada9d1d09f
+                  result:
+                    type: string
+                    example: SUCCESS
+              examples:
+                scanMessages-RES:
+                  value:
+                    data:
+                      scanMessages:
+                        - __v: 0
+                          _id: 682595653170fa8d450185ec
+                          createdAt: '2025-05-15T07:19:01.110Z'
+                          message: Doctor, can you please clarify the result?
+                          read: false
+                          scanId: 68255814517f3bada9d1d09f
+                          senderId: 68254dd9517f3bada9d1d043
+                          senderRole: dentist
+                    error: null
+                    message: Messages belong scan with ID:68255814517f3bada9d1d09f
+                    result: SUCCESS
+      security:
+        - bearerAuth: []
+    parameters:
+      - name: scanID
+        in: path
+        required: true
+        schema:
+          type: string
+  /api/conversations/init:
+    post:
+      tags:
+        - conversations
+      summary: init
+      description: init
+      operationId: init
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                doctorId:
+                  type: string
+                  example: 68230018f51ca94489b2d9f6
+                scanId:
+                  type: string
+                  example: 68255814517f3bada9d1d09f
+                userId:
+                  type: string
+                  example: 68254dd9517f3bada9d1d043
+            examples:
+              init:
+                value:
+                  doctorId: 68230018f51ca94489b2d9f6
+                  scanId: 68255814517f3bada9d1d09f
+                  userId: 68254dd9517f3bada9d1d043
+      responses:
+        '200':
+          description: init-RES
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '416'
+            Content-Security-Policy:
+              schema:
+                type: string
+                example: >-
+                  default-src 'self';base-uri 'self';font-src 'self' https:
+                  data:;form-action 'self';frame-ancestors 'self';img-src 'self'
+                  data:;object-src 'none';script-src 'self';script-src-attr
+                  'none';style-src 'self' https:
+                  'unsafe-inline';upgrade-insecure-requests
+            Cross-Origin-Opener-Policy:
+              schema:
+                type: string
+                example: same-origin
+            Cross-Origin-Resource-Policy:
+              schema:
+                type: string
+                example: same-origin
+            Date:
+              schema:
+                type: string
+                example: Thu, 15 May 2025 09:19:23 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"1a0-JyCbqpRWs/0iqnC5RRsyoDwzNVk"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            Origin-Agent-Cluster:
+              schema:
+                type: string
+                example: '?1'
+            Referrer-Policy:
+              schema:
+                type: string
+                example: no-referrer
+            Strict-Transport-Security:
+              schema:
+                type: string
+                example: max-age=31536000; includeSubDomains
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            X-DNS-Prefetch-Control:
+              schema:
+                type: string
+                example: 'off'
+            X-Download-Options:
+              schema:
+                type: string
+                example: noopen
+            X-Frame-Options:
+              schema:
+                type: string
+                example: SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+              schema:
+                type: string
+                example: none
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            X-RateLimit-Limit:
+              schema:
+                type: string
+                example: '100'
+            X-RateLimit-Remaining:
+              schema:
+                type: string
+                example: '98'
+            X-RateLimit-Reset:
+              schema:
+                type: string
+                example: '1747301473'
+            X-XSS-Protection:
+              schema:
+                type: string
+                example: '0'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      conversation:
+                        type: object
+                        properties:
+                          __v:
+                            type: number
+                            example: 0
+                          _id:
+                            type: string
+                            example: 6825b19b77efb2bed184e212
+                          createdAt:
+                            type: string
+                            example: '2025-05-15T09:19:23.939Z'
+                          doctorId:
+                            type: string
+                            example: 68230018f51ca94489b2d9f6
+                          lastMessageAt:
+                            type: string
+                            example: '2025-05-15T09:19:23.937Z'
+                          scanId:
+                            type: string
+                            example: 68255814517f3bada9d1d09f
+                          unreadCountForDoctor:
+                            type: number
+                            example: 1
+                          unreadCountForUser:
+                            type: number
+                            example: 0
+                          updatedAt:
+                            type: string
+                            example: '2025-05-15T09:19:23.939Z'
+                          userId:
+                            type: string
+                            example: 68254dd9517f3bada9d1d043
+                  error:
+                    nullable: true
+                    example: null
+                  message:
+                    type: string
+                    example: Conversation initialized
+                  result:
+                    type: string
+                    example: SUCCESS
+              examples:
+                init-RES:
+                  value:
+                    data:
+                      conversation:
+                        __v: 0
+                        _id: 6825b19b77efb2bed184e212
+                        createdAt: '2025-05-15T09:19:23.939Z'
+                        doctorId: 68230018f51ca94489b2d9f6
+                        lastMessageAt: '2025-05-15T09:19:23.937Z'
+                        scanId: 68255814517f3bada9d1d09f
+                        unreadCountForDoctor: 1
+                        unreadCountForUser: 0
+                        updatedAt: '2025-05-15T09:19:23.939Z'
+                        userId: 68254dd9517f3bada9d1d043
+                    error: null
+                    message: Conversation initialized
+                    result: SUCCESS
+      security:
+        - bearerAuth: []
+  /api/conversations/inbox:
+    get:
+      tags:
+        - conversations
+      summary: inbox
+      description: inbox
+      operationId: inbox
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                doctorId:
+                  type: string
+                  example: 68230018f51ca94489b2d9f6
+                scanId:
+                  type: string
+                  example: 68255814517f3bada9d1d09f
+                userId:
+                  type: string
+                  example: 68254dd9517f3bada9d1d043
+            examples:
+              inbox:
+                value:
+                  doctorId: 68230018f51ca94489b2d9f6
+                  scanId: 68255814517f3bada9d1d09f
+                  userId: 68254dd9517f3bada9d1d043
+      responses:
+        '200':
+          description: inbox-RES
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: '*'
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+            Content-Length:
+              schema:
+                type: string
+                example: '399'
+            Content-Security-Policy:
+              schema:
+                type: string
+                example: >-
+                  default-src 'self';base-uri 'self';font-src 'self' https:
+                  data:;form-action 'self';frame-ancestors 'self';img-src 'self'
+                  data:;object-src 'none';script-src 'self';script-src-attr
+                  'none';style-src 'self' https:
+                  'unsafe-inline';upgrade-insecure-requests
+            Cross-Origin-Opener-Policy:
+              schema:
+                type: string
+                example: same-origin
+            Cross-Origin-Resource-Policy:
+              schema:
+                type: string
+                example: same-origin
+            Date:
+              schema:
+                type: string
+                example: Thu, 15 May 2025 09:25:57 GMT
+            ETag:
+              schema:
+                type: string
+                example: W/"18f-gBO5nOyrcZATbAezIh0X3AJT/jw"
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=5
+            Origin-Agent-Cluster:
+              schema:
+                type: string
+                example: '?1'
+            Referrer-Policy:
+              schema:
+                type: string
+                example: no-referrer
+            Strict-Transport-Security:
+              schema:
+                type: string
+                example: max-age=31536000; includeSubDomains
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+            X-DNS-Prefetch-Control:
+              schema:
+                type: string
+                example: 'off'
+            X-Download-Options:
+              schema:
+                type: string
+                example: noopen
+            X-Frame-Options:
+              schema:
+                type: string
+                example: SAMEORIGIN
+            X-Permitted-Cross-Domain-Policies:
+              schema:
+                type: string
+                example: none
+            X-Powered-By:
+              schema:
+                type: string
+                example: Express
+            X-RateLimit-Limit:
+              schema:
+                type: string
+                example: '100'
+            X-RateLimit-Remaining:
+              schema:
+                type: string
+                example: '98'
+            X-RateLimit-Reset:
+              schema:
+                type: string
+                example: '1747302052'
+            X-XSS-Protection:
+              schema:
+                type: string
+                example: '0'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      inbox:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            __v:
+                              type: number
+                              example: 0
+                            _id:
+                              type: string
+                              example: 6825b31f77efb2bed184e233
+                            createdAt:
+                              type: string
+                              example: '2025-05-15T09:25:51.893Z'
+                            doctorId:
+                              type: string
+                              example: 68254dd9517f3bada9d1d043
+                            lastMessageAt:
+                              type: string
+                              example: '2025-05-15T09:25:51.890Z'
+                            scanId:
+                              type: string
+                              example: 68255814517f3bada9d1d09f
+                            unreadCountForDoctor:
+                              type: number
+                              example: 0
+                            unreadCountForUser:
+                              type: number
+                              example: 0
+                            updatedAt:
+                              type: string
+                              example: '2025-05-15T09:25:51.893Z'
+                            userId:
+                              type: string
+                              example: 68230018f51ca94489b2d9f6
+                        example:
+                          - __v: 0
+                            _id: 6825b31f77efb2bed184e233
+                            createdAt: '2025-05-15T09:25:51.893Z'
+                            doctorId: 68254dd9517f3bada9d1d043
+                            lastMessageAt: '2025-05-15T09:25:51.890Z'
+                            scanId: 68255814517f3bada9d1d09f
+                            unreadCountForDoctor: 0
+                            unreadCountForUser: 0
+                            updatedAt: '2025-05-15T09:25:51.893Z'
+                            userId: 68230018f51ca94489b2d9f6
+                  error:
+                    nullable: true
+                    example: null
+                  message:
+                    type: string
+                    example: Inbox loaded
+                  result:
+                    type: string
+                    example: SUCCESS
+              examples:
+                inbox-RES:
+                  value:
+                    data:
+                      inbox:
+                        - __v: 0
+                          _id: 6825b31f77efb2bed184e233
+                          createdAt: '2025-05-15T09:25:51.893Z'
+                          doctorId: 68254dd9517f3bada9d1d043
+                          lastMessageAt: '2025-05-15T09:25:51.890Z'
+                          scanId: 68255814517f3bada9d1d09f
+                          unreadCountForDoctor: 0
+                          unreadCountForUser: 0
+                          updatedAt: '2025-05-15T09:25:51.893Z'
+                          userId: 68230018f51ca94489b2d9f6
+                    error: null
+                    message: Inbox loaded
+                    result: SUCCESS
+      security:
+        - bearerAuth: []
+  /api/patient/doctor:
+    get:
+      tags:
+        - patient
+      summary: doctor
+      description: doctor
+      operationId: doctor
+      responses:
+        '200':
+          description: ''
+      security:
+        - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+tags:
+  - name: photo
+  - name: questions
+  - name: scans
+  - name: auth
+  - name: messages
+  - name: conversations
+  - name: patient

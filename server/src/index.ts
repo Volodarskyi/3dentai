@@ -1,4 +1,6 @@
 import express from 'express';
+import swaggerUI from "swagger-ui-express";
+import YAML from "yamljs";
 import bodyParser from 'body-parser';
 import helmet from 'helmet';
 import cors from 'cors';
@@ -13,6 +15,7 @@ import {AppError, errorHandler} from "@/utils/errorUtils";
 import rateLimit from "express-rate-limit";
 
 const app = express();
+const endpointsDoc = YAML.load("./swagger.yaml");
 
 app.use(cors({ origin: '*' }));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -37,6 +40,8 @@ app.use(limiter);
 
 // API Routes
 app.use('/api', routes);
+
+app.use("/swagger", swaggerUI.serve, swaggerUI.setup(endpointsDoc));
 
 // Handle unknown routes
 app.use((req, res, next) => {
