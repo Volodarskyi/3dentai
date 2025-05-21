@@ -1,0 +1,62 @@
+.tabs {
+  display: flex;
+  flex: 1 1 650px;
+  max-width: 650px;
+  min-width: 300px;
+  max-height: 800px;
+  background-color: rgba(83, 255, 255, 0.2);
+  border-radius: 8px;
+
+  .ant-tabs-nav::before {
+    display: none;
+  }
+
+  .ant-tabs-ink-bar {
+    background-color: transparent !important;
+  }
+
+  .ant-tabs-nav .ant-tabs-tab {
+    background-color: rgba(0, 245, 245, 0.2);
+    border-radius: 8px;
+    padding: 7px 0 0 0;
+  }
+
+  .ant-tabs-nav .ant-tabs-tab-active {
+    background-color: rgba(59, 253, 45, 0.25);
+  }
+
+  .ant-tabs-nav .ant-tabs-tab .ant-tabs-tab-btn {
+    color: var(--color-second-500);
+  }
+
+  .tabs .ant-tabs-nav .ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: var(--color-success-250);
+    fill: red;
+  }
+
+  .tabs .ant-tabs-nav .ant-tabs-tab-active .ant-tabs-tab-btn:hover {
+    color: var(--color-success-250);
+  }
+
+  .ant-tabs-nav .ant-tabs-tab .ant-tabs-tab-btn:focus {
+    color: var(--color-second-500);
+  }
+
+  .ant-tabs-tab + .ant-tabs-tab {
+    margin-left: 0;
+  }
+
+  .ant-tabs-tab {
+    flex: 1 1 auto;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .ant-tabs-nav-list {
+    width: 100%;
+  }
+
+  .ant-tabs-tab.ant-tabs-tab-focus .ant-tabs-tab-btn {
+    outline: none !important;
+  }
+}
