@@ -11,7 +11,7 @@ import "./uploadPhoto.styles.scss";
 
 
 const UploadPhoto = () => {
-  const { scanStore } = useStores();
+  const { scanStore, dialogStore } = useStores();
   const { imgUrl, isLoading } = scanStore;
   const fileRef = useRef<HTMLInputElement>(null);
 
@@ -32,6 +32,8 @@ const UploadPhoto = () => {
   };
 
   const handlerClick = () => fileRef.current?.click();
+
+  const showSuccess = ()=> dialogStore.showError('test message 1');
 
   return (
     <>
@@ -78,7 +80,10 @@ const UploadPhoto = () => {
                                     >
                                         <Image src={imgUrl} alt="upload" fill={true} unoptimized />
                                     </div>
-                                    <button onClick={handlerClick} className="uploadPhoto__btnAgain">
+                                    {/*<button onClick={handlerClick} className="uploadPhoto__btnAgain">*/}
+                                    {/*    Upload Photo Again*/}
+                                    {/*</button>*/}
+                                    <button onClick={showSuccess} className="uploadPhoto__btnAgain">
                                         Upload Photo Again
                                     </button>
                                 </div>

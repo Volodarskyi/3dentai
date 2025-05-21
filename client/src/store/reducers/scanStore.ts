@@ -271,10 +271,38 @@ class ScanStore {
             }
 
             console.log("Add Scan Response2:", res.data);
+            return res;
         } catch (e) {
             console.log("ERROR! Login", e);
         }
     };
+
+    sendMessageDentist = async (scanId:string , resultAi:string): Promise<void> => {
+        const requestUrl = "api/messages/send";
+        console.log('sendMessageDentist-reqURL:', requestUrl);
+
+        console.log('sendMessageDentist-scanId:', scanId);
+
+
+        const firstMessageToDoctor = `Doctor, can you please clarify the result? Here is my response from ai: ${resultAi}`
+        console.log('sendMessageDentist-firstMessageToDoctor:', firstMessageToDoctor);
+
+        try {
+            const res = await apiClient.post(requestUrl,{
+                scanId: scanId,
+                message: firstMessageToDoctor
+            });
+
+            if (res.result !== "SUCCESS") {
+                throw new Error(res.message || "Some thing went wrong");
+            }
+
+            console.log("sendMessageDentist RES:", res.data);
+            return res;
+        } catch (e) {
+            console.log("ERROR! sendMessageDentist", e);
+        }
+    }
 }
 
 export default new ScanStore();

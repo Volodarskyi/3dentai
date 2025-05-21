@@ -96,7 +96,7 @@
 }
 
 //UiSuccessResult
-.ui-success-res{
+.ui-success-res {
   width: 60%;
   max-width: 400px;
   display: flex;
@@ -108,23 +108,37 @@
   border-radius: .75rem;
   border: 2px solid rgba(65, 255, 185, 0.65);
 
-  &__success{
+  &__success {
     color: rgba(65, 255, 185, 0.85);
     font-size: 1.5rem;
     font-weight: 600;
     text-align: center;
 
-    &-message{
+    &-message {
       color: rgba(109, 250, 198, 0.7);
       font-size: 1.1rem;
       font-weight: 500;
       text-align: center
     }
+
+    &-btn-close {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      margin-top: 1.5rem;
+      padding: 0.25rem 2rem;
+      background: rgba(65, 255, 185, 0.25);
+      border-radius: .75rem;
+      border: 2px solid rgba(65, 255, 185, 0.65);
+      color: var(--color-text-white);
+      cursor: pointer;
+    }
   }
 }
 
 //UiSuccessResult
-.ui-error-res{
+.ui-error-res {
   width: 60%;
   max-width: 400px;
   display: flex;
@@ -136,18 +150,33 @@
   border-radius: .75rem;
   border: 2px solid rgba(245, 72, 107, 0.65);
 
-  &__error{
+  &__error {
     color: rgba(245, 72, 107, 0.99);
     font-size: 1.5rem;
     font-weight: 600;
     text-align: center;
 
-    &-message{
+    &-message {
       color: rgba(255, 87, 121, 0.8);
       font-size: 1.1rem;
       font-weight: 500;
       text-align: center
     }
+
+    &-btn-close {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      margin-top: 1.5rem;
+      padding: 0.25rem 2rem;
+      background: rgba(255, 87, 121, 0.25);
+      border-radius: .75rem;
+      border: 2px solid rgba(255, 87, 121, 0.65);
+      color: var(--color-text-white);
+      cursor: pointer;
+    }
+
   }
 }
 

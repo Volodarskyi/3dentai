@@ -5,27 +5,33 @@ import { IDentistData } from "@/types/dentistTypes";
 import { useStores } from "@/hooks/useStores";
 
 import './scanComplete.Styles.scss';
+import {EResponseResult} from "@/types/enums/apiEnums";
 
 interface IScanInvestigationMessageComponent {
     dentist: IDentistData | null;
 }
 
 const ScanInvestigationMessageComponent : FC<IScanInvestigationMessageComponent> = ({ dentist }) => {
-    const { scanStore } = useStores();
+    const { scanStore, dialogStore } = useStores();
     const [status, setStatus] = useState<"success" | "error" | "loading" | null>(null);
 
     const handleSubmit = async () => {
         try {
-            setStatus("loading");
+            dialogStore.showLoader()
 
             // Save scan
-            await scanStore.submitScan();
+            const saveScanRes = await scanStore.submitScan();
+            console.log('saveScanRes:', saveScanRes);
 
-            // Simulate message to dentist
-            // TODO: Replace with API call to notify dentist if available
-            console.log("Sending message to dentist:", dentist);
+            if(saveScanRes.result  === EResponseResult.ERROR){
+                throw new Error('save scan to db error')
+            }
 
-            setTimeout(() => setStatus("success"), 500);
+            // send first message to dentist
+            const sendMessageRes = await scanStore.sendMessageDentist(saveScanRes.data.newScan._id, scanStore.scanData.resultAI);
+            console.log('sendMessageRes:', sendMessageRes);
+
+            dialogStore.closeAll()
         } catch (error) {
             console.error("Submission failed:", error);
             setStatus("error");
