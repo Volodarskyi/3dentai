@@ -1,34 +1,49 @@
 "use client";
-import { observer } from "mobx-react-lite";
-import {FC, useState} from "react";
-import { IDentistData } from "@/types/dentistTypes";
-import { useStores } from "@/hooks/useStores";
+import {observer} from "mobx-react-lite";
+import {FC} from "react";
+import {IDentistData} from "@/types/dentistTypes";
+import {useStores} from "@/hooks/useStores";
 
 import './scanComplete.Styles.scss';
+import {EResponseResult} from "@/types/enums/apiEnums";
+import {EScanStatus} from "@/types/enums/scanEnums";
+import {prepareErrorMessage} from "@/utils/apiUtils";
 
 interface IScanInvestigationMessageComponent {
     dentist: IDentistData | null;
 }
 
 const ScanInvestigationMessageComponent : FC<IScanInvestigationMessageComponent> = ({ dentist }) => {
-    const { scanStore } = useStores();
-    const [status, setStatus] = useState<"success" | "error" | "loading" | null>(null);
+    const { scanStore, dialogStore } = useStores();
+
+    const onCloseSuccessFn = ()=>{
+        console.log('TODO redirect to /user')
+        dialogStore.closeAll()
+
+    }
 
     const handleSubmit = async () => {
         try {
-            setStatus("loading");
+            dialogStore.showLoader()
 
             // Save scan
-            await scanStore.submitScan();
+            const saveScanRes = await scanStore.submitScan(EScanStatus.IN_REVIEW);
+            console.log('saveScanRes:', saveScanRes);
 
-            // Simulate message to dentist
-            // TODO: Replace with API call to notify dentist if available
-            console.log("Sending message to dentist:", dentist);
+            if(saveScanRes.result  === EResponseResult.ERROR){
+                throw new Error('save scan to db error')
+            }
 
-            setTimeout(() => setStatus("success"), 500);
+            // send first message to dentist
+            const sendMessageRes = await scanStore.sendMessageDentist(saveScanRes.data.newScan._id, scanStore.scanData.resultAI);
+            console.log('sendMessageRes:', sendMessageRes);
+
+            dialogStore.showSuccess('Save scan & send message',onCloseSuccessFn)
+
         } catch (error) {
             console.error("Submission failed:", error);
-            setStatus("error");
+            const message = prepareErrorMessage(error)
+            dialogStore.showError(message)
         }
     };
 

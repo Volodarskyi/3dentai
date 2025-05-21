@@ -33,9 +33,35 @@ const send = async (
         }
 
         // ✅ exist conversation
-        const conversation = await Conversation.findOne({ scanId });
+        let conversation = await Conversation.findOne({ scanId });
         if (!conversation) {
-            throw new AppError("Conversation not found. Cannot send message.", 404);
+            // Try to find scan to extract doctorId and userId
+            const scan = await Scan.findById(scanId);
+            if (!scan) {
+                throw new AppError("Scan not found. Cannot initialize conversation.", 404);
+            }
+
+            const isParticipant =
+                scan.userId.toString() === sender.userId ||
+                scan.doctorId.toString() === sender.userId;
+
+            if (!isParticipant) {
+                throw new AppError("Unauthorized: Not part of this scan", 403);
+            }
+
+            // Auto-create conversation
+            conversation = await Conversation.findOneAndUpdate(
+                { scanId },
+                {
+                    $set: {
+                        scanId,
+                        userId: scan.userId,
+                        doctorId: scan.doctorId,
+                        lastMessageAt: new Date(),
+                    },
+                },
+                { upsert: true, new: true, setDefaultsOnInsert: true }
+            );
         }
 
         // ✅ create message

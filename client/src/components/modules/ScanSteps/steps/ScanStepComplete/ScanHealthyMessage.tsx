@@ -1,30 +1,54 @@
 "use client";
-import { observer } from "mobx-react-lite";
-import { useState } from "react";
-import { useStores } from "@/hooks/useStores";
+import {observer} from "mobx-react-lite";
+import {useStores} from "@/hooks/useStores";
+
+import {EResponseResult} from "@/types/enums/apiEnums";
+import dialogStore from "@/store/reducers/dialogStore";
 
 import './scanComplete.Styles.scss';
+import {EScanStatus} from "@/types/enums/scanEnums";
+import {prepareErrorMessage} from "@/utils/apiUtils";
 
 const ScanHealthyMessageComponent = () => {
-    const { scanStore } = useStores();
-    const [status, setStatus] = useState<"success" | "error" | "loading" | null>(null);
+    const {scanStore} = useStores();
 
+    // check date today
+    const now = new Date();
+    const formattedDateToday = now.toLocaleDateString(); // e.g., "5/21/2025"
+
+
+    // next scan date
     const nextScanDate = new Date();
     nextScanDate.setDate(nextScanDate.getDate() + 14);
-    const formattedDate = nextScanDate.toLocaleDateString("en-CA");
+    const formattedDateNext = nextScanDate.toLocaleDateString("en-CA");
+
+    const onCloseSuccessFn = () => {
+        console.log('TODO redirect to /user')
+        dialogStore.closeAll()
+    }
 
     const handleSubmit = async () => {
         try {
-            setStatus("loading");
+            dialogStore.showLoader()
 
-            // Save scan (you can extend to also save nextScanDate if backend supports)
-            await scanStore.submitScan();
+            // Save scan
+            const saveScanRes = await scanStore.submitScan(EScanStatus.HEALTHY);
+            console.log('saveScanRes:', saveScanRes);
 
-            // Simulate delay or handle backend response
-            setTimeout(() => setStatus("success"), 500);
+            if (saveScanRes.result === EResponseResult.ERROR) {
+                throw new Error('save scan to db error')
+            }
+
+            // send first message to dentist
+            const sendMessageRes = await scanStore.sendMessageDentist(saveScanRes.data.newScan._id, `HEALTHY | checked ${formattedDateToday}  next scan ${formattedDateNext}`);
+            console.log('sendMessageRes:', sendMessageRes);
+
+            dialogStore.showSuccess('Save scan & send message', onCloseSuccessFn)
+
         } catch (error) {
             console.error("Submission failed:", error);
-            setStatus("error");
+            const message = prepareErrorMessage(error)
+            dialogStore.showError(message)
         }
     };
 
@@ -37,11 +61,13 @@ const ScanHealthyMessageComponent = () => {
 
             <div className="mt-2">
                 <div className="scanComplete__healthy-subtitle">Next Scan Details:</div>
-                <div className="mt-025 scanComplete__healthy-content">Date:<strong className="ml-0.5"> {formattedDate}</strong></div>
-                <div className="mt-025 scanComplete__healthy-content">Time: <strong className="ml-0.5">10:00AM</strong></div>
+                <div className="mt-025 scanComplete__healthy-content">Date:<strong
+                    className="ml-0.5"> {formattedDateNext}</strong></div>
+                <div className="mt-025 scanComplete__healthy-content">Time: <strong className="ml-0.5">10:00AM</strong>
+                </div>
             </div>
 
-            <button className="scanComplete__healthy-btn-confirm" onClick={handleSubmit} disabled={status === "loading"}>
+            <button className="scanComplete__healthy-btn-confirm" onClick={handleSubmit}>
                 CONFIRM
             </button>
         </div>

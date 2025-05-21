@@ -4,6 +4,9 @@ import {apiClient} from "@/api/apiClient";
 import {aiApiServices} from "@/api/services/aiApiServices";
 import {ISteps} from "@/types/steps";
 import {IDentistData} from "@/types/dentistTypes";
+import {EScanStatus} from "@/types/enums/scanEnums";
+import {EResponseResult} from "@/types/enums/apiEnums";
+import {IQuestionDataItem} from "@/types/scanTypes";
 
 class ScanStore {
     steps: ISteps[] = [];
@@ -21,12 +24,7 @@ class ScanStore {
         doctorId: "", // use init function on first step
         teeth: {} as Record<string, string>,
         resultAI: "",
-        questions: [] as {
-            type: "radio" | "checkbox";
-            question: string;
-            answers: { label: string; value: boolean }[];
-            active: boolean;
-        }[],
+        questions: [] as IQuestionDataItem[],
     };
 
     dentistData: IDentistData | null = null;
@@ -227,30 +225,28 @@ class ScanStore {
         }
     };
 
-    init = async (): Promise<void> => {
+    init = async (): Promise<any> => {
         try {
-            this.isLoading = true;
-
             await Promise.all([
                 this.getDentistDataByUserId(),
                 this.getActiveQuestions()
             ]);
 
             console.log("ScanStore initialized.");
+            return {result:EResponseResult.SUCCESS}
         } catch (error) {
             console.error("ScanStore init error:", error);
-        } finally {
-            this.isLoading = false;
         }
     };
 
 
-    submitScan = async () => {
+    submitScan = async (currentStatus:EScanStatus) => {
         const dataToSubmit = {
             doctorId: this.scanData.doctorId,
             teeth: this.scanData.teeth,
             resultAI: this.scanData.resultAI,
             questions: this.scanData.questions,
+            status: currentStatus
         };
 
         console.log("SCAN DATA TO SUBMIT:", JSON.stringify(dataToSubmit, null, 2));
@@ -263,6 +259,7 @@ class ScanStore {
                 teeth: this.scanData.teeth,
                 resultAI: this.scanData.resultAI,
                 questions: this.scanData.questions,
+                status: currentStatus
             });
             console.log("Add Scan Response 1:", res.data);
 
@@ -271,10 +268,38 @@ class ScanStore {
             }
 
             console.log("Add Scan Response2:", res.data);
+            return res;
         } catch (e) {
-            console.log("ERROR! Login", e);
+            console.log("ERROR! api/scans/add", e);
         }
     };
+
+    sendMessageDentist = async (scanId:string , resultAi:string): Promise<void> => {
+        const requestUrl = "api/messages/send";
+        console.log('sendMessageDentist-reqURL:', requestUrl);
+
+        console.log('sendMessageDentist-scanId:', scanId);
+
+
+        const firstMessageToDoctor = `Doctor, can you please clarify the result? Here is my response from ai: ${resultAi}`
+        console.log('sendMessageDentist-firstMessageToDoctor:', firstMessageToDoctor);
+
+        try {
+            const res = await apiClient.post(requestUrl,{
+                scanId: scanId,
+                message: firstMessageToDoctor
+            });
+
+            if (res.result !== "SUCCESS") {
+                throw new Error(res.message || "Some thing went wrong");
+            }
+
+            console.log("sendMessageDentist RES:", res.data);
+            return res;
+        } catch (e) {
+            console.log("ERROR! sendMessageDentist", e);
+        }
+    }
 }
 
 export default new ScanStore();

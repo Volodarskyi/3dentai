@@ -8,6 +8,10 @@ class UiDialogStore {
   currentDialogAction: EDialogAction | null = null;
   successMessage: string | null = null;
   errorMessage: string | null = null;
+  onCloseSuccess: any = ()=>{
+    console.log("Dialog closed successfully")};
+
+  onCloseError: any = ()=>{console.log("Dialog closed error")}
 
   constructor() {
     makeAutoObservable(this);
@@ -24,10 +28,11 @@ class UiDialogStore {
     this.startLoading();
   };
 
-  showSuccess = (successMessage: string) => {
+  showSuccess = (successMessage: string, onCloseSuccessFn:any) => {
     this.isShowUiDialog = true;
     this.isLoading = false;
     this.successMessage = successMessage;
+    this.onCloseSuccess = onCloseSuccessFn;
     this.currentDialogAction = EDialogAction.SHOW_SUCCESS_RESULT;
   };
 
