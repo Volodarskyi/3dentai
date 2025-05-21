@@ -1,11 +1,12 @@
 "use client";
-import { observer } from "mobx-react-lite";
-import {FC, useState} from "react";
-import { IDentistData } from "@/types/dentistTypes";
-import { useStores } from "@/hooks/useStores";
+import {observer} from "mobx-react-lite";
+import {FC} from "react";
+import {IDentistData} from "@/types/dentistTypes";
+import {useStores} from "@/hooks/useStores";
 
 import './scanComplete.Styles.scss';
 import {EResponseResult} from "@/types/enums/apiEnums";
+import {EScanStatus} from "@/types/enums/scanEnums";
 
 interface IScanInvestigationMessageComponent {
     dentist: IDentistData | null;
@@ -13,14 +14,19 @@ interface IScanInvestigationMessageComponent {
 
 const ScanInvestigationMessageComponent : FC<IScanInvestigationMessageComponent> = ({ dentist }) => {
     const { scanStore, dialogStore } = useStores();
-    const [status, setStatus] = useState<"success" | "error" | "loading" | null>(null);
+
+    const onCloseSuccessFn = ()=>{
+        console.log('TODO redirect to /user')
+        dialogStore.closeAll()
+
+    }
 
     const handleSubmit = async () => {
         try {
             dialogStore.showLoader()
 
             // Save scan
-            const saveScanRes = await scanStore.submitScan();
+            const saveScanRes = await scanStore.submitScan(EScanStatus.IN_REVIEW);
             console.log('saveScanRes:', saveScanRes);
 
             if(saveScanRes.result  === EResponseResult.ERROR){
@@ -31,10 +37,12 @@ const ScanInvestigationMessageComponent : FC<IScanInvestigationMessageComponent>
             const sendMessageRes = await scanStore.sendMessageDentist(saveScanRes.data.newScan._id, scanStore.scanData.resultAI);
             console.log('sendMessageRes:', sendMessageRes);
 
-            dialogStore.closeAll()
+            dialogStore.showSuccess('Save scan & send message',onCloseSuccessFn)
+
         } catch (error) {
             console.error("Submission failed:", error);
-            setStatus("error");
+            const message = error instanceof Error ? error.message : 'Unknown error';
+            dialogStore.showError(message)
         }
     };
 

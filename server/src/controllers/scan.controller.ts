@@ -12,7 +12,7 @@ const add = async (
     next: NextFunction
 ): Promise<void> => {
     try {
-        const { doctorId, teeth, resultAI, questions } = req.body;
+        const { doctorId, teeth, resultAI, questions, status } = req.body;
         const user = req.user;
 
         console.log('[API] | [api/scan/add] | [req.body] :', req.body);
@@ -32,7 +32,7 @@ const add = async (
             teeth,
             resultAI,
             questions,
-            status: EScanStatus.IN_REVIEW,
+            status: status ?? EScanStatus.IN_REVIEW, // Fallback to default only if status is null or undefined
         });
 
         sendResSuccess(res, 'Scan created successfully', {newScan});

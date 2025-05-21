@@ -4,6 +4,7 @@ import {apiClient} from "@/api/apiClient";
 import {aiApiServices} from "@/api/services/aiApiServices";
 import {ISteps} from "@/types/steps";
 import {IDentistData} from "@/types/dentistTypes";
+import {EScanStatus} from "@/types/enums/scanEnums";
 
 class ScanStore {
     steps: ISteps[] = [];
@@ -245,12 +246,13 @@ class ScanStore {
     };
 
 
-    submitScan = async () => {
+    submitScan = async (currentStatus:EScanStatus) => {
         const dataToSubmit = {
             doctorId: this.scanData.doctorId,
             teeth: this.scanData.teeth,
             resultAI: this.scanData.resultAI,
             questions: this.scanData.questions,
+            status: currentStatus
         };
 
         console.log("SCAN DATA TO SUBMIT:", JSON.stringify(dataToSubmit, null, 2));
@@ -263,6 +265,7 @@ class ScanStore {
                 teeth: this.scanData.teeth,
                 resultAI: this.scanData.resultAI,
                 questions: this.scanData.questions,
+                status: currentStatus
             });
             console.log("Add Scan Response 1:", res.data);
 
@@ -273,7 +276,7 @@ class ScanStore {
             console.log("Add Scan Response2:", res.data);
             return res;
         } catch (e) {
-            console.log("ERROR! Login", e);
+            console.log("ERROR! api/scans/add", e);
         }
     };
 

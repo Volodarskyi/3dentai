@@ -13,7 +13,7 @@ const UiErrorResultComponent: FC = () => {
             <div className="ui-error-res__error-message">
                 {dialogStore.errorMessage}
             </div>
-            <button className='ui-error-res__error-btn-close' onClick={dialogStore.onCloseSuccess}>
+            <button className='ui-error-res__error-btn-close' onClick={dialogStore.closeAll}>
                 Close
             </button>
         </div>
