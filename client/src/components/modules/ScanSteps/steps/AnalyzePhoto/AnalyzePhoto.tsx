@@ -3,6 +3,7 @@ import {observer} from "mobx-react-lite";
 
 import {useStores} from "@/hooks/useStores";
 import {DisplayAiResponse} from "@/components/DisplayAiResponse/DisplayAiResponse";
+import {prepareErrorMessage} from "@/utils/apiUtils";
 
 const AnalyzePhoto = () => {
     const {scanStore, dialogStore} = useStores();
@@ -27,7 +28,7 @@ const AnalyzePhoto = () => {
                 dialogStore.closeAll();
             }catch (error) {
                 console.error("Submission failed:", error);
-                const message = error instanceof Error ? error.message : 'Unknown error';
+                const message = prepareErrorMessage(error)
                 dialogStore.showError(message)
             }
         })();

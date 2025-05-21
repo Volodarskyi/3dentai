@@ -52,7 +52,7 @@ const signup = async (
     const saveRes = await newUser.save();
     console.log('saveRes:', saveRes);
 
-    sendResSuccess(res,`${firstName} ${lastName} saved to DB`,{userID:saveRes._id})
+    sendResSuccess(res,`Account ${firstName} ${lastName} successfully created`,{userID:saveRes._id})
   } catch (e) {
     console.error('ERROR | Auth.route-register |):', e);
     next(e);

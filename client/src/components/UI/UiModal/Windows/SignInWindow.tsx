@@ -6,6 +6,8 @@ import UiButton from "@/components/UI/UiButton/UiButton";
 import {UiInputModal} from "@/components/UI/UiModal/UiInputModal/UiInputModal";
 import {useStores} from "@/hooks/useStores";
 import {setTokens} from "@/utils/cookieUtils";
+import dialogStore from "@/store/reducers/dialogStore";
+import {EResponseResult} from "@/types/enums/apiEnums";
 
 import "../UiModal.Styles.scss";
 
@@ -26,24 +28,35 @@ const SignInWindowComponent: FC = () => {
         setValue(event.target.value);
     };
 
+    const cleatAllLocalState = ()=>{
+        setEmail("");
+        setPassword("");
+    }
+
+    const onSuccessFlow = () => {
+        cleatAllLocalState()
+        modalStore.closeUiModal()
+        dialogStore.closeAll()
+        router.push("/scan");
+    }
+
     const signIn = async () => {
         console.log("signIn");
         const requestUrl = "api/auth/signin";
-
-        // router.push("/scan");
-        modalStore.closeUiModal();
+        dialogStore.showLoader();
 
         try {
             const res = await apiClient.post(requestUrl, {email, password});
             console.log("api signIn res:", res);
 
-            if (res.result !== "SUCCESS") {
+            if (res.result !== EResponseResult.SUCCESS) {
                 throw new Error(res.message || "Some thing went wrong");
             }
 
             console.log("SingIn RES:", res.data);
 
             setTokens(res.data.token, res.data.refreshToken,)
+            dialogStore.showSuccess(res.message,onSuccessFlow)
             userStore.authorization();
         } catch (e) {
             console.log("ERROR! Login", e);

@@ -8,6 +8,7 @@ import { Col, Row } from "antd";
 import {DisplayTeethSchema} from "@/components/DisplayTeethSchema/DisplayTeethSchema";
 
 import "./uploadPhoto.styles.scss";
+import {prepareErrorMessage} from "@/utils/apiUtils";
 
 
 const UploadPhoto = () => {
@@ -24,7 +25,7 @@ const UploadPhoto = () => {
                 dialogStore.closeAll();
             }catch (error) {
                 console.error("Submission failed:", error);
-                const message = error instanceof Error ? error.message : 'Unknown error';
+                const message = prepareErrorMessage(error)
                 dialogStore.showError(message)
             }
         })();

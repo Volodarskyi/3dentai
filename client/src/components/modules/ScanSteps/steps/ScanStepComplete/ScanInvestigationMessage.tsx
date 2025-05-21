@@ -7,6 +7,7 @@ import {useStores} from "@/hooks/useStores";
 import './scanComplete.Styles.scss';
 import {EResponseResult} from "@/types/enums/apiEnums";
 import {EScanStatus} from "@/types/enums/scanEnums";
+import {prepareErrorMessage} from "@/utils/apiUtils";
 
 interface IScanInvestigationMessageComponent {
     dentist: IDentistData | null;
@@ -41,7 +42,7 @@ const ScanInvestigationMessageComponent : FC<IScanInvestigationMessageComponent>
 
         } catch (error) {
             console.error("Submission failed:", error);
-            const message = error instanceof Error ? error.message : 'Unknown error';
+            const message = prepareErrorMessage(error)
             dialogStore.showError(message)
         }
     };

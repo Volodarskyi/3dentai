@@ -7,6 +7,7 @@ import dialogStore from "@/store/reducers/dialogStore";
 
 import './scanComplete.Styles.scss';
 import {EScanStatus} from "@/types/enums/scanEnums";
+import {prepareErrorMessage} from "@/utils/apiUtils";
 
 const ScanHealthyMessageComponent = () => {
     const {scanStore} = useStores();
@@ -46,7 +47,7 @@ const ScanHealthyMessageComponent = () => {
 
         } catch (error) {
             console.error("Submission failed:", error);
-            const message = error instanceof Error ? error.message : 'Unknown error';
+            const message = prepareErrorMessage(error)
             dialogStore.showError(message)
         }
     };
