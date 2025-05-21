@@ -5,6 +5,7 @@ import {aiApiServices} from "@/api/services/aiApiServices";
 import {ISteps} from "@/types/steps";
 import {IDentistData} from "@/types/dentistTypes";
 import {EScanStatus} from "@/types/enums/scanEnums";
+import {EResponseResult} from "@/types/enums/apiEnums";
 
 class ScanStore {
     steps: ISteps[] = [];
@@ -228,20 +229,17 @@ class ScanStore {
         }
     };
 
-    init = async (): Promise<void> => {
+    init = async (): Promise<any> => {
         try {
-            this.isLoading = true;
-
             await Promise.all([
                 this.getDentistDataByUserId(),
                 this.getActiveQuestions()
             ]);
 
             console.log("ScanStore initialized.");
+            return {result:EResponseResult.SUCCESS}
         } catch (error) {
             console.error("ScanStore init error:", error);
-        } finally {
-            this.isLoading = false;
         }
     };
 

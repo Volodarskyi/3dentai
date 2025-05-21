@@ -18,7 +18,15 @@ const UploadPhoto = () => {
     // ✅ INIT on mount
     useEffect(() => {
         (async () => {
-            await scanStore.init();
+            try {
+                dialogStore.showLoader();
+                const res = await scanStore.init();
+                dialogStore.closeAll();
+            }catch (error) {
+                console.error("Submission failed:", error);
+                const message = error instanceof Error ? error.message : 'Unknown error';
+                dialogStore.showError(message)
+            }
         })();
     }, []);
 
