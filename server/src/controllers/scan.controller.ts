@@ -128,6 +128,7 @@ const getAllByDoctor = async (
         }
 
         const { userId, status } = req.query;
+        console.log('[API] | [/api/scans/doctor?userId=...&status=...] | [req.query] :', req.query);
 
         const query: any = {
             doctorId: doctor.userId
@@ -141,7 +142,9 @@ const getAllByDoctor = async (
             query.status = status;
         }
 
+        console.log('query:',query)
         const scans = await Scan.find(query).sort({ createdAt: -1 });
+        console.log('SCANS:',scans)
 
         sendResSuccess(res,`${doctor.firstName} ${doctor.lastName} scans loaded successfully`, {scans});
     } catch (error) {

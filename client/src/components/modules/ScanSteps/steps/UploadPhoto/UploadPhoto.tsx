@@ -12,7 +12,7 @@ import {prepareErrorMessage} from "@/utils/apiUtils";
 
 
 const UploadPhoto = () => {
-  const { scanStore, dialogStore } = useStores();
+  const { scanStore, dialogStore ,scansViewStore } = useStores();
   const { imgUrl, isLoading } = scanStore;
   const fileRef = useRef<HTMLInputElement>(null);
 
@@ -44,8 +44,20 @@ const UploadPhoto = () => {
 
   const showSuccess = ()=> dialogStore.showError('test message 1');
 
+  // const testFetchScanDoctorUserId =async ()=>{
+  //     const userID = '68230018f51ca94489b2d9f6'
+  //     try {
+  //         const res  = await scansViewStore.fetchScansByDoctorAndUser(userID)
+  //         console.log('RES TEST doc user:',res)
+  //     }catch (e) {
+  //         console.error(e)
+  //     }
+  //
+  // }
+
   return (
     <>
+        {/*<button onClick={testFetchScanDoctorUserId}>TEST</button>*/}
         <Row style={{width:"100%" , display:'flex', alignItems: "stretch"}}>
             <Col xs={24} md={12} style={{marginTop:".5rem"}}>
                 <div className='uploadPhoto-jaw'>
