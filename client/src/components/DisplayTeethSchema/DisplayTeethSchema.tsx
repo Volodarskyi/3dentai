@@ -1,16 +1,22 @@
 "use client";
-import React, { FC, useState } from 'react';
-import { observer } from "mobx-react-lite";
+import React, {FC, useState} from 'react';
+import {observer} from "mobx-react-lite";
 import Image from "next/image";
 
 import './DisplayTeethSchema.Styles.scss';
 
 interface IDisplayTeethSchema {
-    setActiveToothCB: (activeTooth:number) => void;
+    setActiveToothCB: (activeTooth: number) => void;
+    initTooth?: number
+    isDisabled?: boolean;
 }
 
-const DisplayTeethSchemaComponent : FC<IDisplayTeethSchema> = ({setActiveToothCB}) => {
-    const [activeTooth, setActiveTooth] = useState<number>(48);
+const DisplayTeethSchemaComponent: FC<IDisplayTeethSchema> = ({
+                                                                  setActiveToothCB,
+                                                                  initTooth = 48,
+                                                                  isDisabled = false
+                                                              }) => {
+    const [activeTooth, setActiveTooth] = useState<number>(initTooth);
 
     // console.log("setActiveToothCB is", typeof setActiveToothCB);
 
@@ -75,7 +81,7 @@ const DisplayTeethSchemaComponent : FC<IDisplayTeethSchema> = ({setActiveToothCB
                         width={0}
                         height={0}
                         sizes="100vw"
-                        style={{ width: '100%', height: 'auto' }}
+                        style={{width: '100%', height: 'auto'}}
                         unoptimized
                     />
 
@@ -102,8 +108,9 @@ const DisplayTeethSchemaComponent : FC<IDisplayTeethSchema> = ({setActiveToothCB
             </div>
 
             <div className="display-teeth-schema__bottom">
-                <button className="display-teeth-schema__bottom-left" onClick={handlePrev}>Prev</button>
-                <button className="display-teeth-schema__bottom-right" onClick={handleNext}>Next</button>
+                <button className="display-teeth-schema__bottom-left" onClick={handlePrev} disabled={isDisabled}>Prev</button>
+                <button className="display-teeth-schema__bottom-right" onClick={handleNext} disabled={isDisabled}>Next
+                </button>
             </div>
         </div>
     );

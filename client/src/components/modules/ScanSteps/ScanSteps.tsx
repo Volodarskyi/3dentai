@@ -13,6 +13,7 @@ import UploadPhoto from "./steps/UploadPhoto";
 import "./scanStep.styles.scss";
 import {ScanStepComplete} from "@/components/modules/ScanSteps/steps/ScanStepComplete/ScanStepComplete";
 import {DisplayQuestions} from "@/components/DisplayQuestions/DisplayQuestions";
+import {ScanStepQuestions} from "@/components/modules/ScanSteps/steps/ScanStepQuestions/ScanStepQuestions";
 
 const ScanSteps = () => {
   const { scanStore } = useStores();
@@ -30,7 +31,7 @@ const ScanSteps = () => {
         title: "Questions",
         // description: "Send to AI and receive response.",
         icon: <UiIcon idIcon="Questions" name="questions" size={24} />,
-        content: <DisplayQuestions/>,
+        content: <ScanStepQuestions/>,
       },
       {
         title: "AI Analyze",

@@ -6,6 +6,7 @@ import {ISteps} from "@/types/steps";
 import {IDentistData} from "@/types/dentistTypes";
 import {EScanStatus} from "@/types/enums/scanEnums";
 import {EResponseResult} from "@/types/enums/apiEnums";
+import {IQuestionDataItem} from "@/types/scanTypes";
 
 class ScanStore {
     steps: ISteps[] = [];
@@ -23,12 +24,7 @@ class ScanStore {
         doctorId: "", // use init function on first step
         teeth: {} as Record<string, string>,
         resultAI: "",
-        questions: [] as {
-            type: "radio" | "checkbox";
-            question: string;
-            answers: { label: string; value: boolean }[];
-            active: boolean;
-        }[],
+        questions: [] as IQuestionDataItem[],
     };
 
     dentistData: IDentistData | null = null;

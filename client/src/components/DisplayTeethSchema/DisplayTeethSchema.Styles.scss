@@ -64,6 +64,11 @@
       &:hover{
         background: rgba(36, 238, 164, 0.15);
       }
+
+      &:disabled{
+        background: rgba(83, 255, 255, 0.05);
+        color: rgba(83, 255, 255, 0.15);
+      }
     }
 
     &-right{
@@ -77,6 +82,12 @@
       &:hover{
         background: rgba(36, 238, 164, 0.15);
       }
+
+      &:disabled{
+        background: rgba(83, 255, 255, 0.05);
+        color: rgba(83, 255, 255, 0.15);
+      }
+
     }
   }
 

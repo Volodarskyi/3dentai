@@ -1,9 +1,8 @@
 import {useEffect} from "react";
 import {observer} from "mobx-react-lite";
 
-import Loading from "@/components/UI/Loading";
 import {useStores} from "@/hooks/useStores";
-import {DisplayAiResponse} from "@/components/DisplayAiRespoanse/DisplayAiResponse";
+import {DisplayAiResponse} from "@/components/DisplayAiResponse/DisplayAiResponse";
 
 const AnalyzePhoto = () => {
     const {scanStore, dialogStore} = useStores();
@@ -19,7 +18,7 @@ const AnalyzePhoto = () => {
     //     analyze();
     // }, [analyze, imgUrl]);
 
-    // ✅ analyze image
+    // ✅ INIT on mount
     useEffect(() => {
         (async () => {
             try {
