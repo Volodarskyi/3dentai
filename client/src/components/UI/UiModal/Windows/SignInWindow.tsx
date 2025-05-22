@@ -10,6 +10,7 @@ import dialogStore from "@/store/reducers/dialogStore";
 import {EResponseResult} from "@/types/enums/apiEnums";
 
 import "../UiModal.Styles.scss";
+import {prepareErrorMessage} from "@/utils/apiUtils";
 
 // interface ISignInWindowProps {}
 
@@ -58,8 +59,10 @@ const SignInWindowComponent: FC = () => {
             setTokens(res.data.token, res.data.refreshToken,)
             dialogStore.showSuccess(res.message,onSuccessFlow)
             userStore.authorization();
-        } catch (e) {
-            console.log("ERROR! Login", e);
+        } catch (error) {
+            console.log("ERROR! Sign In", error);
+            const message = prepareErrorMessage(error)
+            dialogStore.showError(message)
         }
     };
 

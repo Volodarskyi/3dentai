@@ -4,6 +4,7 @@ import { observer } from "mobx-react-lite";
 import {UserDashboardSection} from "@/appPages/UserPage/sections/UserDashboardSection";
 
 import "./UserPage.Styles.scss";
+import {withAuth} from "@/hoc/WithAuth/withAuth";
 
 
 // interface IDentistPageProps {
@@ -20,4 +21,5 @@ const UserPageComponent: FC = () => {
     );
 };
 
-export const UserPage = observer(UserPageComponent);
+const UserPage = observer(UserPageComponent);
+export const UserPageProtected = withAuth(UserPage, ['user']) // ✅ here

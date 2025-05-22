@@ -5,6 +5,7 @@ import { observer } from "mobx-react-lite";
 import { DentistDashboardSection } from "@/appPages/DentistPage/sections/DentistDashboardSection";
 
 import "./DentistPage.Styles.scss";
+import {withAuth} from "@/hoc/WithAuth/withAuth";
 
 // interface IDentistPageProps {
 // }
@@ -18,4 +19,5 @@ const DentistPageComponent: FC = () => {
   );
 };
 
-export const DentistPage = observer(DentistPageComponent);
+const DentistPage = observer(DentistPageComponent);
+export const DentistPageProtected = withAuth(DentistPage, ['dentist']) // ✅ here
