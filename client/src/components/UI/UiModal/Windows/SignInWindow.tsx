@@ -37,7 +37,7 @@ const SignInWindowComponent: FC = () => {
         cleatAllLocalState()
         modalStore.closeUiModal()
         dialogStore.closeAll()
-        router.push("/scan");
+        router.push("/user");
     }
 
     const signIn = async () => {

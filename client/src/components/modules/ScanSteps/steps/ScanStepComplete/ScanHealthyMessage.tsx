@@ -8,9 +8,11 @@ import dialogStore from "@/store/reducers/dialogStore";
 import './scanComplete.Styles.scss';
 import {EScanStatus} from "@/types/enums/scanEnums";
 import {prepareErrorMessage} from "@/utils/apiUtils";
+import {useRouter} from "next/navigation";
 
 const ScanHealthyMessageComponent = () => {
     const {scanStore} = useStores();
+    const router = useRouter();
 
     // check date today
     const now = new Date();
@@ -23,7 +25,7 @@ const ScanHealthyMessageComponent = () => {
     const formattedDateNext = nextScanDate.toLocaleDateString("en-CA");
 
     const onCloseSuccessFn = () => {
-        console.log('TODO redirect to /user')
+        router.push("/user");
         dialogStore.closeAll()
     }
 
