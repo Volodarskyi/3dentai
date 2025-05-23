@@ -1,10 +1,11 @@
 import {useEffect, useState} from "react";
 import {getAccessToken} from "@/utils/cookieUtils";
 import {jwtDecode} from "@/utils/authUtils";
+import {EUserRole} from "@/types/enums/userEnums";
 
 type UserData = {
     isAuth: boolean
-    role: string
+    role: EUserRole | string
     firstName: string
     lastName: string
     checked: boolean // <- New
