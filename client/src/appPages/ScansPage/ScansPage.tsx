@@ -1,10 +1,13 @@
 "use client";
+import { observer } from "mobx-react-lite";
 
 import { useRouter } from "next/navigation";
 
 import "./ScansPage.Styles.scss";
+import {withAuth} from "@/hoc/WithAuth/withAuth";
+import {EUserRole} from "@/types/enums/userEnums";
 
-const ScansPage = () => {
+const ScansPageComponent = () => {
   const router = useRouter();
 
   const handleClick = () => {
@@ -22,4 +25,5 @@ const ScansPage = () => {
   );
 };
 
-export default ScansPage;
+const ScansPage = observer(ScansPageComponent);
+export const ScansPageProtected = withAuth(ScansPage, [EUserRole.USER, EUserRole.DENTIST])

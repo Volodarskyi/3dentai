@@ -1,10 +1,10 @@
 "use client";
 import { FC } from "react";
 import { observer } from "mobx-react-lite";
-
-import "./DashboardItem.Styles.scss";
 import {UiIcon} from "@/components/UI/UiIcon/UiIcon";
 import {useRouter} from "next/navigation";
+
+import "./DashboardItem.Styles.scss";
 
 interface IDashboardItem {
     icon: string;
