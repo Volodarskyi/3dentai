@@ -97,7 +97,7 @@ Each component folder should include the following files:
     ├── Dashboard.tsx
     ├── dashboard.module.scss
     └── 
-/src/screen
+/src/appPages
   /Home
     ├── Home.tsx
     ├── home.module.scss
