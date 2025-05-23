@@ -1,12 +1,38 @@
 "use client";
-import { observer } from "mobx-react-lite";
+import {observer} from "mobx-react-lite";
 
-import { OurSolutions } from "@/components/OurSolutions/OurSolutions";
-import { PageDecorations } from "@/components/PageDecorations/PageDecorations";
+import {OurSolutions} from "@/components/OurSolutions/OurSolutions";
+import {PageDecorations} from "@/components/PageDecorations/PageDecorations";
+import {useUserData} from "@/hooks/useUserData";
+import {useEffect} from "react";
+import {EUserRole} from "@/types/enums/userEnums";
+import {useRouter} from "next/navigation";
 
 import "./HomePage.Styles.scss";
 
 const HomePageComponent = () => {
+  const {role, checked} = useUserData();
+  const router = useRouter();
+
+  useEffect(() => {
+    console.log('home page-useEffect-start');
+    if(!checked){
+      console.log('home page-useEffect-checked:',checked);
+      return ;
+    }
+
+    if(role === EUserRole.DENTIST){
+      console.log('home page-useEffect-dentist:',role);
+      router.push("/dentist");
+    }
+
+    if(role === EUserRole.USER){
+      console.log('home page-useEffect-user:',role);
+      router.push("/user");
+    }
+
+  }, [role]);
+
   return (
     <div className="home">
       <PageDecorations />

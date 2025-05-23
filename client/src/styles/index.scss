@@ -6,3 +6,31 @@ body {
   background-color: var(--color-bg-page);
   color: var(--color-text-white);
 }
+
+/* styles/globals.scss or globals.css */
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0f172a; // dark navy background
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #22d3ee; // cyan
+  border-radius: 5px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #0ea5e9; // brighter on hover
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #22d3ee #0f172a;
+}

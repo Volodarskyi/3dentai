@@ -90,6 +90,7 @@ const SignInWindowComponent: FC = () => {
             <UiInputModal
                 icon={"key"}
                 key={"key"}
+                type={"password"}
                 value={password}
                 onChange={(event) => setInputValue(event, password, setPassword)}
                 placeholder={"Password"}

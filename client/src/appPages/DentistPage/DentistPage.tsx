@@ -13,7 +13,7 @@ import {withAuth} from "@/hoc/WithAuth/withAuth";
 const DentistPageComponent: FC = () => {
   return (
     <div className="dentist">
-      <h1 className="dentist__main-title">Dentist Page</h1>
+      <h1 className="dentist__main-title">Dentist Dashboard</h1>
       <DentistDashboardSection />
     </div>
   );
