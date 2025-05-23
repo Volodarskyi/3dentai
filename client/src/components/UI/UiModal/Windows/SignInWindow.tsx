@@ -10,6 +10,9 @@ import dialogStore from "@/store/reducers/dialogStore";
 import {EResponseResult} from "@/types/enums/apiEnums";
 
 import "../UiModal.Styles.scss";
+import {prepareErrorMessage} from "@/utils/apiUtils";
+import {jwtDecode} from "@/utils/authUtils";
+import {EUserRole} from "@/types/enums/userEnums";
 
 // interface ISignInWindowProps {}
 
@@ -33,11 +36,20 @@ const SignInWindowComponent: FC = () => {
         setPassword("");
     }
 
-    const onSuccessFlow = () => {
+    const onSuccessFlow = (token:string) => {
+        const { payload } = jwtDecode(token)
+        const { role } = payload
         cleatAllLocalState()
         modalStore.closeUiModal()
         dialogStore.closeAll()
-        router.push("/scan");
+
+        if(role === EUserRole.DENTIST){
+            router.push("/dentist");
+            return;
+        }
+
+        router.push("/user");
+        return;
     }
 
     const signIn = async () => {
@@ -56,10 +68,12 @@ const SignInWindowComponent: FC = () => {
             console.log("SingIn RES:", res.data);
 
             setTokens(res.data.token, res.data.refreshToken,)
-            dialogStore.showSuccess(res.message,onSuccessFlow)
+            dialogStore.showSuccess(res.message,()=>onSuccessFlow(res.data.token))
             userStore.authorization();
-        } catch (e) {
-            console.log("ERROR! Login", e);
+        } catch (error) {
+            console.log("ERROR! Sign In", error);
+            const message = prepareErrorMessage(error)
+            dialogStore.showError(message)
         }
     };
 
@@ -76,6 +90,7 @@ const SignInWindowComponent: FC = () => {
             <UiInputModal
                 icon={"key"}
                 key={"key"}
+                type={"password"}
                 value={password}
                 onChange={(event) => setInputValue(event, password, setPassword)}
                 placeholder={"Password"}

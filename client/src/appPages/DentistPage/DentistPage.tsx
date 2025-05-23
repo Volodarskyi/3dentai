@@ -5,6 +5,7 @@ import { observer } from "mobx-react-lite";
 import { DentistDashboardSection } from "@/appPages/DentistPage/sections/DentistDashboardSection";
 
 import "./DentistPage.Styles.scss";
+import {withAuth} from "@/hoc/WithAuth/withAuth";
 
 // interface IDentistPageProps {
 // }
@@ -12,10 +13,11 @@ import "./DentistPage.Styles.scss";
 const DentistPageComponent: FC = () => {
   return (
     <div className="dentist">
-      <h1 className="dentist__main-title">Dentist Page</h1>
+      <h1 className="dentist__main-title">Dentist Dashboard</h1>
       <DentistDashboardSection />
     </div>
   );
 };
 
-export const DentistPage = observer(DentistPageComponent);
+const DentistPage = observer(DentistPageComponent);
+export const DentistPageProtected = withAuth(DentistPage, ['dentist']) // ✅ here

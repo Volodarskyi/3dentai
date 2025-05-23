@@ -1,7 +1,7 @@
-import ScansPage from "@/appPages/ScansPage/ScansPage";
+import {ScansPageProtected} from "@/appPages/ScansPage/ScansPage";
 
 function Scans() {
-  return <ScansPage />;
+  return <ScansPageProtected />;
 }
 
 export default Scans;

@@ -5,6 +5,8 @@ import { observer } from "mobx-react-lite";
 import { AnnotationsWorkSpaceSection } from "@/appPages/AnnotationsPage/sections/AnnotationsWorkSpaceSection";
 
 import "./AnnotationsPage.Styles.scss";
+import {withAuth} from "@/hoc/WithAuth/withAuth";
+import {EUserRole} from "@/types/enums/userEnums";
 
 // interface IAnnotationsPageProps {
 // }
@@ -19,4 +21,5 @@ const AnnotationsPageComponent: FC = () => {
   );
 };
 
-export const AnnotationsPage = observer(AnnotationsPageComponent);
+const AnnotationsPage = observer(AnnotationsPageComponent);
+export const AnnotationsPageProtected = withAuth(AnnotationsPage, [EUserRole.DENTIST]) // ✅ here

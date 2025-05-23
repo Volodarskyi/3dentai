@@ -3,11 +3,12 @@ import {observer} from "mobx-react-lite";
 import {FC} from "react";
 import {IDentistData} from "@/types/dentistTypes";
 import {useStores} from "@/hooks/useStores";
-
-import './scanComplete.Styles.scss';
 import {EResponseResult} from "@/types/enums/apiEnums";
 import {EScanStatus} from "@/types/enums/scanEnums";
 import {prepareErrorMessage} from "@/utils/apiUtils";
+import {useRouter} from "next/navigation";
+
+import './scanComplete.Styles.scss';
 
 interface IScanInvestigationMessageComponent {
     dentist: IDentistData | null;
@@ -15,11 +16,11 @@ interface IScanInvestigationMessageComponent {
 
 const ScanInvestigationMessageComponent : FC<IScanInvestigationMessageComponent> = ({ dentist }) => {
     const { scanStore, dialogStore } = useStores();
+    const router = useRouter();
 
     const onCloseSuccessFn = ()=>{
-        console.log('TODO redirect to /user')
+        router.push("/user");
         dialogStore.closeAll()
-
     }
 
     const handleSubmit = async () => {

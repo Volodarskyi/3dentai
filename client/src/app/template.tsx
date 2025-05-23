@@ -1,36 +1,38 @@
 "use client";
 
-import { ReactNode } from "react";
-import { usePathname } from "next/navigation";
+import {ReactNode} from "react";
+import {usePathname} from "next/navigation";
 
 import Header from "@/components/Header";
 import Footer from "@/components/modules/Footer";
-import { UiDialog } from "@/components/UI/UiDialog/UiDialog";
-import { UiModal } from "@/components/UI/UiModal/UiModal";
-import { StoreWrapper } from "@/store/provider";
+import {UiDialog} from "@/components/UI/UiDialog/UiDialog";
+import {UiModal} from "@/components/UI/UiModal/UiModal";
+import {StoreWrapper} from "@/store/provider";
+import {UiMenu} from "@/components/UI/UiMenu/UiMenu";
 
 interface TemplateProps {
-  readonly children: ReactNode;
+    readonly children: ReactNode;
 }
 
 function Template(props: TemplateProps) {
-  const { children } = props;
+    const {children} = props;
 
-  const pathname = usePathname();
+    const pathname = usePathname();
 
-  if (pathname === "/scan") {
-    console.log("display or hide footer");
-  }
+    if (pathname === "/scan") {
+        console.log("display or hide footer");
+    }
 
-  return (
-    <StoreWrapper>
-      <Header />
-      {children}
-      <UiModal />
-      <UiDialog />
-      <Footer />
-    </StoreWrapper>
-  );
+    return (
+        <StoreWrapper>
+            <Header/>
+            {children}
+            <UiModal/>
+            <UiDialog/>
+            <UiMenu/>
+            <Footer/>
+        </StoreWrapper>
+    );
 }
 
 export default Template;
